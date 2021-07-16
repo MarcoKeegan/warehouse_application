@@ -8,7 +8,7 @@ class  LoginProvider {
     try {
       await auth.signInWithEmailAndPassword(
         email: email,
-        password: password
+        password: password,
       ); 
       return 'text';
     } on FirebaseAuthException catch (e) {

@@ -11,7 +11,7 @@ import 'package:warehouse_application/route_manager.dart';
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: FirebaseAuth.instance.currentUser == null? '/login': '/',
+      initialRoute: FirebaseAuth.instance.currentUser == null? '/login': '/dashM',
       builder: (context, child) {
         return ColorfulSafeArea(
           color: Colors.white,

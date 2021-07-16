@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_application/views/homePage.dart';
-import 'package:warehouse_application/views/login.dart';
+import 'package:warehouse_application/views/dashboardClient.dart';
+import 'package:warehouse_application/views/dashboardManager.dart';
+import 'package:warehouse_application/views/loginPage.dart';
+import 'package:warehouse_application/views/regisPage.dart';
 
 class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case '/regis':
+        return MaterialPageRoute(builder: (context) => RegisPage());
       case '/login':
         return MaterialPageRoute(builder: (context) => LoginPage());
-      case '/':
-        return MaterialPageRoute(builder: (context) => Homepage());
-      // case '/game':
-      //   return MaterialPageRoute(builder: (context) => GamePageRunner());
+      case '/dashM':
+        return MaterialPageRoute(builder: (context) => DashManagerPage());
+      case '/dashC':
+        return MaterialPageRoute(builder: (context) => DashClientPage());
       // case '/end':
       //   final int endScore =
       //       (settings.arguments as Map<String, dynamic>)['score'];
