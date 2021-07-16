@@ -49,6 +49,11 @@ class _RegisPage extends State<RegisPage> {
                       child: TextFormField(controller: role,
                       decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Role',),),
                     ),
+                     Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: TextFormField(controller: role,
+                      decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Nama',),),
+                    ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: TextFormField(controller: email,
