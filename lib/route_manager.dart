@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_application/views/dashboardClient.dart';
+import 'package:warehouse_application/views/addStock_Page.dart';
 import 'package:warehouse_application/views/dashboardManager.dart';
 import 'package:warehouse_application/views/loginPage.dart';
+import 'package:warehouse_application/views/preViewStock_Page.dart';
+import 'package:warehouse_application/views/purchasing_page.dart';
 import 'package:warehouse_application/views/regisPage.dart';
+import 'package:warehouse_application/views/stock_Page.dart';
+import 'package:warehouse_application/views/userPage.dart';
+import 'package:warehouse_application/views/viewStock_Page.dart';
+import 'package:warehouse_application/views/warehouse._Page.dart';
 
 class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -13,16 +19,23 @@ class RouteManager {
         return MaterialPageRoute(builder: (context) => LoginPage());
       case '/dashM':
         return MaterialPageRoute(builder: (context) => DashManagerPage());
-      case '/dashC':
-        return MaterialPageRoute(builder: (context) => DashClientPage());
-      // case '/end':
-      //   final int endScore =
-      //       (settings.arguments as Map<String, dynamic>)['score'];
-      //   return MaterialPageRoute(
-      //       builder: (context) => EndScore(endScore: endScore));
+      case '/userPage':
+        return MaterialPageRoute(builder: (context) => UserPage());
+      case '/warePage':
+        return MaterialPageRoute(builder: (context) => WarehousePage());
+      case '/stockPage':
+        return MaterialPageRoute(builder: (context) => StockPage());
+      case '/purchPage':
+        return MaterialPageRoute(builder: (context) => PurchPage());
+      case '/prePage':
+        return MaterialPageRoute(builder: (context) => PreViewStockPage());
+      case '/addStckPage':
+        return MaterialPageRoute(builder: (context) => AddStockPage());
+      case '/viewStckPage':
+        return MaterialPageRoute(builder: (context) => ViewStockPage());
       default:
         return MaterialPageRoute(
-            builder: (context) => _DefaultErrorRoutePage(settings: settings));
+          builder: (context) => _DefaultErrorRoutePage(settings: settings));
     }
   }
 }

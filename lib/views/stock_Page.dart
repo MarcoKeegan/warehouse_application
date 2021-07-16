@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_application/repo/provider/login_provider.dart';
 
-
-class DashManagerPage extends StatelessWidget {
-  DashManagerPage({Key? key}) : super(key: key);
-   LoginProvider loginProvider = LoginProvider();
+class StockPage extends StatelessWidget {
+  StockPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,23 +16,15 @@ class DashManagerPage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
         leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.menu, size: 30,)
+          onPressed: () {Navigator.of(context).pushReplacementNamed('/dashM');},
+          icon: Icon(Icons.arrow_back, size: 30,)
         ),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed('/userPage');
-            },
-            icon: Icon(Icons.account_circle_sharp, size: 30,),
-          ),
-        ]
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 15.0, 200.0, 15.0),
-            child: Text("Dashboard", style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.black)),
+            padding: const EdgeInsets.fromLTRB(8.0, 15.0, 270.0, 15.0),
+            child: Text("Stock", style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.black)),
           ),
           Padding(
             padding: const EdgeInsets.all(5.0),
@@ -45,10 +34,10 @@ class DashManagerPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: 500.0,
-                    height: 150.0,
+                    height: 50.0,
                     child: new RaisedButton(
-                      child: new Text('Warehouse'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/warePage');},
+                      child: new Text('Warehouse123'),
+                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
                     ),
                   ),
                 ),
@@ -56,10 +45,10 @@ class DashManagerPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: 500.0,
-                    height: 150.0,
+                    height: 50.0,
                     child: new RaisedButton(
-                      child: new Text('Stock'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/stockPage');},
+                      child: new Text('Warehouse1234'),
+                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
                     ),
                   ),
                 ),
@@ -67,10 +56,21 @@ class DashManagerPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
                     width: 500.0,
-                    height: 150.0,
+                    height: 50.0,
                     child: new RaisedButton(
-                      child: new Text('Purchasing'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/purchPage');},
+                      child: new Text('Warehouse12345'),
+                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: 500.0,
+                    height: 50.0,
+                    child: new RaisedButton(
+                      child: new Text('Warehouse123456'),
+                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
                     ),
                   ),
                 ),

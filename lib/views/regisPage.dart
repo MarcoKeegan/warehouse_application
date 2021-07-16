@@ -47,9 +47,9 @@ class _RegisPage extends State<RegisPage> {
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: TextFormField(controller: role,
-                      decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Role',),),
+                      decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Role *nanti diganti dropdown*',),),
                     ),
-                     Padding(
+                    Padding(
                       padding: EdgeInsets.all(8.0),
                       child: TextFormField(controller: role,
                       decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Nama',),),
