@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:warehouse_application/repo/provider/login_provider.dart';
 
@@ -17,11 +19,11 @@ class DashManagerPage extends StatelessWidget {
             fontSize: 40,
           ),
         ),
-        automaticallyImplyLeading: false,
-        leading: IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.menu, size: 30,)
-        ),
+        // automaticallyImplyLeading: false,
+        // leading: IconButton(
+        //   onPressed: () {},
+        //   icon: Icon(Icons.menu, size: 30,)
+        // ),
         actions: <Widget>[
           IconButton(
             onPressed: () {
@@ -79,6 +81,62 @@ class DashManagerPage extends StatelessWidget {
           ),
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.cyan[400],
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pushReplacementNamed('/userPage');
+                    },
+                    icon: Icon(Icons.account_circle_sharp, size: 30,),
+                  ),
+                  Text('NAMA USER**', style: TextStyle(fontSize: 30),),
+                ],
+              )
+            ),
+            ListTile(
+              title: Text('Dashboard'),
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed('/dashM');
+              },
+            ),
+            ListTile(
+              title: Text('Warehouse'),
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed('/warePage');
+              },
+            ),
+            ListTile(
+              title: Text('Stock'),
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed('/stockPage');
+              },
+            ),
+            ListTile(
+              title: Text('Purchasing'),
+              onTap: () {
+                Navigator.of(context).pushReplacementNamed('/purchPage');
+              },
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: IconButton(
+                onPressed: () {
+                  loginProvider.signOut(); Navigator.of(context).pushReplacementNamed('/login');
+                }, 
+                icon:Icon(Icons.logout, color: Colors.black,)
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 }

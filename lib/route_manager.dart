@@ -7,8 +7,8 @@ import 'package:warehouse_application/views/purchasing_page.dart';
 import 'package:warehouse_application/views/regisPage.dart';
 import 'package:warehouse_application/views/stock_Page.dart';
 import 'package:warehouse_application/views/userPage.dart';
-import 'package:warehouse_application/views/viewStock_Page.dart';
-import 'package:warehouse_application/views/warehouse._Page.dart';
+import 'package:warehouse_application/views/listViewStock_Page.dart';
+import 'package:warehouse_application/views/warehouse_Page.dart';
 
 class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {

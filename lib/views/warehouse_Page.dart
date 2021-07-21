@@ -14,6 +14,7 @@ class WarehousePage extends StatelessWidget {
             fontSize: 40,
           ),
         ),
+        automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {Navigator.of(context).pushReplacementNamed('/dashM');},
           icon: Icon(Icons.arrow_back, size: 30,)

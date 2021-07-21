@@ -15,6 +15,10 @@ class AddStockPage extends StatelessWidget {
           ),
         ),
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+          icon: Icon(Icons.arrow_back, size: 30,)
+        ),
       ),
       body: Column(
         children: [
