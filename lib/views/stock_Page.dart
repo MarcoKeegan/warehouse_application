@@ -30,47 +30,80 @@ class StockPage extends StatelessWidget {
             padding: const EdgeInsets.all(5.0),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 50.0,
-                    child: new RaisedButton(
-                      child: new Text('Warehouse123'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                    child: SizedBox(
+                      width: 500,
+                      height: 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Warehouse123'),
+                        ]
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 50.0,
-                    child: new RaisedButton(
-                      child: new Text('Warehouse1234'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                    child: SizedBox(
+                      width: 500,
+                      height: 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Warehouse1234'),
+                        ]
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 50.0,
-                    child: new RaisedButton(
-                      child: new Text('Warehouse12345'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                    child: SizedBox(
+                      width: 500,
+                      height: 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Warehouse12345'),
+                        ]
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 50.0,
-                    child: new RaisedButton(
-                      child: new Text('Warehouse123456'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+                    child: SizedBox(
+                      width: 500,
+                      height: 50,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Warehouse123456'),
+                        ]
+                      ),
                     ),
                   ),
                 ),

@@ -23,8 +23,8 @@ class AddStockPage extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(8.0, 15.0, 200.0, 15.0),
-            child: Text("Add Stock", style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.black)),
+            padding: const EdgeInsets.fromLTRB(8.0, 15.0, 180.0, 15.0),
+            child: Text("Add Product", style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.black)),
           ),
           Padding(
             padding: EdgeInsets.all(8.0),
@@ -51,7 +51,7 @@ class AddStockPage extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');}, 
-            child: Text("Add Stock", style: TextStyle(color: Colors.black),),
+            child: Text("Add Product", style: TextStyle(color: Colors.black),),
           ),
         ],
       ),

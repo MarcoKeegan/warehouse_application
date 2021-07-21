@@ -43,36 +43,60 @@ class DashManagerPage extends StatelessWidget {
             padding: const EdgeInsets.all(5.0),
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 150.0,
-                    child: new RaisedButton(
-                      child: new Text('Warehouse'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/warePage');},
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {Navigator.of(context).pushReplacementNamed('/warePage');},
+                    child: SizedBox(
+                      width: 500,
+                      height: 150,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Warehouse'),
+                        ]
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 150.0,
-                    child: new RaisedButton(
-                      child: new Text('Stock'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/stockPage');},
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {Navigator.of(context).pushReplacementNamed('/stockPage');},
+                    child: SizedBox(
+                      width: 500,
+                      height: 150,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Stock'),
+                        ]
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: SizedBox(
-                    width: 500.0,
-                    height: 150.0,
-                    child: new RaisedButton(
-                      child: new Text('Purchasing'),
-                      onPressed: () {Navigator.of(context).pushReplacementNamed('/purchPage');},
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {Navigator.of(context).pushReplacementNamed('/purchPage');},
+                    child: SizedBox(
+                      width: 500,
+                      height: 150,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Purchasing'),
+                        ]
+                      ),
                     ),
                   ),
                 ),
