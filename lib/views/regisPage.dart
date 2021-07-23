@@ -82,16 +82,16 @@ class _RegisPage extends State<RegisPage> {
                           } else if (state is DropdownRoleDone) {  //MASIH ERRROR SAMPE 
                             return DropdownButton(
                               hint: Text('Select Role'),
-                              value: '${state.role}',
-                              items: state.role.map((item) {
+                              value: state.role,                    //value ???
+                              items: state.role.map((item) {        //items ???
                                 return DropdownMenuItem(
                                   child: Text('${state.role}'),
-                                  value: '${state.role}',
+                                  value: state.role,                //value ???
                                 );
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  value = value as String;
+                                  value = state.role as String;    //ini apaaa
                                 });
                               },
                             );
