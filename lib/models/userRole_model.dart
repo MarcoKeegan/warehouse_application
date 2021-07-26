@@ -29,8 +29,8 @@ class UserRole {
 
   factory UserRole.fromJson(Map<String, dynamic> json) {
     return UserRole(
-      roleId: json['Role_ID'], 
-      role: json['role']
+      roleId: json['Role_ID'] as int,
+      role: json['Role'] as String,
     );
   }
 }

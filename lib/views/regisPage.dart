@@ -70,6 +70,8 @@ class _RegisPage extends State<RegisPage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
+
+
                     BlocProvider(create: (context) => DropdownRoleBloc(apiRepository: apiRepository),
                       child: BlocBuilder<DropdownRoleBloc, DropdownRoleState>(
                         builder: (context, state) {
@@ -100,6 +102,8 @@ class _RegisPage extends State<RegisPage> {
                         }
                       ),
                     ),
+
+
 
                     // DropdownButton(
                     //   hint: Text('Select Role'),
