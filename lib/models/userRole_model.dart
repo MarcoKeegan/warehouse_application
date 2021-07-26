@@ -1,5 +1,5 @@
 class UserPack {
-  final int message;
+  final String message;
   final List<UserRole> data;
 
   UserPack({

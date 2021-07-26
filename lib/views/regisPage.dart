@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,26 +28,6 @@ class _RegisPage extends State<RegisPage> {
   bool _hasBeenPressed = false;
   bool _obscureText = true;
   RoleApiRepository apiRepository = RoleApiRepository();
-  // final Client roles = Client();
-  // String _baseUrl = "https://asia-east2-warehouse-intern.cloudfunctions.net/fransTest/user/User_role";
-  // String? valRoles; //= 'Client';
-  // List<dynamic> _dataRole = List<dynamic>.empty();
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   getRole();
-  // }
-
-  // void getRole() async {
-  //   final respose = await roles.get(Uri.parse(_baseUrl));
-  //   var listData = jsonDecode(respose.body);
-    
-  //   setState(() {
-  //     _dataRole = listData;
-  //   });
-  //   print("data : $listData");
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,52 +62,28 @@ class _RegisPage extends State<RegisPage> {
                             );
                           } else if (state is DropdownRoleFailed) {
                             print('dropdown error');
-                          } else if (state is DropdownRoleDone) {  //MASIH ERRROR SAMPE 
+                          } else if (state is DropdownRoleDone) { 
+                            String jabatan = state.role[1].role; 
                             return DropdownButton(
                               hint: Text('Select Role'),
-                              value: state.role,                    //value ???
-                              items: state.role.map((item) {        //items ???
+                              value: jabatan,                 
+                              items: state.role.map((item) {     
                                 return DropdownMenuItem(
-                                  child: Text('${state.role}'),
-                                  value: state.role,                //value ???
+                                  child: Text('${item.role}'),
+                                  value: item.role,                
                                 );
                               }).toList(),
                               onChanged: (value) {
                                 setState(() {
-                                  value = state.role as String;    //ini apaaa
+                                  jabatan = value as String;    //ini apaaa, MASI SALAH
                                 });
                               },
                             );
-                          }                                        //SINI
+                          }                                  
                           return Container();
                         }
                       ),
                     ),
-
-
-
-                    // DropdownButton(
-                    //   hint: Text('Select Role'),
-                    //   value: valRoles,
-                    //   items: _dataRole.map((item) {
-                    //     return DropdownMenuItem(
-                    //       child: Text(item['Role'],),
-                    //       value: item['Role'],
-                    //     );
-                    //   }).toList(),
-                    //   onChanged: (value) {
-                    //     setState(() {
-                    //       valRoles = value as String;
-                    //     });
-                    //   },
-                    // ),
-                    
-
-                    // Padding(
-                    //   padding: EdgeInsets.all(8.0),
-                    //   child: TextFormField(controller: role,
-                    //   decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Role *nanti diganti dropdown*',),),
-                    // ),
                     Padding(
                       padding: EdgeInsets.all(8.0),
                       child: TextFormField(controller: nama,
