@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/dropdown_role_bloc/dropdown_role_bloc.dart';
 import 'package:warehouse_application/models/userRole_model.dart';
-import 'package:warehouse_application/repo/provider/login_provider.dart';
+import 'package:warehouse_application/repo/repositories/loginAPISementara_repository.dart';
+import 'package:warehouse_application/repo/repositories/regisApiSementara_repository.dart';
 import 'package:warehouse_application/repo/repositories/roleApi_repository.dart';
 
 
@@ -22,7 +23,7 @@ class RegisPage extends StatefulWidget {
 
 class _RegisPage extends State<RegisPage> {
   final _formKey = GlobalKey<FormState>();
-  LoginProvider loginProvider = LoginProvider();
+  RegisApiRepository regisRepo = RegisApiRepository();
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   TextEditingController nama = TextEditingController();
@@ -108,7 +109,7 @@ class _RegisPage extends State<RegisPage> {
                         child: Text("REGISTER", style: TextStyle(color: Colors.white),),
                         color: Colors.blue,
                         onPressed: () {
-                          loginProvider.regisEmailandPass(email.text.trim(),pass.text.trim()).then((value) {
+                          regisRepo.regisEmailandPass(email.text.trim(),pass.text.trim()).then((value) {
                             if (value == 'text'){
                             Navigator.of(context).pushReplacementNamed('/login');
                           }else {

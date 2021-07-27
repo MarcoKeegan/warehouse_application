@@ -1,48 +1,23 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'package:warehouse_application/models/readAllUser_model.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
+class LoginRegisterProvider {
+  LoginRegisterProvider({http.Client? login}) : _login = login ?? http.Client();
 
-class  LoginProvider {
-  FirebaseAuth auth = FirebaseAuth.instance;
+  final http.Client _login;
+  final String _baseUrl = "https://asia-east2-warehouse-intern.cloudfunctions.net/Apiv1_1_0/user/User_all";
 
-  Future<String> loginWithEmailandPass(String email, String password) async {
+  Future<AllUser> userRegister(int amount) async {
+    final Uri _url = Uri.parse('$_baseUrl');
     try {
-      await auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      ); 
-      return 'text';
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      final http.Response response = await _login.post(_url);
+      if (response.statusCode == 200) {
+        return AllUser.fromJson(jsonDecode(response.body));
       }
+      throw Exception(response.statusCode);
+    }catch (e) {
+      throw Exception(e);
     }
-    throw Exception();
-  }
-
-  Future<String> regisEmailandPass(String email, String password) async {
-    try {
-      await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password
-      );
-      return 'text';
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-    throw Exception();
-  }
-  
-  void signOut () {
-    auth.signOut();
   }
 }
-
-

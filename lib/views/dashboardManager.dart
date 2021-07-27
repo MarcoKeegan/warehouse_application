@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:warehouse_application/repo/provider/login_provider.dart';
+import 'package:warehouse_application/repo/repositories/loginAPISementara_repository.dart';
 
 
 class DashManagerPage extends StatelessWidget {
@@ -19,11 +19,6 @@ class DashManagerPage extends StatelessWidget {
             fontSize: 40,
           ),
         ),
-        // automaticallyImplyLeading: false,
-        // leading: IconButton(
-        //   onPressed: () {},
-        //   icon: Icon(Icons.menu, size: 30,)
-        // ),
         actions: <Widget>[
           IconButton(
             onPressed: () {
