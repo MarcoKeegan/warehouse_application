@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/dropdown_role_bloc/dropdown_role_bloc.dart';
+import 'package:warehouse_application/models/userRole_model.dart';
 import 'package:warehouse_application/repo/provider/login_provider.dart';
 import 'package:warehouse_application/repo/repositories/roleApi_repository.dart';
 
@@ -28,6 +29,7 @@ class _RegisPage extends State<RegisPage> {
   bool _hasBeenPressed = false;
   bool _obscureText = true;
   RoleApiRepository apiRepository = RoleApiRepository();
+  String? jabatan;
 
   @override
   Widget build(BuildContext context) {
@@ -63,19 +65,18 @@ class _RegisPage extends State<RegisPage> {
                           } else if (state is DropdownRoleFailed) {
                             print('dropdown error');
                           } else if (state is DropdownRoleDone) { 
-                            String jabatan = state.role[1].role; 
                             return DropdownButton(
-                              hint: Text('Select Role'),
+                              hint: Text('Select Role',),
                               value: jabatan,                 
-                              items: state.role.map((item) {     
+                              items: state.role.map((UserRole item) {     
                                 return DropdownMenuItem(
                                   child: Text('${item.role}'),
                                   value: item.role,                
                                 );
                               }).toList(),
-                              onChanged: (value) {
+                              onChanged: (String? newValue) {
                                 setState(() {
-                                  jabatan = value as String;    //ini apaaa, MASI SALAH
+                                  jabatan = newValue;
                                 });
                               },
                             );
