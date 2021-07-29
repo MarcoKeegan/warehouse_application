@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:warehouse_application/views/addProduct_Page.dart';
 import 'package:warehouse_application/views/addStock_Page.dart';
 import 'package:warehouse_application/views/dashboardManager.dart';
 import 'package:warehouse_application/views/detailStock_Page.dart';
@@ -31,11 +32,14 @@ class RouteManager {
       case '/prePage':
         return MaterialPageRoute(builder: (context) => PreViewStockPage());
       case '/addStckPage':
-        return MaterialPageRoute(builder: (context) => AddStockPage());
+        return MaterialPageRoute(builder: (context) => AddProductPage());
       case '/viewListStckPage':
         return MaterialPageRoute(builder: (context) => ListStockPage());
-       case '/detailStockPage':
+      case '/detailStockPage':
         return MaterialPageRoute(builder: (context) => DetailStockPage());
+      case '/addStockPage':
+        return MaterialPageRoute(builder: (context) => AddStockPage());
+        
       default:
         return MaterialPageRoute(
           builder: (context) => _DefaultErrorRoutePage(settings: settings));

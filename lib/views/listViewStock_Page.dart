@@ -73,8 +73,8 @@ class ListStockPage extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');}, 
-            child: Text("Back", style: TextStyle(color: Colors.black),),
+            onPressed: () {Navigator.of(context).pushReplacementNamed('/addStckPage');}, 
+            child: Text("Add Product", style: TextStyle(color: Colors.black),),
           ),
         ],
       ),

@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:warehouse_application/repo/provider/register_provider.dart';
 
 // class RegisFailure implements Exception {}
 
 class RegisApiRepository {
-  RegisApiRepository({RegisterProvider? provider}) : _provider = provider ?? RegisterProvider();
+  // RegisApiRepository({RegisterProvider? provider}) : _provider = provider ?? RegisterProvider();
 
-  final RegisterProvider _provider;
+  // final RegisterProvider _provider;
   
   FirebaseAuth auth = FirebaseAuth.instance;
 

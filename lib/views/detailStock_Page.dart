@@ -103,6 +103,14 @@ class DetailStockPage extends StatelessWidget {
               child: Text('Alamat Warehouse**', textAlign: TextAlign.center,),
             )
           ),
+          ElevatedButton(
+            onPressed: () {Navigator.of(context).pushReplacementNamed('/addStockPage');}, 
+            child: Text("Add Stock", style: TextStyle(color: Colors.black),),
+          ),
+          ElevatedButton(
+            onPressed: () {}, 
+            child: Text("Disable Product", style: TextStyle(color: Colors.black),),
+          ),
         ],
       ),
     );

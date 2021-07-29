@@ -70,17 +70,17 @@ class PreViewStockPage extends StatelessWidget {
               child: Text('JUMLAH BARANG', textAlign: TextAlign.center,),
             )
           ),
-          Row(
-            children: [
+          Center(
+            child: 
               ElevatedButton(
                 onPressed: () {Navigator.of(context).pushReplacementNamed('/viewListStckPage');}, 
                 child: Text("View Product", style: TextStyle(color: Colors.black),),
               ),
-              ElevatedButton(
-                onPressed: () {Navigator.of(context).pushReplacementNamed('/addStckPage');}, 
-                child: Text("Add Product", style: TextStyle(color: Colors.black),),
-              ),
-            ]
+              // ElevatedButton(
+              //   onPressed: () {Navigator.of(context).pushReplacementNamed('/addStckPage');}, 
+              //   child: Text("Add Product", style: TextStyle(color: Colors.black),),
+              // ),
+            
           )
         ],
       ),

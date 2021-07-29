@@ -16,7 +16,7 @@ class AddStockPage extends StatelessWidget {
         ),
         automaticallyImplyLeading: false,
         leading: IconButton(
-          onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');},
+          onPressed: () {Navigator.of(context).pushReplacementNamed('/detailStockPage');},
           icon: Icon(Icons.arrow_back, size: 30,)
         ),
       ),
@@ -24,17 +24,23 @@ class AddStockPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 15.0, 180.0, 15.0),
-            child: Text("Add Product", style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.black)),
+            child: Text("Add Stock", style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.black)),
           ),
+          // Padding(
+          //   padding: EdgeInsets.all(8.0),
+          //   child: TextFormField(
+          //     decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Nama Barang'),
+          //   )
+          // ),
           Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
-            decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Nama Warehouse *nanti diganti dropdown*',),),
-          ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
-              decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Nama Barang'),
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 500.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black)
+              ),
+              child: Text('Product 1', textAlign: TextAlign.center,),
             )
           ),
           Padding(
@@ -43,15 +49,14 @@ class AddStockPage extends StatelessWidget {
               decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Jumlah Barang'),
             )
           ),
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextFormField(
-              decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Harga Barang'),
-            )
-          ),
+          // Padding(
+          //   padding: EdgeInsets.all(8.0),
+          //   child: TextFormField(
+          //   decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Deskripsi Barang',),),
+          // ),
           ElevatedButton(
-            onPressed: () {Navigator.of(context).pushReplacementNamed('/prePage');}, 
-            child: Text("Add Product", style: TextStyle(color: Colors.black),),
+            onPressed: () {}, 
+            child: Text("Add Stock", style: TextStyle(color: Colors.black),),
           ),
         ],
       ),
