@@ -4,14 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:warehouse_application/blocs/dropdown_role_bloc/dropdown_role_bloc.dart';
 import 'package:warehouse_application/models/userRole_model.dart';
-import 'package:warehouse_application/repo/repositories/regisApiSementara_repository.dart';
 import 'package:warehouse_application/repo/repositories/roleApi_repository.dart';
 
 
-void main() async {
-   await Firebase.initializeApp();
-  runApp(new MaterialApp(home: new RegisPage()));
-}
+// void main() async {
+//    await Firebase.initializeApp();
+//   runApp(new MaterialApp(home: new RegisPage()));
+// }
 
 class RegisPage extends StatefulWidget {
   @override
@@ -36,10 +35,10 @@ class _RegisPage extends State<RegisPage> {
   }
 
   // final _formKey = GlobalKey<FormState>();
-  RegisRepository regisRepo = RegisRepository();
-  TextEditingController email = TextEditingController();
-  TextEditingController pass = TextEditingController();
-  TextEditingController nama = TextEditingController();
+  // RegisRepository regisRepo = RegisRepository();
+  // TextEditingController email = TextEditingController();
+  // TextEditingController pass = TextEditingController();
+  // TextEditingController nama = TextEditingController();
   bool _hasBeenPressed = false;
   bool _obscureText = true;
   RoleApiRepository apiRepository = RoleApiRepository();
@@ -64,7 +63,7 @@ class _RegisPage extends State<RegisPage> {
               children: [
                 Spacer(flex: 3),
                 Text("Warehouse", style: TextStyle(fontSize: 50, fontStyle: FontStyle.italic, color: Colors.black)),
-                FormBuilder(
+                Form(
                   
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -103,9 +102,10 @@ class _RegisPage extends State<RegisPage> {
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: FormBuilder(
-                          key: _formKey,
-                          child: TextFormField(controller: nama,
+                        // child: FormBuilder(
+                        //   key: _formKey,
+                          child: TextFormField(
+                            // controller: nama,
                             decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Nama',),
                             validator: (value) {
                               if (value!.isEmpty || value.length > 2) {
@@ -116,13 +116,14 @@ class _RegisPage extends State<RegisPage> {
                               _authData['name'] = value!;
                             },
                           ),
-                        ),
+                        // ),
                       ),
                       Padding(
                         padding: EdgeInsets.all(8.0),
-                        child: FormBuilder(
-                          key: _formKey,
-                          child: TextFormField(controller: email,
+                        // child: FormBuilder(
+                        //   key: _formKey,
+                          child: TextFormField(
+                            // controller: email,
                             decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
                             validator: (value) {
                               if (value!.isEmpty || value.contains('@')) {
@@ -134,12 +135,14 @@ class _RegisPage extends State<RegisPage> {
                             },
                           ),
                         ),
-                      ),
+                      // ),
                       Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: FormBuilder(
-                            key: _formKey,
-                            child: TextFormField(controller: pass, obscureText: _obscureText,
+                          // child: FormBuilder(
+                          //   key: _formKey,
+                            child: TextFormField(
+                              // controller: pass, 
+                            obscureText: _obscureText,
                             decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Password', suffixIcon: IconButton(icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off), 
                             onPressed: () {setState(() {
                               _obscureText = !_obscureText;
@@ -153,7 +156,7 @@ class _RegisPage extends State<RegisPage> {
                               _authData['password'] = value!;
                             },                    
                             ),
-                          ),
+                          // ),
                         ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -161,15 +164,22 @@ class _RegisPage extends State<RegisPage> {
                           child: Text("REGISTER", style: TextStyle(color: Colors.white),),
                           color: Colors.blue,
                           onPressed: () {
-                            regisRepo.regisEmailandPass(email.text.trim(),pass.text.trim()).then((value) {
-                              if (value == 'text'){
+                            _submit();
+                            // regisRepo.regisEmailandPass(email.text.trim(),pass.text.trim()).then((value) {
+                            //   if (value == 'text'){
+                            //   Navigator.of(context).pushReplacementNamed('/login');
+                            // }else {
+                            //   print('error');
+                            //   return Container();
+                            // }
+                            // } 
+                            // );
+
+                            if (_formKey.currentState!.validate()) {
                               Navigator.of(context).pushReplacementNamed('/login');
-                            }else {
-                              print('error');
-                              return Container();
+                            } else {
+                              print('Nama or Email or Password is invalid');
                             }
-                            } 
-                            );
                           },
                         ),
                       ),
