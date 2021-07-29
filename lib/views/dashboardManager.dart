@@ -6,7 +6,7 @@ import 'package:warehouse_application/repo/repositories/loginAPISementara_reposi
 
 class DashManagerPage extends StatelessWidget {
   DashManagerPage({Key? key}) : super(key: key);
-   LoginProvider loginProvider = LoginProvider();
+   LoginRepository loginRepository = LoginRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +148,7 @@ class DashManagerPage extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: IconButton(
                 onPressed: () {
-                  loginProvider.signOut(); Navigator.of(context).pushReplacementNamed('/login');
+                  loginRepository.signOut(); Navigator.of(context).pushReplacementNamed('/login');
                 }, 
                 icon:Icon(Icons.logout, color: Colors.black,)
               ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:warehouse_application/models/registerUser_model.dart';
 import 'package:warehouse_application/models/response_model.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
@@ -9,8 +10,8 @@ class RegisApiRepository {
 
   final WarehouseApiProvider _provider;
 
-  Future<ResponseBerhasil> regisUser({required email, required pass, required name, required roleId}) async {
-    RegisUser regis = RegisUser(email: email, pass: pass, name: name, roleId: roleId);
+  Future<ResponseBerhasil> regisUser({String? email, String? pass, String? name, int? roleId}) async {
+    RegisUser regis = RegisUser(email: email!, pass: pass!, name: name!, roleId: roleId!);
     
     final result = await _provider.regisUser(regis);
     if (result is ResponseBerhasil) {
@@ -21,4 +22,12 @@ class RegisApiRepository {
       throw Exception();
     }
   }
+
+  //  Future<void> signUp({
+  //   required String username,
+  //   required String email,
+  //   required String password,
+  // }) async {
+  //   await Future.delayed(Duration(seconds: 2));
+  // }
 }

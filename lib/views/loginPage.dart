@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_application/repo/repositories/loginAPISementara_repository.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:warehouse_application/repo/repositories/loginAPISementara_repository.dart';
 
 void main() async {
    await Firebase.initializeApp();
@@ -15,7 +15,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  LoginProvider loginProvider = LoginProvider();
+  LoginRepository loginRepository = LoginRepository();
   TextEditingController email = TextEditingController();
   TextEditingController pass = TextEditingController();
   bool _hasBeenPressed = false;
@@ -62,7 +62,7 @@ class _LoginPage extends State<LoginPage> {
                           child: Text("LOGIN", style: TextStyle(color: Colors.white),),
                           color: Colors.blue,
                           onPressed: () {
-                            loginProvider.loginWithEmailandPass(email.text.trim(),pass.text.trim()).then((value) {
+                            loginRepository.loginWithEmailandPass(email.text.trim(),pass.text.trim()).then((value) {
                               if (value == 'text'){
                                 Navigator.of(context).pushReplacementNamed('/dashM');
                               }else {

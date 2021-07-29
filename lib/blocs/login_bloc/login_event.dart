@@ -7,19 +7,16 @@ abstract class LoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AppStarted extends LoginEvent {
-  @override 
-  String toString() => 'AppStarted';
-}
+class AppStarted extends LoginEvent {}
 
 class LoggedIn extends LoginEvent {
+  String email;
+  String password;
 
-  @override 
-  String toString() => 'LoggedIn';
+  LoggedIn({required  this.email, required this.password});
+
+  @override
+  List<Object> get props => [email, password];
 }
 
-class LoggedOut extends LoginEvent {
-
-  @override 
-  String toString() => 'LoggedOut';
-}
+class LoggedOut extends LoginEvent {}

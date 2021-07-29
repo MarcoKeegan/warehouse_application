@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 // class RegisFailure implements Exception {}
 
-class RegisApiRepository {
+class RegisRepository {
   // RegisApiRepository({RegisterProvider? provider}) : _provider = provider ?? RegisterProvider();
 
   // final RegisterProvider _provider;
