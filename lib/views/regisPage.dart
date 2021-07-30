@@ -106,7 +106,7 @@ class _RegisPage extends State<RegisPage> {
                         //   key: _formKey,
                           child: TextFormField(
                             // controller: nama,
-                            decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Nama',),
+                            decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Name',),
                             validator: (value) {
                               if (value!.isEmpty || value.length > 2) {
                                 return 'Name Too Short!';
