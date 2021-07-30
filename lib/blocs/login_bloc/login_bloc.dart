@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(LoginInitial());
+  LoginBloc(this.firebaseAuth) : super(LoginInitial());
 
-  
+  final FirebaseRepository firebaseAuth;
   @override
   Stream<LoginState> mapEventToState(
     LoginEvent event,
@@ -18,9 +18,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is Login) {
       yield LoginLoading();
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: '',
-          password: '',
+        await firebaseAuth.loginWithEmailandPass(
+          email: event.email,
+          password: event.password,
         );
         yield LoginDone();
       } catch (e) {

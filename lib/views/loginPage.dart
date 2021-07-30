@@ -32,7 +32,7 @@ class _LoginPage extends State<LoginPage> {
   }
 
   // final _formKey = GlobalKey<FormState>();
-  LoginRepository loginRepository = LoginRepository();
+  FirebaseRepository loginRepository = FirebaseRepository();
   // TextEditingController email = TextEditingController();
   // TextEditingController pass = TextEditingController();
   bool _hasBeenPressed = false;

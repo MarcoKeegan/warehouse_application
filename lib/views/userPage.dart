@@ -4,7 +4,7 @@ import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.d
 
 class UserPage extends StatelessWidget {
   UserPage({Key? key}) : super(key: key);
-   LoginRepository loginRepository = LoginRepository();
+   FirebaseRepository loginRepository = FirebaseRepository();
 
   @override
   Widget build(BuildContext context) {

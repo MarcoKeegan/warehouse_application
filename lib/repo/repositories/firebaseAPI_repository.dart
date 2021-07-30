@@ -1,14 +1,14 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-class  LoginRepository {
+class  FirebaseRepository {
   FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<String> loginWithEmailandPass(String email, String password) async {
+  Future<String> loginWithEmailandPass({String? email, String? password}) async {
     try {
       await auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: email!,
+        password: password!,
       ); 
       return 'text';
     } on FirebaseAuthException catch (e) {
@@ -21,24 +21,24 @@ class  LoginRepository {
     throw Exception();
   }
 
-  Future<String> regisEmailandPass(String email, String password) async {
-    try {
-      await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password
-      );
-      return 'text';
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-    throw Exception();
-  }
+  // Future<String> regisEmailandPass(String email, String password) async {
+  //   try {
+  //     await auth.createUserWithEmailAndPassword(
+  //       email: email,
+  //       password: password
+  //     );
+  //     return 'text';
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'weak-password') {
+  //       print('The password provided is too weak.');
+  //     } else if (e.code == 'email-already-in-use') {
+  //       print('The account already exists for that email.');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   throw Exception();
+  // }
   
   void signOut () {
     auth.signOut();

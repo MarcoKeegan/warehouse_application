@@ -6,7 +6,7 @@ import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.d
 
 class DashManagerPage extends StatelessWidget {
   DashManagerPage({Key? key}) : super(key: key);
-   LoginRepository loginRepository = LoginRepository();
+   FirebaseRepository loginRepository = FirebaseRepository();
 
   @override
   Widget build(BuildContext context) {
