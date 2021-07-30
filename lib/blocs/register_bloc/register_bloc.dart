@@ -8,7 +8,7 @@ part 'register_event.dart';
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisState> {  
-  RegisterBloc(this.regisRepository) : super(RegisState());
+  RegisterBloc({required this.regisRepository}) : super(RegisState());
 
   final RegisApiRepository regisRepository;
 

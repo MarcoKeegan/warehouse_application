@@ -42,7 +42,8 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
+      body: FormBuilder(
+      child: Stack(
         children: [
           Container(
             constraints: BoxConstraints.expand(),
@@ -56,12 +57,11 @@ class _LoginPage extends State<LoginPage> {
               child: Builder(
                 builder: (context) => Column(
                 children: [
-                  // Spacer(flex: 1),
+                  Spacer(flex: 1),
                   Text('Warehouse', style: TextStyle(fontSize: 50),),
-                  // Spacer(flex: 1),
-                  FormBuilder(
-                    key: _formKey,
-                    child: Column(
+                  // FormBuilder(
+                  //   key: _formKey,
+                     Column(
                       mainAxisSize: MainAxisSize.min,
                       
                       children: [
@@ -69,7 +69,7 @@ class _LoginPage extends State<LoginPage> {
                         _showRegisButton(),
                       ],
                     ),
-                  ),
+                  // ),
                   Spacer(flex: 1,),
                 ],
             ),
@@ -78,6 +78,7 @@ class _LoginPage extends State<LoginPage> {
           )
         ],
       )
+    )
     );
   }
 
@@ -88,9 +89,10 @@ class _LoginPage extends State<LoginPage> {
           print('Login Failed!');
         }
       },
-      child: FormBuilder(
-        key: _formKey,
-        child: Padding(
+      child: Column(
+        // key: _formKey,
+        children:[ 
+          Padding(
           padding: EdgeInsets.all(8.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -101,15 +103,17 @@ class _LoginPage extends State<LoginPage> {
             ],
           ),
         ),
+        ]
       )
     );
   }
-}
 
-Widget _emailField() {
+  Widget _emailField() {
   return BlocBuilder<LoginBloc, LoginState>(
     builder: (context, state) {
-      return FormBuilderTextField(
+      return Padding(
+        padding: EdgeInsets.all(8.0),
+        child: FormBuilderTextField(
         // controller: email,
         name: 'email',
         decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
@@ -121,6 +125,7 @@ Widget _emailField() {
           // onSaved: (value) {
           //   _authData['email'] = value!;
           // },
+        ),
       );
     }
   );
@@ -129,8 +134,9 @@ Widget _emailField() {
 Widget _passField() {
   return BlocBuilder<LoginBloc, LoginState>(
     builder: (context, state) {
-      bool _obscureText = true;
-      return FormBuilderTextField(
+      return Padding(
+        padding: EdgeInsets.all(8.0),
+        child: FormBuilderTextField(
         name: 'password', 
         obscureText: _obscureText,
         decoration: InputDecoration(
@@ -139,21 +145,22 @@ Widget _passField() {
           suffixIcon: IconButton(
             icon: Icon(
               _obscureText ? Icons.visibility : Icons.visibility_off), 
-        onPressed: () {
-          // setState(() {
-          //   _obscureText = !_obscureText;
-          // });
-        },
-      )),
-      validator: (value) {
-          if (value!.isEmpty || value.length < 5) {
-            return 'Password Too Short!';
-          }
-        },
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+            )),
+            validator: (value) {
+                if (value!.isEmpty || value.length < 5) {
+                  return 'Password Too Short!';
+                }
+              },
         // onSaved: (value) {
         //   _authData['password'] = value!;
-        // }, 
-        );
+        // },
+          ) 
+      );
     }
   );
 }
@@ -165,11 +172,11 @@ Widget _loginButton() {
         child: Text("LOGIN", style: TextStyle(color: Colors.white),),
         color: Colors.blue,
         onPressed: () {
-          // if (_formKey.currentState!.validate()) {
-          //   Navigator.of(context).pushReplacementNamed('/dashM');
-          // } else {
-          //   print('Email or Password is invalid');
-          // }
+          if (_formKey.currentState!.validate()) {
+            Navigator.of(context).pushReplacementNamed('/dashM');
+          } else {
+            print('Email or Password is invalid');
+          }
         },
       );
     }
@@ -189,5 +196,8 @@ Widget _showRegisButton() {
       );
     },
   );
+}
+
+
 }
 
