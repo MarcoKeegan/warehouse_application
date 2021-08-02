@@ -18,8 +18,6 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPage extends State<LoginPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
-
-  // bool autoValidate = true;
   late bool isPasswordShown;
   late LoginBloc _loginBloc;
 
@@ -74,66 +72,26 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  // Widget _loginForm() {
-  //   return BlocListener<LoginBloc, LoginState>(
-  //     listener: (context, state) {
-  //       if (state is LoginFailed) {
-  //         print('Login Failed!');
-  //       }
-  //     },
-  //     child: Column(
-  //       children:[ 
-  //         Padding(
-  //         padding: EdgeInsets.all(8.0),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.center,
-  //           children: [
-  //             _emailField(),
-  //             _passField(),
-  //             _loginButton(),
-  //           ],
-  //         ),
-  //       ),
-  //       ]
-  //     )
-  //   );
-  // }
-
   Widget _emailField(BuildContext context) {
-  // return BlocBuilder<LoginBloc, LoginState>(
-  //   builder: (context, state) {
-      return Padding(
-        padding: EdgeInsets.all(8.0),
-        child: FormBuilderTextField(
-        name: 'email',
-        decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
-        textInputAction: TextInputAction.next,
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.email(context),
-          FormBuilderValidators.required(context),
-        ]),
-        // validator: (value) {
-        //     if (value!.isEmpty || value.contains('@')) {
-        //       return 'Invalid Email!';
-        //     }
-        //   },
-          // onSaved: (value) {
-          //   _authData['email'] = value!;
-          // },
-        ),
-      );
-  //   }
-  // );
-}
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: FormBuilderTextField(
+      name: 'email',
+      decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
+      textInputAction: TextInputAction.next,
+      validator: FormBuilderValidators.compose([
+        FormBuilderValidators.email(context),
+        FormBuilderValidators.required(context),
+      ]),
+      ),
+    );
+  }
 
-Widget _passField(BuildContext context) {
-  // return BlocBuilder<LoginBloc, LoginState>(
-  //   builder: (context, state) {
-      return Padding(
-        padding: EdgeInsets.all(8.0),
-        child: FormBuilderTextField(
+  Widget _passField(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: FormBuilderTextField(
         name: 'password', 
-        // obscureText: _obscureText,
         obscureText: !isPasswordShown,
         decoration: InputDecoration(
           border: OutlineInputBorder(), 
@@ -146,55 +104,39 @@ Widget _passField(BuildContext context) {
                   isPasswordShown = !isPasswordShown;
                 });
               },
-            )),
-            // validator: (value) {
-            //     if (value!.isEmpty || value.length < 5) {
-            //       return 'Password Too Short!';
-            //     }
-            //   },
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.minLength(context, 5),
-              FormBuilderValidators.required(context),
-            ]),
-          ) 
-      );
-  //   }
-  // );
-}
-
-Widget _loginButton() {
-  // return BlocBuilder<LoginBloc, LoginState>(
-  //   builder: (context, state) {
-      return RaisedButton(
-        child: Text("LOGIN", style: TextStyle(color: Colors.white),),
-        color: Colors.blue,
-        onPressed: () {
-          if (_formKey.currentState!.saveAndValidate()) {
-            _loginBloc.add(Login(
-              email: _formKey.currentState!.value['email'],
-              password: _formKey.currentState!.value['password']));
-          }
-        },
-      );
-  //   }
-  // );
-}
-
-Widget _showRegisButton(BuildContext context) {
-  // return BlocBuilder<LoginBloc, LoginState>(
-  //   builder: (context, state) {
-      return Center(
-        child: FlatButton(
-          child: Text("Don't have any Account? Register", style: TextStyle(color: Colors.black),),
-          onPressed: () {
-            Navigator.of(context).pushReplacementNamed('/regis');
-          }
+          )
         ),
-      );
-  //   },
-  // );
-}
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.minLength(context, 5),
+          FormBuilderValidators.required(context),
+        ]),
+      ) 
+    );
+  }
 
+  Widget _loginButton() {
+    return RaisedButton(
+      child: Text("LOGIN", style: TextStyle(color: Colors.white),),
+      color: Colors.blue,
+      onPressed: () {
+        if (_formKey.currentState!.saveAndValidate()) {
+          _loginBloc.add(Login(
+            email: _formKey.currentState!.value['email'],
+            password: _formKey.currentState!.value['password']));
+        }
+      },
+    );
+  }
 
+  Widget _showRegisButton(BuildContext context) {
+    return Center(
+      child: FlatButton(
+        child: Text("Don't have any Account? Register", style: TextStyle(color: Colors.black),),
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed('/regis');
+        }
+      ),
+    );
+  }
 }
 
