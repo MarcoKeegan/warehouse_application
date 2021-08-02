@@ -140,7 +140,7 @@ Widget _passField(BuildContext context) {
           labelText: 'Password', 
           suffixIcon: IconButton(
             icon: Icon(
-              isPasswordShown ? Icons.visibility : Icons.visibility_off), 
+              isPasswordShown ? Icons.visibility_off : Icons.visibility), 
               onPressed: () {
                 setState(() {
                   isPasswordShown = !isPasswordShown;

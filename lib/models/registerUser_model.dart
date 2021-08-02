@@ -1,8 +1,8 @@
 class RegisUser {
-  final int roleId;
-  final String name;
-  final String email;
-  final String pass;
+  final int? roleId;
+  final String? name;
+  final String? email;
+  final String? pass;
 
   RegisUser ({
     required this.roleId,
