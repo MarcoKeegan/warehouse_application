@@ -3,36 +3,50 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:warehouse_application/blocs/dropdown_role_bloc/dropdown_role_bloc.dart';
 import 'package:warehouse_application/blocs/register_bloc/register_bloc.dart';
+import 'package:warehouse_application/models/registerUser_model.dart';
 import 'package:warehouse_application/models/userRole_model.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/roleApi_repository.dart';
 
 class RegisPage extends StatefulWidget {
+  const RegisPage({Key? key, required RegisApiRepository regisApiRepository}) 
+    : _regisApiRepository = regisApiRepository, super(key: key);
+
+  final RegisApiRepository _regisApiRepository;
+
   @override
   _RegisPage createState() => _RegisPage();
 }
 
 class _RegisPage extends State<RegisPage> {
-  final GlobalKey<FormState> _formKey = GlobalKey();
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey();
 
-  Map<String, String> _authData = {
-    'roleId': '',
-    'name': '',
-    'email': '',
-    'password': '',
-  };
+  // Map<String, String> _authData = {
+  //   'roleId': '',
+  //   'name': '',
+  //   'email': '',
+  //   'password': '',
+  // };
 
-  Future _submit() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-    _formKey.currentState!.save();
-  }
-  bool _hasBeenPressed = false;
+  // Future _submit() async {
+  //   if (!_formKey.currentState!.validate()) {
+  //     return;
+  //   }
+  //   _formKey.currentState!.save();
+  // }
+  late RegisterBloc _registerBloc;
   bool _obscureText = true;
-  RoleApiRepository apiRepository = RoleApiRepository();
-  RegisApiRepository regisRepository = RegisApiRepository();
   String? jabatan;
+
+  @override
+  void initState() {
+    _registerBloc =
+        RegisterBloc(regisRepository: widget._regisApiRepository);
+    super.initState();
+  }
+
+  RoleApiRepository roleApiRepository = RoleApiRepository();
+  RegisApiRepository provider = RegisApiRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +66,15 @@ class _RegisPage extends State<RegisPage> {
             child: MultiBlocProvider(
               providers: [
                 BlocProvider<RegisterBloc>(
-                  create: (BuildContext context) => RegisterBloc(regisRepository: regisRepository),
+                  create: (BuildContext context) => RegisterBloc(regisRepository: provider),
                 ),
                 BlocProvider<DropdownRoleBloc>(
-                  create: (BuildContext context) => DropdownRoleBloc(apiRepository: apiRepository),
+                  create: (BuildContext context) => DropdownRoleBloc(apiRepository: roleApiRepository),
                 ),
               ],
-              child: Builder(
-                builder: (context) => Column(
+              child: FormBuilder(
+                key: _formKey,
+                child: Column(
                 children: [
                   Spacer(flex: 3),
                   Text("Warehouse", style: TextStyle(fontSize: 50, fontStyle: FontStyle.italic, color: Colors.black)),
@@ -67,8 +82,12 @@ class _RegisPage extends State<RegisPage> {
                     mainAxisSize: MainAxisSize.min,
                     
                     children: [
-                      _regisForm(),
-                      _showLoginButton(),
+                      _dropdownRole(),
+                      _nameField(context),
+                      _emailField(context),
+                      _passField(context),
+                      _regisButton(),
+                      _showLoginButton(context),
                     ],
                   ),
                   Spacer(flex: 3,),
@@ -82,36 +101,37 @@ class _RegisPage extends State<RegisPage> {
     )
     );
   }
-  Widget _regisForm() {
-    return BlocListener<RegisterBloc, RegisState>(
-      listener: (context, state) {
-        if (state is RegisFailed) {
-          print('Register Failed!');
-        }
-      },
-      child: Column(
-        children: [
-          Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _dropdownRole(),
-              _nameField(),
-              _emailField(),
-              _passField(),
-              _regisButton(),
-            ],
-          ),
-        ),
-        ],
-      ),
-    );
-  }
+  // Widget _regisForm() {
+  //   return BlocListener<RegisterBloc, RegisState>(
+  //     listener: (context, state) {
+  //       if (state is RegisFailed) {
+  //         print('Register Failed!');
+  //       }
+  //     },
+  //     child: Column(
+  //       children: [
+  //         Padding(
+  //         padding: EdgeInsets.all(8.0),
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.center,
+  //           children: [
+  //             _dropdownRole(),
+  //             _nameField(),
+  //             _emailField(),
+  //             _passField(),
+  //             _regisButton(),
+  //           ],
+  //         ),
+  //       ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _dropdownRole() {
-    return BlocProvider(create: (context) => DropdownRoleBloc(apiRepository: apiRepository),
-      child: BlocBuilder<DropdownRoleBloc, DropdownRoleState>(
+    // return BlocProvider(create: (context) => DropdownRoleBloc(apiRepository: apiRepository),
+    //   child: 
+      return BlocBuilder<DropdownRoleBloc, DropdownRoleState>(
         builder: (context, state) {
           if (state is DropdownRoleLoading) {
             return Center(
@@ -138,112 +158,119 @@ class _RegisPage extends State<RegisPage> {
           }                                  
           return Container();
         }
-      ),
-    );
+      );
+    // );
   }
 
-  Widget _nameField() {
-    return BlocBuilder<RegisterBloc, RegisState>(
-      builder: (context, state) {
+  Widget _nameField(BuildContext context) {
+    // return BlocBuilder<RegisterBloc, RegisState>(
+    //   builder: (context, state) {
         return Padding(
         padding: EdgeInsets.all(8.0),
-          child: TextFormField(
+          child: FormBuilderTextField(
+            name: 'name',
             decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Name',),
-            validator: (value) {
-              if (value!.isEmpty || value.length > 2) {
-                return 'Name Too Short!';
-              }
-            },
-            onSaved: (value) {
-              _authData['name'] = value!;
-            },
+            // validator: (value) {
+            //   if (value!.isEmpty || value.length > 2) {
+            //     return 'Name Too Short!';
+            //   }
+            // },
+            // onSaved: (value) {
+            //   _authData['name'] = value!;
+            // },
+            textInputAction: TextInputAction.next,
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required(context),
+            ]),
           ),
       );
-      }
-    );
+      // }
+    // );
   }
 
-  Widget _emailField() {
-    return BlocBuilder<RegisterBloc, RegisState>(
-      builder: (context, state) {
+  Widget _emailField(BuildContext context) {
+    // return BlocBuilder<RegisterBloc, RegisState>(
+    //   builder: (context, state) {
         return Padding(
           padding: EdgeInsets.all(8.0),
-            child: TextFormField(
+            child: FormBuilderTextField(
+              name: 'email',
               decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
-              validator: (value) {
-                if (value!.isEmpty || value.contains('@')) {
-                  return 'Invalid Email!';
-                }
-              },
-              onSaved: (value) {
-                _authData['email'] = value!;
-              },
+              // validator: (value) {
+              //   if (value!.isEmpty || value.contains('@')) {
+              //     return 'Invalid Email!';
+              //   }
+              // },
+              // onSaved: (value) {
+              //   _authData['email'] = value!;
+              // },
+             textInputAction: TextInputAction.next,
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.email(context),
+                FormBuilderValidators.required(context),
+              ]),
             ),
         );
-      }
-    );
+      // }
+    // );
   }
 
-  Widget _passField() {
-    return BlocBuilder<RegisterBloc, RegisState>(
-      builder: (context, state) {
+  Widget _passField(BuildContext context) {
+    // return BlocBuilder<RegisterBloc, RegisState>(
+    //   builder: (context, state) {
         return Padding(
           padding: EdgeInsets.all(8.0),
-            child: TextFormField(
+            child: FormBuilderTextField(
+              name: 'password',
             obscureText: _obscureText,
             decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Password', suffixIcon: IconButton(icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off), 
             onPressed: () {setState(() {
               _obscureText = !_obscureText;
             });},)),
-            validator: (value) {
-              if (value!.isEmpty || value.length < 5) {
-                return 'Password Too Short!';
-              }
-            },
-            onSaved: (value) {
-              _authData['password'] = value!;
-            },                    
+            // validator: (value) {
+            //   if (value!.isEmpty || value.length < 5) {
+            //     return 'Password Too Short!';
+            //   }
+            // },
+            // onSaved: (value) {
+            //   _authData['password'] = value!;
+            // },                    
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.minLength(context, 3),
+              FormBuilderValidators.required(context),
+          ]),
             ),
         );
-      }
-    );
+    //   }
+    // );
   }
 
   Widget _regisButton() {
-    return BlocBuilder<RegisterBloc, RegisState>(
-      builder: (context, state) {
+    // return BlocBuilder<RegisterBloc, RegisState>(
+    //   builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: RaisedButton(
             child: Text("REGISTER", style: TextStyle(color: Colors.white),),
             color: Colors.blue,
             onPressed: () {
-              _submit();
-              // regisRepo.regisEmailandPass(email.text.trim(),pass.text.trim()).then((value) {
-              //   if (value == 'text'){
-              //   Navigator.of(context).pushReplacementNamed('/login');
-              // }else {
-              //   print('error');
-              //   return Container();
-              // }
-              // } 
-              // );
-
-              if (_formKey.currentState!.validate()) {
-                Navigator.of(context).pushReplacementNamed('/login');
-              } else {
-                print('Nama or Email or Password is invalid');
+              if (_formKey.currentState!.saveAndValidate()) {
+                _registerBloc.add(RequestRegis(
+                  email: _formKey.currentState!.value['email'],
+                  pass: _formKey.currentState!.value['password'],
+                  nama: _formKey.currentState!.value['name'],
+                  roleId: _formKey.currentState!.value['role']));
               }
             },
           ),
         );
-      }
-    );
+    //   }
+    // );
   }
 
-  Widget _showLoginButton() {
-    return BlocBuilder<RegisterBloc, RegisState>(
-      builder: (context, state) {
+  Widget _showLoginButton(BuildContext context) {
+    // return BlocBuilder<RegisterBloc, RegisState>(
+    //   builder: (context, state) {
         return Center(
           child: FlatButton(
             child: Text("Already have Account? Back to Login", style: TextStyle(color: Colors.black),),
@@ -253,7 +280,7 @@ class _RegisPage extends State<RegisPage> {
           ),
         );
       }
-    );
-  }
+  //   );
+  // }
   
 }

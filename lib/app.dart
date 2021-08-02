@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
+import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 import 'package:warehouse_application/views/addProduct_Page.dart';
 import 'package:warehouse_application/views/addStock_Page.dart';
 import 'package:warehouse_application/views/dashboardManager.dart';
@@ -18,11 +19,13 @@ import 'package:warehouse_application/views/userPage.dart';
 import 'package:warehouse_application/views/warehouse_Page.dart';
 
 class App extends StatefulWidget {
-  App({Key? key, required FirebaseRepository firebaseAuth}) 
-      : _firebaseAuthRepo = firebaseAuth, 
+  App({Key? key, required FirebaseRepository firebaseAuth, required RegisApiRepository regisApiRepository}) 
+      : _firebaseAuthRepo = firebaseAuth,
+      _regisApiRepository = regisApiRepository,
         super(key: key);
   
   final FirebaseRepository _firebaseAuthRepo;
+  final RegisApiRepository _regisApiRepository;
 
    @override
   _AppState createState() => _AppState();
@@ -62,13 +65,15 @@ class _AppState extends State<App> {
       onGenerateRoute: (RouteSettings settings) {
         switch(settings.name) {
           case '/login': 
-          return MaterialPageRoute(builder: (context) => LoginPage(
-            firebaseAuthRepo: widget._firebaseAuthRepo,
-          ));
+            return MaterialPageRoute(builder: (context) => LoginPage(
+              firebaseAuthRepo: widget._firebaseAuthRepo,
+            ));
           case'/dashM': 
             return MaterialPageRoute(builder: (context) => DashManagerPage());
           case '/regis':
-            return MaterialPageRoute(builder: (context) => RegisPage());
+            return MaterialPageRoute(builder: (context) => RegisPage(
+              regisApiRepository: widget._regisApiRepository,
+            ));
           case '/userPage':
             return MaterialPageRoute(builder: (context) => UserPage());
           case '/warePage':

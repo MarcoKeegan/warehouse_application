@@ -10,8 +10,8 @@ class RegisApiRepository {
 
   final WarehouseApiProvider _provider;
 
-  Future<ResponseBerhasil> regisUser({String? email, String? pass, String? name, int? roleId}) async {
-    RegisUser regis = RegisUser(email: email!, pass: pass!, name: name!, roleId: roleId!);
+  Future<ResponseBerhasil> regisUser({required String email, required String pass, required String name, required int roleId}) async {
+    RegisUser regis = RegisUser(email: email, pass: pass, name: name, roleId: roleId);
     
     final result = await _provider.regisUser(regis);
     if (result is ResponseBerhasil) {

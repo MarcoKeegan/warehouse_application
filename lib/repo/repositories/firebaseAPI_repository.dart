@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:warehouse_application/models/firebaseUser_models.dart';
 
@@ -27,6 +24,20 @@ class  FirebaseRepository {
     }
   }
 
+  Future<void> signUp({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      _firebaseAuth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+  
   Future<void> logout() async {
     try {
       await _firebaseAuth.signOut();

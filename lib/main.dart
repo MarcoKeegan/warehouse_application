@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/app.dart';
 import 'package:warehouse_application/bloc_observer.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
+import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 
 
 void main() async {
@@ -16,5 +17,9 @@ void main() async {
   Bloc.observer = CustomBlocObserver();
   await Firebase.initializeApp();
   final FirebaseRepository _firebaseAuthRepo = FirebaseRepository();
-  runApp(App(firebaseAuth: _firebaseAuthRepo));
+  final RegisApiRepository _regisApiRepository = RegisApiRepository();
+  runApp(App(
+    firebaseAuth: _firebaseAuthRepo,
+    regisApiRepository: _regisApiRepository
+  ));
 }
