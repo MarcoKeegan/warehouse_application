@@ -148,7 +148,7 @@ class DashManagerPage extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: IconButton(
                 onPressed: () {
-                  loginRepository.signOut(); Navigator.of(context).pushReplacementNamed('/login');
+                  loginRepository.logout(); Navigator.of(context).pushReplacementNamed('/login');
                 }, 
                 icon:Icon(Icons.logout, color: Colors.black,)
               ),

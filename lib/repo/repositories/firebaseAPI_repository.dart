@@ -1,47 +1,44 @@
+import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:warehouse_application/models/firebaseUser_models.dart';
 
 class  FirebaseRepository {
-  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseRepository({FirebaseAuth? firebaseAuth}) 
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
-  Future<String> loginWithEmailandPass({String? email, String? password}) async {
+  final FirebaseAuth _firebaseAuth;
+
+  Stream<FirebaseUser> get user => _firebaseAuth
+      .authStateChanges()
+      .map((user) => user != null ? user.toUser : FirebaseUser.empty);
+
+  Future<void> loginWithCredentials(
+      {required String email, required String password}) async {
+    // final String encryptedPassword =
+    //     sha256.convert(utf8.encode(password)).toString();
+
     try {
-      await auth.signInWithEmailAndPassword(
-        email: email!,
-        password: password!,
-      ); 
-      return 'text';
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
+      _firebaseAuth.signInWithEmailAndPassword(
+          email: email, password: password);
+    } catch (e) {
+      throw Exception(e);
     }
-    throw Exception();
   }
 
-  // Future<String> regisEmailandPass(String email, String password) async {
-  //   try {
-  //     await auth.createUserWithEmailAndPassword(
-  //       email: email,
-  //       password: password
-  //     );
-  //     return 'text';
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'weak-password') {
-  //       print('The password provided is too weak.');
-  //     } else if (e.code == 'email-already-in-use') {
-  //       print('The account already exists for that email.');
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  //   throw Exception();
-  // }
-  
-  void signOut () {
-    auth.signOut();
+  Future<void> logout() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      throw Exception(e);
+    }
+  }  
+}
+
+extension on User {
+  FirebaseUser get toUser {
+    return FirebaseUser(uid: uid, name: displayName, email: email);
   }
 }
 

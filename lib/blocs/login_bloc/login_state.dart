@@ -13,12 +13,4 @@ class LoginFailed extends LoginState {}
 
 class LoginLoading extends LoginState {}
 
-class LoginDone extends LoginState {
-  // final String email;
-  // final String password;
-
-  // LoginDone({required this.email, required this.password});
-
-  // @override
-  // List<Object> get props => [email, password];
-}
+class LoginDone extends LoginState {}

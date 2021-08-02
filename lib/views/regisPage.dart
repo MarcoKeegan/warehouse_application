@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -7,12 +6,6 @@ import 'package:warehouse_application/blocs/register_bloc/register_bloc.dart';
 import 'package:warehouse_application/models/userRole_model.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/roleApi_repository.dart';
-
-
-// void main() async {
-//    await Firebase.initializeApp();
-//   runApp(new MaterialApp(home: new RegisPage()));
-// }
 
 class RegisPage extends StatefulWidget {
   @override
@@ -45,7 +38,6 @@ class _RegisPage extends State<RegisPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FormBuilder(
-        // key: _formKey,
           child: Stack(
           children: [
             Container(
@@ -66,17 +58,11 @@ class _RegisPage extends State<RegisPage> {
                   create: (BuildContext context) => DropdownRoleBloc(apiRepository: apiRepository),
                 ),
               ],
-            
-            
-            
-            
-  
               child: Builder(
                 builder: (context) => Column(
                 children: [
                   Spacer(flex: 3),
                   Text("Warehouse", style: TextStyle(fontSize: 50, fontStyle: FontStyle.italic, color: Colors.black)),
-                  // Form(
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     
@@ -85,7 +71,6 @@ class _RegisPage extends State<RegisPage> {
                       _showLoginButton(),
                     ],
                   ),
-                  // ),
                   Spacer(flex: 3,),
                 ],
                 ),
@@ -162,10 +147,7 @@ class _RegisPage extends State<RegisPage> {
       builder: (context, state) {
         return Padding(
         padding: EdgeInsets.all(8.0),
-        // child: FormBuilder(
-        //   key: _formKey,
           child: TextFormField(
-            // controller: nama,
             decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Name',),
             validator: (value) {
               if (value!.isEmpty || value.length > 2) {
@@ -176,7 +158,6 @@ class _RegisPage extends State<RegisPage> {
               _authData['name'] = value!;
             },
           ),
-        // ),
       );
       }
     );
@@ -187,10 +168,7 @@ class _RegisPage extends State<RegisPage> {
       builder: (context, state) {
         return Padding(
           padding: EdgeInsets.all(8.0),
-          // child: FormBuilder(
-          //   key: _formKey,
             child: TextFormField(
-              // controller: email,
               decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
               validator: (value) {
                 if (value!.isEmpty || value.contains('@')) {
@@ -201,8 +179,7 @@ class _RegisPage extends State<RegisPage> {
                 _authData['email'] = value!;
               },
             ),
-          );
-        // ),
+        );
       }
     );
   }
@@ -212,10 +189,7 @@ class _RegisPage extends State<RegisPage> {
       builder: (context, state) {
         return Padding(
           padding: EdgeInsets.all(8.0),
-          // child: FormBuilder(
-          //   key: _formKey,
             child: TextFormField(
-              // controller: pass, 
             obscureText: _obscureText,
             decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Password', suffixIcon: IconButton(icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off), 
             onPressed: () {setState(() {
@@ -230,7 +204,6 @@ class _RegisPage extends State<RegisPage> {
               _authData['password'] = value!;
             },                    
             ),
-          // ),
         );
       }
     );

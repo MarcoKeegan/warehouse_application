@@ -8,9 +8,11 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc({required this.firebaseAuthRepo}) : super(LoginInitial());
+  LoginBloc({required FirebaseRepository firebaseAuth}) 
+      : _firebaseAuthRepo = firebaseAuth,
+        super(LoginInitial());
 
-  final FirebaseRepository firebaseAuthRepo;
+  final FirebaseRepository _firebaseAuthRepo;
 
   @override
   Stream<LoginState> mapEventToState(
@@ -19,7 +21,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     if (event is Login) {
       yield LoginLoading();
       try {
-        await firebaseAuthRepo.loginWithEmailandPass(
+        await _firebaseAuthRepo.loginWithCredentials(
           email: event.email,
           password: event.password,
         );
