@@ -96,20 +96,27 @@ class _RegisPage extends State<RegisPage> {
         } else if (state is DropdownRoleFailed) {
           print('dropdown error');
         } else if (state is DropdownRoleDone) { 
-          return DropdownButton(
-            hint: Text('Select Role',),
-            value: jabatan,                 
-            items: state.role.map((UserRole item) {     
-              return DropdownMenuItem(
-                child: Text('${item.role}'),
-                value: item.role,                
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                jabatan = newValue;
-              });
-            },
+          return Padding(
+            padding: EdgeInsets.all(8.0),
+            child: FormBuilderDropdown(
+              decoration: InputDecoration(border: OutlineInputBorder(),),
+              hint: Text('Select Role',),
+              name: 'jabatan',                 
+              items: state.role.map((UserRole item) {     
+                return DropdownMenuItem(
+                  child: Text('${item.role}'),
+                  value: item.role,                
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  jabatan = newValue;
+                });
+              },
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(context),
+              ]),
+            )
           );
         }                                  
         return Container();
@@ -157,7 +164,7 @@ class _RegisPage extends State<RegisPage> {
           _obscureText = !_obscureText;
         });},)),                   
         validator: FormBuilderValidators.compose([
-          FormBuilderValidators.minLength(context, 3),
+          FormBuilderValidators.minLength(context, 5),
           FormBuilderValidators.required(context),
         ]),
       ),

@@ -40,14 +40,12 @@ class _LoginPage extends State<LoginPage> {
                 image: AssetImage("images/gudang.jpg"), fit: BoxFit.cover
               )
             ),
-            
             child: BlocProvider(create: (context) => _loginBloc,
               child: Builder(
                 builder: (context) => Column(
                 children: [
                   Spacer(flex: 1),
                   Text('Warehouse', style: TextStyle(fontSize: 50),),
-                  // Spacer(flex: 1),
                   FormBuilder(
                     key: _formKey,
                      child: Column(
