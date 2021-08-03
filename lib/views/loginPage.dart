@@ -105,7 +105,7 @@ class _LoginPage extends State<LoginPage> {
           )
         ),
         validator: FormBuilderValidators.compose([
-          FormBuilderValidators.minLength(context, 5),
+          FormBuilderValidators.minLength(context, 6),
           FormBuilderValidators.required(context),
         ]),
       ) 

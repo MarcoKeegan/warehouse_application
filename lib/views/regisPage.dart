@@ -166,7 +166,7 @@ class _RegisPage extends State<RegisPage> {
           _obscureText = !_obscureText;
         });},)),                   
         validator: FormBuilderValidators.compose([
-          FormBuilderValidators.minLength(context, 5),
+          FormBuilderValidators.minLength(context, 6),
           FormBuilderValidators.required(context),
         ]),
       ),
@@ -185,9 +185,12 @@ class _RegisPage extends State<RegisPage> {
               email: _formKey.currentState!.value['email'],
               pass: _formKey.currentState!.value['password'],
               nama: _formKey.currentState!.value['name'],
-              roleId: _formKey.currentState!.value['role']));
+              roleId: _formKey.currentState!.value['role'],
+            ));
+            Navigator.of(context).pushReplacementNamed('/login');
           }
         },
+        
       ),
     );
   }
