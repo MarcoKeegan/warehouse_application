@@ -18,21 +18,17 @@ class  FirebaseRepository {
 
     try {
       _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
+        email: email, password: password);
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  Future<void> signUp({
-    required String email,
-    required String password,
-  }) async {
+  Future<void> signUp(
+    {required String email,required String password}) async {
     try {
       _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+        email: email, password: password);
     } catch (e) {
       throw Exception(e);
     }

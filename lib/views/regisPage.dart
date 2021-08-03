@@ -7,6 +7,7 @@ import 'package:warehouse_application/models/userRole_model.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/roleApi_repository.dart';
 
+
 class RegisPage extends StatefulWidget {
   const RegisPage({Key? key, required RegisApiRepository regisApiRepository}) 
     : _regisApiRepository = regisApiRepository, super(key: key);
