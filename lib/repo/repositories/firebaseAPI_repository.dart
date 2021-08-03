@@ -24,15 +24,15 @@ class  FirebaseRepository {
     }
   }
 
-  Future<void> signUp(
-    {required String email,required String password}) async {
-    try {
-      _firebaseAuth.createUserWithEmailAndPassword(
-        email: email, password: password);
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  // Future<void> signUp(
+  //   {required String email,required String password}) async {
+  //   try {
+  //     _firebaseAuth.createUserWithEmailAndPassword(
+  //       email: email, password: password);
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  // }
   
   Future<void> logout() async {
     try {

@@ -102,16 +102,17 @@ class _RegisPage extends State<RegisPage> {
             child: FormBuilderDropdown(
               decoration: InputDecoration(border: OutlineInputBorder(),),
               hint: Text('Select Role',),
-              name: 'jabatan',                 
+              name: 'role',                 
               items: state.role.map((UserRole item) {     
                 return DropdownMenuItem(
                   child: Text('${item.role}'),
-                  value: item.role,                
+                  value: item.roleId,                
                 );
               }).toList(),
-              onChanged: (String? newValue) {
+              onChanged: (int? newValue) {
                 setState(() {
-                  jabatan = newValue;
+                  // jabatan = newValue;
+                  newValue == 1? jabatan = 'manager' : jabatan = 'client';
                 });
               },
               validator: FormBuilderValidators.compose([
