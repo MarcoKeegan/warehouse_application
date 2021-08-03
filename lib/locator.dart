@@ -1,8 +1,8 @@
 // import 'package:get_it/get_it.dart';
-// import 'package:project_trivia/repo/repositories/repository.dart';
+// import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
 // final locator = GetIt.instance;
 
 // void setupServices() {
-//   locator.registerLazySingleton<ApiRepository>(() => ApiRepository());
+//   locator.registerLazySingleton<WarehouseApiProvider>(() => WarehouseApiProvider());
 // }

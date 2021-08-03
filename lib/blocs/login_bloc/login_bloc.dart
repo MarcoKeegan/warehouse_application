@@ -25,6 +25,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: event.email,
           password: event.password,
         );
+        // print(event.email);
+        // print(event.password);
         yield LoginDone();
       } catch (e) {
         yield LoginFailed();
