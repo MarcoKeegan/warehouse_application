@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:warehouse_application/models/firebaseUid_models.dart';
 import 'package:warehouse_application/models/registerUser_model.dart';
 import 'package:warehouse_application/models/response_model.dart';
+import 'package:warehouse_application/models/userRole_model.dart';
 
 class WarehouseApiProvider {
   WarehouseApiProvider({http.Client? warehouse})
@@ -57,6 +58,19 @@ class WarehouseApiProvider {
     }
   }
 
+  Future<UserPack> getRole(int roleId) async {
+    final Uri _url = Uri.parse('$_baseUrl/user/User_role');
+
+    try {
+      final http.Response response = await _warehouse.get(_url);
+      if (response.statusCode == 200) {
+        return UserPack.fromJson(jsonDecode(response.body));
+      }
+      throw Exception(response.statusCode);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
   // Future loginUser(String login) async {
   //   final Uri _url = Uri.parse('$_baseUrl//user/F_user/:Firebase_UID');
   //   try {

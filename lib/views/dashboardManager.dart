@@ -87,7 +87,7 @@ class _DashManagerPage extends State<DashManagerPage> {
                           child: InkWell(
                             onTap: () {
                               Navigator.of(context)
-                                  .pushReplacementNamed('/stockPage');
+                                  .pushReplacementNamed('/viewListStckPage');
                             },
                             child: SizedBox(
                               width: 500,
@@ -171,7 +171,8 @@ class _DashManagerPage extends State<DashManagerPage> {
               ListTile(
                 title: Text('Stock'),
                 onTap: () {
-                  Navigator.of(context).pushReplacementNamed('/stockPage');
+                  Navigator.of(context)
+                      .pushReplacementNamed('/viewListStckPage');
                 },
               ),
               ListTile(
