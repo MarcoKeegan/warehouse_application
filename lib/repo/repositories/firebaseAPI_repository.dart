@@ -13,9 +13,6 @@ class FirebaseRepository {
 
   Future<void> loginWithCredentials(
       {required String email, required String password}) async {
-    // final String encryptedPassword =
-    //     sha256.convert(utf8.encode(password)).toString();
-
     try {
       _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);

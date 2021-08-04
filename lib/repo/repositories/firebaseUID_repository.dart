@@ -12,6 +12,7 @@ class FirebaseUIDRepository {
   Future loginToDash({required FirebaseUser firebaseUser}) async {
     final result = await _warehouseApiProvider.loginUser(firebaseUser.uid);
     if (result is ReadUserFirebaseUID) {
+      print(result.message);
       return result.data;
     } else if (result is ResponseGagal) {
       print(result.errorkey);
