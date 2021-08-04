@@ -17,10 +17,10 @@ class ResponseGagal extends PostResponse {
 
   factory ResponseGagal.fromJson(Map<String, dynamic> json) {
     return ResponseGagal(
-      message: json['message'] as String,
-      errorkey: json['error_key'] as String,
-      errormessage: json['error_message'] as String,
-      errordata: json['error_data'] as String,
+      message: json['message'],
+      errorkey: json['error_key'],
+      errormessage: json['error_message'],
+      errordata: json['error_data'],
     );
   }
 }
@@ -30,7 +30,7 @@ class ResponseBerhasil extends PostResponse {
 
   factory ResponseBerhasil.fromJson(Map<String, dynamic> json) {
     return ResponseBerhasil(
-      message: json['message'] as String,
+      message: json['message'],
     );
   }
 }

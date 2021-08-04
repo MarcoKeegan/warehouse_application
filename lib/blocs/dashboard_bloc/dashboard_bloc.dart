@@ -30,10 +30,11 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         print(_userData.userId);
         print(_userData.roleId);
         print(_userData.firebaseUid);
+
+        yield DashboardDone();
       } catch (e) {
         yield DashboardFailed();
       }
-      yield DashboardDone();
     }
   }
 }

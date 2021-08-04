@@ -41,16 +41,17 @@ class WarehouseApiProvider {
   }
 
   Future loginUser(String firebaseUid) async {
-    final Uri _url = Uri.parse('$_baseUrl/user/F_user/:$firebaseUid');
+    final Uri _url = Uri.parse('$_baseUrl/user/F_user/$firebaseUid');
+    print(firebaseUid);
     try {
       final http.Response response = await _warehouse.get(_url);
       if (response.statusCode == 200) {
         Map<String, dynamic> responseMessage = jsonDecode(response.body);
         if (responseMessage['message'] == 'Success') {
-          print('Success');
+          print('Login To Dash Berhasil');
           return ReadUserFirebaseUID.fromJson(responseMessage);
         } else {
-          print('Gagal');
+          print('Login To Dash Gagal');
           return ResponseGagal.fromJson(responseMessage);
         }
       }

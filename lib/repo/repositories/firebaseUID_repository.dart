@@ -1,5 +1,6 @@
 import 'package:warehouse_application/models/firebaseUid_models.dart';
 import 'package:warehouse_application/models/firebaseUser_models.dart';
+import 'package:warehouse_application/models/response_model.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
 class FirebaseUIDRepository {
@@ -12,6 +13,8 @@ class FirebaseUIDRepository {
     final result = await _warehouseApiProvider.loginUser(firebaseUser.uid);
     if (result is ReadUserFirebaseUID) {
       return result.data;
+    } else if (result is ResponseGagal) {
+      print(result.errorkey);
     }
   }
 }
