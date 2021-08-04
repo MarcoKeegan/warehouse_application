@@ -31,26 +31,27 @@ class _LoginPage extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            constraints: BoxConstraints.expand(),
-            decoration: BoxDecoration(
+        body: Stack(
+      children: [
+        Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("images/gudang.jpg"), fit: BoxFit.cover
-              )
-            ),
-            child: BlocProvider(create: (context) => _loginBloc,
-              child: Builder(
-                builder: (context) => Column(
+                  image: AssetImage("images/gudang.jpg"), fit: BoxFit.cover)),
+          child: BlocProvider(
+            create: (context) => _loginBloc,
+            child: Builder(
+              builder: (context) => Column(
                 children: [
                   Spacer(flex: 1),
-                  Text('Warehouse', style: TextStyle(fontSize: 50),),
+                  Text(
+                    'Warehouse',
+                    style: TextStyle(fontSize: 50),
+                  ),
                   FormBuilder(
                     key: _formKey,
-                     child: Column(
+                    child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      
                       children: [
                         _emailField(context),
                         _passField(context),
@@ -59,68 +60,73 @@ class _LoginPage extends State<LoginPage> {
                       ],
                     ),
                   ),
-                  Spacer(flex: 1,),
+                  Spacer(
+                    flex: 1,
+                  ),
                 ],
-            ),
               ),
             ),
-          )
-        ],
-      )
-    );
+          ),
+        )
+      ],
+    ));
   }
 
   Widget _emailField(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: FormBuilderTextField(
-      name: 'email',
-      decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
-      textInputAction: TextInputAction.next,
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.email(context),
-        FormBuilderValidators.required(context),
-      ]),
+        name: 'email',
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Email',
+        ),
+        textInputAction: TextInputAction.next,
+        validator: FormBuilderValidators.compose([
+          FormBuilderValidators.email(context),
+          FormBuilderValidators.required(context),
+        ]),
       ),
     );
   }
 
   Widget _passField(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: FormBuilderTextField(
-        name: 'password', 
-        obscureText: !isPasswordShown,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(), 
-          labelText: 'Password', 
-          suffixIcon: IconButton(
-            icon: Icon(
-              isPasswordShown ? Icons.visibility_off : Icons.visibility), 
-              onPressed: () {
-                setState(() {
-                  isPasswordShown = !isPasswordShown;
-                });
-              },
-          )
-        ),
-        validator: FormBuilderValidators.compose([
-          FormBuilderValidators.minLength(context, 6),
-          FormBuilderValidators.required(context),
-        ]),
-      ) 
-    );
+        padding: EdgeInsets.all(8.0),
+        child: FormBuilderTextField(
+          name: 'password',
+          obscureText: !isPasswordShown,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Password',
+              suffixIcon: IconButton(
+                icon: Icon(
+                    isPasswordShown ? Icons.visibility_off : Icons.visibility),
+                onPressed: () {
+                  setState(() {
+                    isPasswordShown = !isPasswordShown;
+                  });
+                },
+              )),
+          validator: FormBuilderValidators.compose([
+            FormBuilderValidators.minLength(context, 6),
+            FormBuilderValidators.required(context),
+          ]),
+        ));
   }
 
   Widget _loginButton() {
     return RaisedButton(
-      child: Text("LOGIN", style: TextStyle(color: Colors.white),),
+      child: Text(
+        "LOGIN",
+        style: TextStyle(color: Colors.white),
+      ),
       color: Colors.blue,
       onPressed: () {
         if (_formKey.currentState!.saveAndValidate()) {
           _loginBloc.add(Login(
-            email: _formKey.currentState!.value['email'],
-            password: _formKey.currentState!.value['password']));
+              email: _formKey.currentState!.value['email'],
+              password: _formKey.currentState!.value['password']));
         }
       },
     );
@@ -129,12 +135,13 @@ class _LoginPage extends State<LoginPage> {
   Widget _showRegisButton(BuildContext context) {
     return Center(
       child: FlatButton(
-        child: Text("Don't have any Account? Register", style: TextStyle(color: Colors.black),),
-        onPressed: () {
-          Navigator.of(context).pushReplacementNamed('/regis');
-        }
-      ),
+          child: Text(
+            "Don't have any Account? Register",
+            style: TextStyle(color: Colors.black),
+          ),
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed('/regis');
+          }),
     );
   }
 }
-

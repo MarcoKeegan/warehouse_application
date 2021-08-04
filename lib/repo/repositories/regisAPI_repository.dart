@@ -27,12 +27,4 @@ class RegisApiRepository {
       throw Exception();
     }
   }
-
-  //  Future<void> signUp({
-  //   required String username,
-  //   required String email,
-  //   required String password,
-  // }) async {
-  //   await Future.delayed(Duration(seconds: 2));
-  // }
 }

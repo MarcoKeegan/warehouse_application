@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_application/views/addProduct_Page.dart';
-import 'package:warehouse_application/views/addStock_Page.dart';
-import 'package:warehouse_application/views/dashboardManager.dart';
-import 'package:warehouse_application/views/detailStock_Page.dart';
-import 'package:warehouse_application/views/loginPage.dart';
-import 'package:warehouse_application/views/preViewStock_Page.dart';
-import 'package:warehouse_application/views/purchasing_page.dart';
-import 'package:warehouse_application/views/regisPage.dart';
-import 'package:warehouse_application/views/stock_Page.dart';
-import 'package:warehouse_application/views/userPage.dart';
-import 'package:warehouse_application/views/listViewStock_Page.dart';
-import 'package:warehouse_application/views/warehouse_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/addProduct_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/addStock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/dashboardManager.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/detailStock_Page.dart';
+import 'package:warehouse_application/views/loginFolder/loginPage.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/preViewStock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/purchaseFolder/purchasing_page.dart';
+import 'package:warehouse_application/views/regisFolder/regisPage.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/stock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/userPageFolder/userPage.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/listViewStock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/warehouseFolder/warehouse_Page.dart';
 
 class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -41,7 +41,7 @@ class RouteManager {
       //   return MaterialPageRoute(builder: (context) => AddStockPage());
       default:
         return MaterialPageRoute(
-          builder: (context) => _DefaultErrorRoutePage(settings: settings));
+            builder: (context) => _DefaultErrorRoutePage(settings: settings));
     }
   }
 }

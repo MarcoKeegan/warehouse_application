@@ -5,19 +5,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
-import 'package:warehouse_application/views/addProduct_Page.dart';
-import 'package:warehouse_application/views/addStock_Page.dart';
-import 'package:warehouse_application/views/dashboardManager.dart';
-import 'package:warehouse_application/views/dashboard_runner.dart';
-import 'package:warehouse_application/views/detailStock_Page.dart';
-import 'package:warehouse_application/views/listViewStock_Page.dart';
-import 'package:warehouse_application/views/loginPage.dart';
-import 'package:warehouse_application/views/preViewStock_Page.dart';
-import 'package:warehouse_application/views/purchasing_page.dart';
-import 'package:warehouse_application/views/regisPage.dart';
-import 'package:warehouse_application/views/stock_Page.dart';
-import 'package:warehouse_application/views/userPage.dart';
-import 'package:warehouse_application/views/warehouse_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/addProduct_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/addStock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/dashboardManager.dart';
+import 'package:warehouse_application/views/dashboardFolder/dashboard_runner.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/detailStock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/listViewStock_Page.dart';
+import 'package:warehouse_application/views/loginFolder/loginPage.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/preViewStock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/purchaseFolder/purchasing_page.dart';
+import 'package:warehouse_application/views/regisFolder/regisPage.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/stock_Page.dart';
+import 'package:warehouse_application/views/dashboardFolder/userPageFolder/userPage.dart';
+import 'package:warehouse_application/views/dashboardFolder/warehouseFolder/warehouse_Page.dart';
 
 class App extends StatefulWidget {
   App(

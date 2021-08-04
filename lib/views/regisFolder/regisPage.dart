@@ -7,10 +7,10 @@ import 'package:warehouse_application/models/userRole_model.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/roleApi_repository.dart';
 
-
 class RegisPage extends StatefulWidget {
-  const RegisPage({Key? key, required RegisApiRepository regisApiRepository}) 
-    : _regisApiRepository = regisApiRepository, super(key: key);
+  const RegisPage({Key? key, required RegisApiRepository regisApiRepository})
+      : _regisApiRepository = regisApiRepository,
+        super(key: key);
 
   final RegisApiRepository _regisApiRepository;
 
@@ -26,8 +26,7 @@ class _RegisPage extends State<RegisPage> {
 
   @override
   void initState() {
-    _registerBloc =
-        RegisterBloc(regisRepository: widget._regisApiRepository);
+    _registerBloc = RegisterBloc(regisRepository: widget._regisApiRepository);
     super.initState();
   }
 
@@ -37,35 +36,37 @@ class _RegisPage extends State<RegisPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FormBuilder(
-          child: Stack(
-          children: [
-            Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("images/gudang.jpg"), fit: BoxFit.cover
-                )
+        body: FormBuilder(
+            child: Stack(
+      children: [
+        Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("images/gudang.jpg"), fit: BoxFit.cover)),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<RegisterBloc>(
+                create: (BuildContext context) =>
+                    RegisterBloc(regisRepository: provider),
               ),
-            
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider<RegisterBloc>(
-                  create: (BuildContext context) => RegisterBloc(regisRepository: provider),
-                ),
-                BlocProvider<DropdownRoleBloc>(
-                  create: (BuildContext context) => DropdownRoleBloc(apiRepository: roleApiRepository),
-                ),
-              ],
-              child: FormBuilder(
-                key: _formKey,
-                child: Column(
+              BlocProvider<DropdownRoleBloc>(
+                create: (BuildContext context) =>
+                    DropdownRoleBloc(apiRepository: roleApiRepository),
+              ),
+            ],
+            child: FormBuilder(
+              key: _formKey,
+              child: Column(
                 children: [
                   Spacer(flex: 3),
-                  Text("Warehouse", style: TextStyle(fontSize: 50, fontStyle: FontStyle.italic, color: Colors.black)),
+                  Text("Warehouse",
+                      style: TextStyle(
+                          fontSize: 50,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.black)),
                   Column(
                     mainAxisSize: MainAxisSize.min,
-                    
                     children: [
                       _dropdownRole(),
                       _nameField(context),
@@ -75,63 +76,68 @@ class _RegisPage extends State<RegisPage> {
                       _showLoginButton(context),
                     ],
                   ),
-                  Spacer(flex: 3,),
+                  Spacer(
+                    flex: 3,
+                  ),
                 ],
-                ),
               ),
             ),
-          )
-        ],
-      )
-    )
-    );
+          ),
+        )
+      ],
+    )));
   }
 
   Widget _dropdownRole() {
     return BlocBuilder<DropdownRoleBloc, DropdownRoleState>(
-      builder: (context, state) {
-        if (state is DropdownRoleLoading) {
-          return Center(
-            child: CircularProgressIndicator(color: Colors.white),
-          );
-        } else if (state is DropdownRoleFailed) {
-          print('dropdown error');
-        } else if (state is DropdownRoleDone) { 
-          return Padding(
+        builder: (context, state) {
+      if (state is DropdownRoleLoading) {
+        return Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        );
+      } else if (state is DropdownRoleFailed) {
+        print('dropdown error');
+      } else if (state is DropdownRoleDone) {
+        return Padding(
             padding: EdgeInsets.all(8.0),
             child: FormBuilderDropdown(
-              decoration: InputDecoration(border: OutlineInputBorder(),),
-              hint: Text('Select Role',),
-              name: 'role',                 
-              items: state.role.map((UserRole item) {     
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+              hint: Text(
+                'Select Role',
+              ),
+              name: 'role',
+              items: state.role.map((UserRole item) {
                 return DropdownMenuItem(
                   child: Text('${item.role}'),
-                  value: item.roleId,                
+                  value: item.roleId,
                 );
               }).toList(),
               onChanged: (int? newValue) {
                 setState(() {
                   // jabatan = newValue;
-                  newValue == 1? jabatan = 'manager' : jabatan = 'client';
+                  newValue == 1 ? jabatan = 'manager' : jabatan = 'client';
                 });
               },
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(context),
               ]),
-            )
-          );
-        }                                  
-        return Container();
+            ));
       }
-    );
+      return Container();
+    });
   }
 
   Widget _nameField(BuildContext context) {
     return Padding(
-    padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0),
       child: FormBuilderTextField(
         name: 'name',
-        decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Name',),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Name',
+        ),
         textInputAction: TextInputAction.next,
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(context),
@@ -145,7 +151,10 @@ class _RegisPage extends State<RegisPage> {
       padding: EdgeInsets.all(8.0),
       child: FormBuilderTextField(
         name: 'email',
-        decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Email',),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: 'Email',
+        ),
         textInputAction: TextInputAction.next,
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.email(context),
@@ -161,10 +170,18 @@ class _RegisPage extends State<RegisPage> {
       child: FormBuilderTextField(
         name: 'password',
         obscureText: _obscureText,
-        decoration: InputDecoration(border: OutlineInputBorder(), labelText: 'Password', suffixIcon: IconButton(icon: Icon(_obscureText ? Icons.visibility : Icons.visibility_off), 
-        onPressed: () {setState(() {
-          _obscureText = !_obscureText;
-        });},)),                   
+        decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'Password',
+            suffixIcon: IconButton(
+              icon:
+                  Icon(_obscureText ? Icons.visibility : Icons.visibility_off),
+              onPressed: () {
+                setState(() {
+                  _obscureText = !_obscureText;
+                });
+              },
+            )),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.minLength(context, 6),
           FormBuilderValidators.required(context),
@@ -177,7 +194,10 @@ class _RegisPage extends State<RegisPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: RaisedButton(
-        child: Text("REGISTER", style: TextStyle(color: Colors.white),),
+        child: Text(
+          "REGISTER",
+          style: TextStyle(color: Colors.white),
+        ),
         color: Colors.blue,
         onPressed: () {
           if (_formKey.currentState!.saveAndValidate()) {
@@ -190,7 +210,6 @@ class _RegisPage extends State<RegisPage> {
             Navigator.of(context).pushReplacementNamed('/login');
           }
         },
-        
       ),
     );
   }
@@ -198,11 +217,13 @@ class _RegisPage extends State<RegisPage> {
   Widget _showLoginButton(BuildContext context) {
     return Center(
       child: FlatButton(
-        child: Text("Already have Account? Back to Login", style: TextStyle(color: Colors.black),),
-        onPressed: () {
-          Navigator.of(context).pushReplacementNamed('/login');
-        }
-      ),
+          child: Text(
+            "Already have Account? Back to Login",
+            style: TextStyle(color: Colors.black),
+          ),
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed('/login');
+          }),
     );
   }
 }
