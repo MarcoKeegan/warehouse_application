@@ -2,9 +2,7 @@ class ReadUserFirebaseUID {
   final String message;
   final UserData data;
 
-  ReadUserFirebaseUID({
-    required this.message, required this.data
-  });
+  ReadUserFirebaseUID({required this.message, required this.data});
 
   factory ReadUserFirebaseUID.fromJson(Map<String, dynamic> json) {
     UserData userData = UserData.fromJson(json['data']);
@@ -32,11 +30,11 @@ class UserData {
 
   factory UserData.fromJson(Map<String, dynamic> json) {
     return UserData(
-      userId: json['User_ID'] as int,
-      roleId: json['Role_ID'] as int,
-      name: json['Name'] as String,
-      email: json['Email'] as String,
-      firebaseUid: json['Firebase_UID'] as String,
+      userId: json['User_ID'],
+      roleId: json['Role_ID'],
+      name: json['Name'],
+      email: json['Email'],
+      firebaseUid: json['Firebase_UID'],
     );
   }
 }

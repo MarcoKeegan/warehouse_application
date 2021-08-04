@@ -4,32 +4,32 @@ abstract class PostResponse {
 }
 
 class ResponseGagal extends PostResponse {
-  final String? error_key;
-  final String? error_message;
-  final error_data;
+  final String? errorkey;
+  final String? errormessage;
+  final errordata;
 
-  ResponseGagal ({
+  ResponseGagal({
     required String message,
-    this.error_key,
-    this.error_message,
-    this.error_data,
-  }) : super(message:  message);
+    this.errorkey,
+    this.errormessage,
+    this.errordata,
+  }) : super(message: message);
 
   factory ResponseGagal.fromJson(Map<String, dynamic> json) {
-    return ResponseGagal (
+    return ResponseGagal(
       message: json['message'] as String,
-      error_key: json['error_key'] as String,
-      error_message: json['error_message'] as String,
-      error_data: json['error_data'] as String,
+      errorkey: json['error_key'] as String,
+      errormessage: json['error_message'] as String,
+      errordata: json['error_data'] as String,
     );
   }
 }
 
 class ResponseBerhasil extends PostResponse {
   ResponseBerhasil({required String message}) : super(message: message);
- 
+
   factory ResponseBerhasil.fromJson(Map<String, dynamic> json) {
-    return ResponseBerhasil (
+    return ResponseBerhasil(
       message: json['message'] as String,
     );
   }

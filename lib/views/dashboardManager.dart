@@ -5,19 +5,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/blocs/dashboard_bloc/dashboard_bloc.dart';
 
-class DashManagerPage extends StatefulWidget {                    //tadinya statelessWidget
+class DashManagerPage extends StatefulWidget {
   DashManagerPage({Key? key}) : super(key: key);
 
   @override
   _DashManagerPage createState() => _DashManagerPage();
 }
-// FirebaseRepository loginRepository = FirebaseRepository();
 
-class _DashManagerPage extends State<DashManagerPage> {         //masi belom tau
+class _DashManagerPage extends State<DashManagerPage> {
   @override
   void didChangeDependencies() {
     BlocProvider.of<DashboardBloc>(context).add(LoadData());
-  }                                                             //masih belom tau
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,85 +45,88 @@ class _DashManagerPage extends State<DashManagerPage> {         //masi belom tau
         body: Container(
           child: BlocBuilder<DashboardBloc, DashboardState>(
             builder: (context, state) {
-              if (state is DashboardDone) 
-              return Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 15.0, 200.0, 15.0),
-                    child: Text("Dashboard",
-                        style: TextStyle(
-                            fontSize: 30,
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Column(children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        elevation: 2,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/warePage');
-                          },
-                          child: SizedBox(
-                            width: 500,
-                            height: 150,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Warehouse'),
-                                ]),
+              if (state is DashboardDone)
+                return Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.fromLTRB(8.0, 15.0, 200.0, 15.0),
+                      child: Text("Dashboard",
+                          style: TextStyle(
+                              fontSize: 30,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.black)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(children: [
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 2,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/warePage');
+                            },
+                            child: SizedBox(
+                              width: 500,
+                              height: 150,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Warehouse'),
+                                  ]),
+                            ),
                           ),
                         ),
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        elevation: 2,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/stockPage');
-                          },
-                          child: SizedBox(
-                            width: 500,
-                            height: 150,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Stock'),
-                                ]),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 2,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/stockPage');
+                            },
+                            child: SizedBox(
+                              width: 500,
+                              height: 150,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Stock'),
+                                  ]),
+                            ),
                           ),
                         ),
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        elevation: 2,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/purchPage');
-                          },
-                          child: SizedBox(
-                            width: 500,
-                            height: 150,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Purchasing'),
-                                ]),
+                        Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10)),
+                          elevation: 2,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/purchPage');
+                            },
+                            child: SizedBox(
+                              width: 500,
+                              height: 150,
+                              child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Purchasing'),
+                                  ]),
+                            ),
                           ),
                         ),
-                      ),
-                    ]),
-                  ),
-                ],
-              );
-              else {return Container();}
+                      ]),
+                    ),
+                  ],
+                );
+              else {
+                return Container();
+              }
             },
           ),
         ),

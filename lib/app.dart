@@ -8,6 +8,7 @@ import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart
 import 'package:warehouse_application/views/addProduct_Page.dart';
 import 'package:warehouse_application/views/addStock_Page.dart';
 import 'package:warehouse_application/views/dashboardManager.dart';
+import 'package:warehouse_application/views/dashboard_runner.dart';
 import 'package:warehouse_application/views/detailStock_Page.dart';
 import 'package:warehouse_application/views/listViewStock_Page.dart';
 import 'package:warehouse_application/views/loginPage.dart';
@@ -19,17 +20,20 @@ import 'package:warehouse_application/views/userPage.dart';
 import 'package:warehouse_application/views/warehouse_Page.dart';
 
 class App extends StatefulWidget {
-  App({Key? key, required FirebaseRepository firebaseAuth, required RegisApiRepository regisApiRepository}) 
+  App(
+      {Key? key,
+      required FirebaseRepository firebaseAuth,
+      required RegisApiRepository regisApiRepository})
       : _firebaseAuthRepo = firebaseAuth,
-      _regisApiRepository = regisApiRepository,
+        _regisApiRepository = regisApiRepository,
         super(key: key);
-  
+
   final FirebaseRepository _firebaseAuthRepo;
   final RegisApiRepository _regisApiRepository;
 
-   @override
+  @override
   _AppState createState() => _AppState();
- }
+}
 
 class _AppState extends State<App> {
   late AuthenticationBloc _authBloc;
@@ -43,8 +47,8 @@ class _AppState extends State<App> {
     _authBloc = AuthenticationBloc(firebaseAuth: widget._firebaseAuthRepo);
     super.initState();
   }
-  
-  @override 
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navigatorKey,
@@ -61,19 +65,22 @@ class _AppState extends State<App> {
           child: child,
         ),
       ),
-      initialRoute: FirebaseAuth.instance.currentUser == null? '/login': '/dashM',
+      initialRoute:
+          FirebaseAuth.instance.currentUser == null ? '/login' : '/dashM',
       onGenerateRoute: (RouteSettings settings) {
-        switch(settings.name) {
-          case '/login': 
-            return MaterialPageRoute(builder: (context) => LoginPage(
-              firebaseAuthRepo: widget._firebaseAuthRepo,
-            ));
-          case'/dashM': 
-            return MaterialPageRoute(builder: (context) => DashManagerPage());
+        switch (settings.name) {
+          case '/login':
+            return MaterialPageRoute(
+                builder: (context) => LoginPage(
+                      firebaseAuthRepo: widget._firebaseAuthRepo,
+                    ));
+          case '/dashM':
+            return MaterialPageRoute(builder: (context) => DashboardPage());
           case '/regis':
-            return MaterialPageRoute(builder: (context) => RegisPage(
-              regisApiRepository: widget._regisApiRepository,
-            ));
+            return MaterialPageRoute(
+                builder: (context) => RegisPage(
+                      regisApiRepository: widget._regisApiRepository,
+                    ));
           case '/userPage':
             return MaterialPageRoute(builder: (context) => UserPage());
           case '/warePage':

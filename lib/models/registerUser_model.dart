@@ -4,7 +4,7 @@ class RegisUser {
   final String? email;
   final String? pass;
 
-  RegisUser ({
+  RegisUser({
     required this.roleId,
     required this.name,
     required this.email,
@@ -14,9 +14,9 @@ class RegisUser {
   Map<String, dynamic> toJson() {
     return {
       'Role_ID': roleId,
-      'Name' : name,
-      'Email' : email,
-      'Password' : pass,
+      'Name': name,
+      'Email': email,
+      'Password': pass,
     };
   }
 }

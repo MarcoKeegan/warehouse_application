@@ -23,7 +23,8 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
     if (event is LoadData) {
       yield DashboardLoading();
       try {
-        _userData = await _firebaseUIDRepository.loginToDash(firebaseUser: firebaseUser);
+        _userData = await _firebaseUIDRepository.loginToDash(
+            firebaseUser: firebaseUser);
         print(_userData.email);
         print(_userData.name);
         print(_userData.userId);
@@ -31,7 +32,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
         print(_userData.firebaseUid);
       } catch (e) {
         yield DashboardFailed();
-      } 
+      }
       yield DashboardDone();
     }
   }
