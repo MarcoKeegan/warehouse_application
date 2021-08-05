@@ -1,16 +1,17 @@
 class CreateProduct {
-  final int? productTypeId;
-  final String? productName;
-  final int? price;
-  final String? imageType;
-  final String? image64;
+  final int productTypeId;
+  final String productName;
+  final int price;
+  final String imageType;
+  final String image64;
 
   const CreateProduct(
       {required this.productTypeId,
       required this.productName,
       required this.price,
       required this.imageType,
-      required this.image64});
+      required this.image64
+      });
 
   Map<String, dynamic> toJson() {
     return {

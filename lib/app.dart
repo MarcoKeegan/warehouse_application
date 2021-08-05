@@ -3,11 +3,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:warehouse_application/repo/repositories/createProduct_repository.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/addProduct_Page.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/addStock_Page.dart';
-import 'package:warehouse_application/views/dashboardFolder/dashboardManager.dart';
 import 'package:warehouse_application/views/dashboardFolder/dashboard_runner.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/detailStock_Page.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/listViewStock_Page.dart';
@@ -23,13 +23,16 @@ class App extends StatefulWidget {
   App(
       {Key? key,
       required FirebaseRepository firebaseAuth,
-      required RegisApiRepository regisApiRepository})
+      required RegisApiRepository regisApiRepository,
+      required CreateProductRepository createProductRepository})
       : _firebaseAuthRepo = firebaseAuth,
         _regisApiRepository = regisApiRepository,
+        _createProductRepository = createProductRepository,
         super(key: key);
 
   final FirebaseRepository _firebaseAuthRepo;
   final RegisApiRepository _regisApiRepository;
+  final CreateProductRepository _createProductRepository;
 
   @override
   _AppState createState() => _AppState();
@@ -92,7 +95,10 @@ class _AppState extends State<App> {
           case '/prePage':
             return MaterialPageRoute(builder: (context) => PreViewStockPage());
           case '/addStckPage':
-            return MaterialPageRoute(builder: (context) => AddProductPage());
+            return MaterialPageRoute(
+                builder: (context) => AddProductPage(
+                      createProductRepository: widget._createProductRepository,
+                    ));
           case '/viewListStckPage':
             return MaterialPageRoute(builder: (context) => ListStockPage());
           case '/detailStockPage':

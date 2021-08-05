@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:warehouse_application/models/createProduct_models.dart';
 import 'package:warehouse_application/models/response_model.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
@@ -27,8 +26,10 @@ class CreateProductRepository {
 
     final result = await _provider.createProduct(createProduct);
     if (result is ResponseBerhasil) {
+      print(result.message);
       return result;
     } else if (result is ResponseGagal) {
+      print(result.errorkey);
       throw GetProductFailure();
     } else {
       print(Exception());
