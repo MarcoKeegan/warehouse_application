@@ -2,6 +2,7 @@ class CreateProduct {
   final int productTypeId;
   final String productName;
   final String price;
+  // final List<ImageProduct> images;
   final String imageType;
   final String image64;
 
@@ -10,8 +11,7 @@ class CreateProduct {
       required this.productName,
       required this.price,
       required this.imageType,
-      required this.image64
-      });
+      required this.image64});
 
   Map<String, dynamic> toJson() {
     return {

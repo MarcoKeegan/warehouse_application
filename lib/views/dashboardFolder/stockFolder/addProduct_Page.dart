@@ -228,7 +228,7 @@ class _AddProductPage extends State<AddProductPage> {
               border: OutlineInputBorder(), labelText: 'Upload Image'),
           maxFiles: 5,
           previewImages: true,
-          onChanged: (value) => print(value.toString()),
+          onChanged: (value) => print(value),
           selector: Center(
             child: Icon(Icons.upload),
           ),
