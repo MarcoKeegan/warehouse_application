@@ -10,7 +10,7 @@ abstract class CreateproductEvent extends Equatable {
 class CreateProductReq extends CreateproductEvent {
   final int productTypeId;
   final String productName;
-  final int price;
+  final String price;
   final String image64;
   final String imageType;
 

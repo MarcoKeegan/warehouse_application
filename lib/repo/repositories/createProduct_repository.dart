@@ -13,7 +13,7 @@ class CreateProductRepository {
   Future<ResponseBerhasil> createProduct({
     required int productTypeId,
     required String productName,
-    required int price,
+    required String price,
     required String image64,
     required String imageType,
   }) async {

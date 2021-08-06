@@ -22,7 +22,7 @@ class AddProductPage extends StatefulWidget {
 class _AddProductPage extends State<AddProductPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late CreateproductBloc _createproductBloc;
-  String? type;
+  int? type;
 
   @override
   void initState() {
@@ -147,7 +147,7 @@ class _AddProductPage extends State<AddProductPage> {
                 // } else if (newValue == 4) {
                 //   type = 'Furniture & Houseware';
                 // }
-                type = newValue as String?;
+                type = newValue;
               });
             },
             validator: FormBuilderValidators.compose([
@@ -229,12 +229,17 @@ class _AddProductPage extends State<AddProductPage> {
       child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.saveAndValidate()) {
+            
+            print(_formKey.currentState!.value['type'].runtimeType);
+            print(_formKey.currentState!.value['harga'].runtimeType);
             _createproductBloc.add(CreateProductReq(
               productName: _formKey.currentState!.value['namaB'],
               productTypeId: _formKey.currentState!.value['type'],
               price: _formKey.currentState!.value['harga'],
-              imageType: _formKey.currentState!.value[''],
-              image64: _formKey.currentState!.value[''],
+              imageType:'',
+              // _formKey.currentState!.value[''],
+              image64: '',
+              // _formKey.currentState!.value[''],
             ));
           }
           // Navigator.of(context).pushReplacementNamed('/viewListStckPage');

@@ -1,7 +1,7 @@
 class CreateProduct {
   final int productTypeId;
   final String productName;
-  final int price;
+  final String price;
   final String imageType;
   final String image64;
 
