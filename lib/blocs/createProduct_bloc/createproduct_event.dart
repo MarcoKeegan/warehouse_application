@@ -11,11 +11,17 @@ class CreateProductReq extends CreateproductEvent {
   final int productTypeId;
   final String productName;
   final String price;
-  final String image64;
+  final Uint8List image64;
   final String imageType;
 
-  CreateProductReq({required this.productTypeId, required this.productName, required this.price, required this.image64, required this.imageType});
+  CreateProductReq(
+      {required this.productTypeId,
+      required this.productName,
+      required this.price,
+      required this.image64,
+      required this.imageType});
 
-   @override
-  List<Object> get props => [productTypeId, productName, price, image64, imageType];
+  @override
+  List<Object> get props =>
+      [productTypeId, productName, price, image64, imageType];
 }

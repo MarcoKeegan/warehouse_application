@@ -1,14 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:mime/mime.dart';
 import 'package:warehouse_application/repo/repositories/createProduct_repository.dart';
 
 part 'createproduct_event.dart';
 part 'createproduct_state.dart';
 
 class CreateproductBloc extends Bloc<CreateproductEvent, CreateproductState> {
-  CreateproductBloc({required this.createProductRepository}) : super(CreateproductInitial());
+  CreateproductBloc({required this.createProductRepository})
+      : super(CreateproductInitial());
 
   final CreateProductRepository createProductRepository;
 
@@ -19,7 +23,17 @@ class CreateproductBloc extends Bloc<CreateproductEvent, CreateproductState> {
     if (event is CreateProductReq) {
       yield CreateproductLoading();
       try {
-        await createProductRepository.createProduct(productTypeId: event.productTypeId, productName: event.productName, price: event.price, image64: event.image64, imageType: event.imageType);
+        Uint8List imageToUploadBytes = event.image64;
+        String image64 = base64Encode(imageToUploadBytes);
+        String imageType = lookupMimeType(event.imageType)!.split('/').last;
+        print(imageType);
+
+        await createProductRepository.createProduct(
+            productTypeId: event.productTypeId,
+            productName: event.productName,
+            price: event.price,
+            image64: image64,
+            imageType: imageType);
         yield CreateproductDone();
       } catch (e) {
         yield CreateproductFailed();

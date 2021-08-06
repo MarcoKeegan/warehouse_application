@@ -1,16 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:warehouse_application/views/dashboardFolder/stockFolder/addProduct_Page.dart';
-import 'package:warehouse_application/views/dashboardFolder/stockFolder/addStock_Page.dart';
-import 'package:warehouse_application/views/dashboardFolder/dashboardManager.dart';
-import 'package:warehouse_application/views/dashboardFolder/stockFolder/detailStock_Page.dart';
-import 'package:warehouse_application/views/loginFolder/loginPage.dart';
-import 'package:warehouse_application/views/dashboardFolder/stockFolder/preViewStock_Page.dart';
-import 'package:warehouse_application/views/dashboardFolder/purchaseFolder/purchasing_page.dart';
-import 'package:warehouse_application/views/regisFolder/regisPage.dart';
-import 'package:warehouse_application/views/dashboardFolder/stockFolder/stock_Page.dart';
-import 'package:warehouse_application/views/dashboardFolder/userPageFolder/userPage.dart';
-import 'package:warehouse_application/views/dashboardFolder/stockFolder/listViewStock_Page.dart';
-import 'package:warehouse_application/views/dashboardFolder/warehouseFolder/warehouse_Page.dart';
 
 class RouteManager {
   static Route<dynamic> generateRoute(RouteSettings settings) {
