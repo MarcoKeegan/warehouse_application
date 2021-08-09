@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
+import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/blocs/createProduct_bloc/createproduct_bloc.dart';
 import 'package:warehouse_application/blocs/productType_bloc/producttype_bloc.dart';
 import 'package:warehouse_application/models/productType_models.dart';
@@ -15,7 +16,7 @@ class AddProductPage extends StatefulWidget {
         super(key: key);
 
   final CreateProductRepository _createProductRepository;
-
+  
   @override
   _AddProductPage createState() => _AddProductPage();
 }
@@ -23,7 +24,7 @@ class AddProductPage extends StatefulWidget {
 class _AddProductPage extends State<AddProductPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late CreateproductBloc _createproductBloc;
-  int? type;
+  String? type;
 
   @override
   void initState() {
@@ -76,8 +77,8 @@ class _AddProductPage extends State<AddProductPage> {
                 _title(),
                 _uploadImage(),
                 _dropdownType(),
-                _namaBarang(),
-                _hargaBarang(),
+                _namaBarang(context),
+                _hargaBarang(context),
                 // _namaWarehouse(),
                 // _alamatWarehouse(),
                 _addProductButton()
@@ -97,14 +98,6 @@ class _AddProductPage extends State<AddProductPage> {
               fontSize: 30, fontStyle: FontStyle.italic, color: Colors.black)),
     );
   }
-
-  // Widget _image() {
-  //   return SizedBox(
-  //     height: 150,
-  //     width: 150,
-  //     child: Image.network(''),
-  //   );
-  // }
 
   Widget _dropdownType() {
     return BlocBuilder<ProducttypeBloc, ProducttypeState>(
@@ -134,16 +127,15 @@ class _AddProductPage extends State<AddProductPage> {
               }).toList(),
               onChanged: (int? newValue) {
                 setState(() {
-                  // if (newValue == 1) {
-                  //   type = 'Drug & Healthcare' ;
-                  // } else if (newValue == 2) {
-                  //   type = 'Food & Groceries';
-                  // } else if (newValue == 3) {
-                  //   type = 'Electronics';
-                  // } else if (newValue == 4) {
-                  //   type = 'Furniture & Houseware';
-                  // }
-                  type = newValue;
+                  if (newValue == 1) {
+                    type = 'Drug & Healthcare';
+                  } else if (newValue == 2) {
+                    type = 'Food & Groceries';
+                  } else if (newValue == 3) {
+                    type = 'Electronics';
+                  } else if (newValue == 4) {
+                    type = 'Furniture & Houseware';
+                  }
                 });
               },
               validator: FormBuilderValidators.compose([
@@ -155,7 +147,7 @@ class _AddProductPage extends State<AddProductPage> {
     });
   }
 
-  Widget _namaBarang() {
+  Widget _namaBarang(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(8.0),
         child: FormBuilderTextField(
@@ -169,7 +161,7 @@ class _AddProductPage extends State<AddProductPage> {
         ));
   }
 
-  Widget _hargaBarang() {
+  Widget _hargaBarang(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(8.0),
         child: FormBuilderTextField(
@@ -225,8 +217,10 @@ class _AddProductPage extends State<AddProductPage> {
         child: FormBuilderFilePicker(
           name: 'image',
           decoration: InputDecoration(
-              border: OutlineInputBorder(), labelText: 'Upload Image'),
-          maxFiles: 5,
+            border: OutlineInputBorder(), 
+            labelText: 'Upload Image'
+          ),
+          maxFiles: 1,
           previewImages: true,
           onChanged: (value) => print(value),
           selector: Center(
@@ -247,25 +241,29 @@ class _AddProductPage extends State<AddProductPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(
-        onPressed: () async {
+        onPressed: () {
           if (_formKey.currentState!.saveAndValidate()) {
             print(_formKey.currentState!.value['type'].runtimeType);
             print(_formKey.currentState!.value['harga'].runtimeType);
             print(_formKey.currentState!.value['namaB'].runtimeType);
             print(_formKey.currentState!.value['image'].runtimeType);
-            // print(_formKey.currentState!.value['harga'].runtimeType);
 
             _createproductBloc.add(CreateProductReq(
               productName: _formKey.currentState!.value['namaB'],
               productTypeId: _formKey.currentState!.value['type'],
               price: _formKey.currentState!.value['harga'],
-              image64: (_formKey.currentState!.value['image'] as PlatformFile)
-                  .bytes!,
-              imageType: (_formKey.currentState!.value['image'] as PlatformFile)
-                  .extension!,
+              image64: (_formKey.currentState!.value['image']
+                        as List<PlatformFile>)
+                    .first
+                    .bytes!,
+              imageType: (_formKey.currentState!.value['image']
+                        as List<PlatformFile>)
+                    .first
+                    .extension!,
+              firebaseUid: BlocProvider.of<AuthenticationBloc>(context).user.uid
             ));
           }
-          // Navigator.of(context).pushReplacementNamed('/viewListStckPage');
+          Navigator.of(context).pushReplacementNamed('/viewListStckPage');
         },
         child: Text(
           "Add Product",

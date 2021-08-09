@@ -74,14 +74,14 @@ class WarehouseApiProvider {
     }
   }
 
-  Future createProduct(CreateProduct createProduct) async {
+  Future createProduct(CreateProduct createProduct, String firebaseUid) async {
     final Uri _url = Uri.parse('$_baseUrl/product/Product');
     try {
       final http.Response response = await _warehouse.post(
         _url,
         headers: <String, String>{
-          'Content-type': 'application/json',
-          'Firebase_UID': '*firebase_uid*'
+          "Content-Type": "application/json",
+          "Firebase_UID": firebaseUid,
         },
         body: jsonEncode(createProduct),
       );
@@ -90,6 +90,7 @@ class WarehouseApiProvider {
         if (responseMessage['message'] == 'Success') {
           return ResponseBerhasil.fromJson(responseMessage);
         } else {
+          print(response.body);
           return ResponseGagal.fromJson(responseMessage);
         }
       }

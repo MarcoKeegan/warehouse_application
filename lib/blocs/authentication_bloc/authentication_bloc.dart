@@ -20,6 +20,8 @@ class AuthenticationBloc
   
   StreamSubscription<FirebaseUser>? _streamSubscription;
   FirebaseRepository _firebaseAuthRepo;
+  
+  FirebaseUser get user => state.user;
 
   @override
   Future<void> close() {

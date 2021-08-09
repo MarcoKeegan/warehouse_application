@@ -13,15 +13,17 @@ class CreateProductReq extends CreateproductEvent {
   final String price;
   final Uint8List image64;
   final String imageType;
+  final String firebaseUid;
 
   CreateProductReq(
       {required this.productTypeId,
       required this.productName,
       required this.price,
       required this.image64,
-      required this.imageType});
+      required this.imageType,
+      required this.firebaseUid});
 
   @override
   List<Object> get props =>
-      [productTypeId, productName, price, image64, imageType];
+      [productTypeId, productName, price, image64, imageType, firebaseUid];
 }
