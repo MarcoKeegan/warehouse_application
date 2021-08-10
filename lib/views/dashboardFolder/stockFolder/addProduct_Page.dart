@@ -25,6 +25,7 @@ class _AddProductPage extends State<AddProductPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late CreateproductBloc _createproductBloc;
   String? type;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -242,10 +243,11 @@ class _AddProductPage extends State<AddProductPage> {
       child: ElevatedButton(
         onPressed: () {
           if (_formKey.currentState!.saveAndValidate()) {
-            print(_formKey.currentState!.value['type'].runtimeType);
-            print(_formKey.currentState!.value['harga'].runtimeType);
-            print(_formKey.currentState!.value['namaB'].runtimeType);
-            print(_formKey.currentState!.value['image'].runtimeType);
+            //untuk cek type data
+            // print(_formKey.currentState!.value['type'].runtimeType);
+            // print(_formKey.currentState!.value['harga'].runtimeType);
+            // print(_formKey.currentState!.value['namaB'].runtimeType);
+            // print(_formKey.currentState!.value['image'].runtimeType);
 
             _createproductBloc.add(CreateProductReq(
                 productName: _formKey.currentState!.value['namaB'],

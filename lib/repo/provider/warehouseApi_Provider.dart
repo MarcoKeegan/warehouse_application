@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:warehouse_application/models/createProduct_models.dart';
 import 'package:warehouse_application/models/firebaseUid_models.dart';
 import 'package:warehouse_application/models/productType_models.dart';
+import 'package:warehouse_application/models/readProduct_models.dart';
 import 'package:warehouse_application/models/registerUser_model.dart';
 import 'package:warehouse_application/models/response_model.dart';
 import 'package:warehouse_application/models/userRole_model.dart';
@@ -107,6 +108,20 @@ class WarehouseApiProvider {
       final http.Response response = await _warehouse.get(_url);
       if (response.statusCode == 200) {
         return ProductTypePack.fromJson(jsonDecode(response.body));
+      }
+      throw Exception(response.statusCode);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future<ReadAllProduct> getProduct(int productId) async {
+    final Uri _url = Uri.parse('$_baseUrl/product/Product_all');
+
+    try {
+      final http.Response response = await _warehouse.get(_url);
+      if (response.statusCode == 200) {
+        return ReadAllProduct.fromJson(jsonDecode(response.body));
       }
       throw Exception(response.statusCode);
     } catch (e) {
