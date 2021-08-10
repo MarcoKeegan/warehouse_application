@@ -6,21 +6,21 @@ class CreateProduct {
   // final String imageType;
   // final String image64;
 
-  const CreateProduct(
-      {required this.productTypeId,
-      required this.productName,
-      required this.price,
-      required this.images,
-      // required this.imageType,
-      // required this.image64
-      });
+  const CreateProduct({
+    required this.productTypeId,
+    required this.productName,
+    required this.price,
+    required this.images,
+    // required this.imageType,
+    // required this.image64
+  });
 
   Map<String, dynamic> toJson() {
     return {
       'Product_Type_ID': productTypeId,
       'Product_Name': productName,
       'Single_Price': price,
-      'Image' : images,
+      'Image': images,
       // 'mime': imageType,
       // 'data': image64,
     };
@@ -28,8 +28,8 @@ class CreateProduct {
 }
 
 class ImageProduct {
-  final String? imageType;
-  final String? image64;
+  final String imageType;
+  final String image64;
 
   const ImageProduct({
     required this.imageType,

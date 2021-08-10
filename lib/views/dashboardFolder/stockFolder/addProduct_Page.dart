@@ -16,7 +16,7 @@ class AddProductPage extends StatefulWidget {
         super(key: key);
 
   final CreateProductRepository _createProductRepository;
-  
+
   @override
   _AddProductPage createState() => _AddProductPage();
 }
@@ -217,10 +217,9 @@ class _AddProductPage extends State<AddProductPage> {
         child: FormBuilderFilePicker(
           name: 'image',
           decoration: InputDecoration(
-            border: OutlineInputBorder(), 
-            labelText: 'Upload Image'
-          ),
+              border: OutlineInputBorder(), labelText: 'Upload Image'),
           maxFiles: 1,
+          withData: true,
           previewImages: true,
           onChanged: (value) => print(value),
           selector: Center(
@@ -249,19 +248,19 @@ class _AddProductPage extends State<AddProductPage> {
             print(_formKey.currentState!.value['image'].runtimeType);
 
             _createproductBloc.add(CreateProductReq(
-              productName: _formKey.currentState!.value['namaB'],
-              productTypeId: _formKey.currentState!.value['type'],
-              price: _formKey.currentState!.value['harga'],
-              image64: (_formKey.currentState!.value['image']
+                productName: _formKey.currentState!.value['namaB'],
+                productTypeId: _formKey.currentState!.value['type'],
+                price: _formKey.currentState!.value['harga'],
+                image64: (_formKey.currentState!.value['image']
                         as List<PlatformFile>)
                     .first
                     .bytes!,
-              imageType: (_formKey.currentState!.value['image']
+                imageType: (_formKey.currentState!.value['image']
                         as List<PlatformFile>)
                     .first
                     .extension!,
-              firebaseUid: BlocProvider.of<AuthenticationBloc>(context).user.uid
-            ));
+                firebaseUid:
+                    BlocProvider.of<AuthenticationBloc>(context).user.uid));
           }
           Navigator.of(context).pushReplacementNamed('/viewListStckPage');
         },

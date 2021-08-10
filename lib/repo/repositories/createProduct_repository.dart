@@ -18,11 +18,11 @@ class CreateProductRepository {
     required String firebaseUid,
   }) async {
     CreateProduct createProduct = CreateProduct(
-        price: price,
-        productName: productName,
-        productTypeId: productTypeId,
-        images: images,
-        );
+      price: price,
+      productName: productName,
+      productTypeId: productTypeId,
+      images: images,
+    );
 
     final result = await _provider.createProduct(createProduct, firebaseUid);
     if (result is ResponseBerhasil) {

@@ -13,7 +13,7 @@ class DashboardPage extends StatefulWidget {
 
 class _DashboardPage extends State<DashboardPage> {
   FirebaseUser firebaseUser = FirebaseUser(
-      uid: 'PAcDaZd2RPQ2Nhipf60vG27q5nc2'); // cari cara uid ambil otomatis
+      uid: '5HAikyaWYcXS62b5EneqyXulOrt2'); // cari cara uid ambil otomatis
 
   @override
   Widget build(BuildContext context) {
