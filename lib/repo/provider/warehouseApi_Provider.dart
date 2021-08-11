@@ -115,7 +115,7 @@ class WarehouseApiProvider {
     }
   }
 
-  Future<ReadAllProduct> getProduct(int productId) async {
+  Future<ReadAllProduct> getProduct(int readAllProduct) async {
     final Uri _url = Uri.parse('$_baseUrl/product/Product_all');
 
     try {

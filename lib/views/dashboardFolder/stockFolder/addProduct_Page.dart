@@ -25,20 +25,24 @@ class _AddProductPage extends State<AddProductPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late CreateproductBloc _createproductBloc;
   String? type;
-  bool isLoading = false;
-
+  bool _load = false;
+ 
   @override
   void initState() {
     _createproductBloc = CreateproductBloc(
         createProductRepository: widget._createProductRepository);
     super.initState();
   }
-
+  
   ProductTypeRepository productTypeRepository = ProductTypeRepository();
   CreateProductRepository createProductRepository = CreateProductRepository();
 
   @override
   Widget build(BuildContext context) {
+
+    Widget loadingIndicator =_load? 
+    new Center(child: new CircularProgressIndicator()):new Container();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan[400],
@@ -82,7 +86,8 @@ class _AddProductPage extends State<AddProductPage> {
                 _hargaBarang(context),
                 // _namaWarehouse(),
                 // _alamatWarehouse(),
-                _addProductButton()
+                _addProductButton(),
+                new Align(child: loadingIndicator,alignment: FractionalOffset.center,),
               ],
             ),
           ),
@@ -248,7 +253,7 @@ class _AddProductPage extends State<AddProductPage> {
             // print(_formKey.currentState!.value['harga'].runtimeType);
             // print(_formKey.currentState!.value['namaB'].runtimeType);
             // print(_formKey.currentState!.value['image'].runtimeType);
-
+  
             _createproductBloc.add(CreateProductReq(
                 productName: _formKey.currentState!.value['namaB'],
                 productTypeId: _formKey.currentState!.value['type'],
@@ -264,6 +269,9 @@ class _AddProductPage extends State<AddProductPage> {
                 firebaseUid:
                     BlocProvider.of<AuthenticationBloc>(context).user.uid));
           }
+          setState((){
+            _load=true;
+          });
           Navigator.of(context).pushReplacementNamed('/viewListStckPage');
         },
         child: Text(
@@ -271,6 +279,6 @@ class _AddProductPage extends State<AddProductPage> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-    );
+    );      
   }
 }

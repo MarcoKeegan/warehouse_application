@@ -14,7 +14,7 @@ class ShowProductFailed extends ShowProductState {}
 class ShowProductLoading extends ShowProductState {}
 
 class ShowProductDone extends ShowProductState {
-  final List<ProductData> product;
+  final ReadAllProduct product;
 
   ShowProductDone({required this.product});
 

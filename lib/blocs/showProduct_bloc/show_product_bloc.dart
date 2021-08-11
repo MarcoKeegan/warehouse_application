@@ -11,7 +11,7 @@ part 'show_product_state.dart';
 class ShowProductBloc extends Bloc<ShowProductEvent, ShowProductState> {
   ShowProductBloc({required this.getProductRepository})
       : super(ShowProductInitial()) {
-    add(ShowProductLoad(productId: 5));
+    add(ShowProductLoad());
   }
 
   final GetProductRepository getProductRepository;
@@ -24,7 +24,7 @@ class ShowProductBloc extends Bloc<ShowProductEvent, ShowProductState> {
       yield ShowProductLoading();
       try {
         final result =
-            await getProductRepository.getProduct(productId: event.productId);
+            await getProductRepository.getProduct(productId: 1);
         yield ShowProductDone(product: result);
       } catch (e) {
         yield ShowProductFailed();

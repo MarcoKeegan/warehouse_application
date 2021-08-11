@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:warehouse_application/blocs/showProduct_bloc/show_product_bloc.dart';
+import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
+import 'package:warehouse_application/repo/repositories/readProduct_repository.dart';
 
 class ListStockPage extends StatefulWidget {
   const ListStockPage({Key? key}) : super(key: key);
@@ -7,25 +11,12 @@ class ListStockPage extends StatefulWidget {
 }
 
 class _ListStockPage extends State<ListStockPage> {
-  // List<dynamic> product = [
-  //   "Android Cupcake",
-  //   "Android Donut",
-  //   "Android Eclair",
-  //   "Android Froyo",
-  //   "Android Gingerbread",
-  //   "Android Honeycomb",
-  //   "Android Ice Cream Sandwich",
-  //   "Android Jelly Bean",
-  //   "Android Kitkat",
-  //   "Android Lollipop",
-  //   "Android Marshmallow",
-  //   "Android Nougat",
-  //   "Android Oreo",
-  //   "Android Pie"
-  // ];
+  WarehouseApiProvider warehouseApiProvider = WarehouseApiProvider();
+  GetProductRepository getProductRepository = GetProductRepository();
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan[400],
@@ -46,76 +37,32 @@ class _ListStockPage extends State<ListStockPage> {
               size: 30,
             )),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0, 15.0, 180.0, 15.0),
-              child: Text("List Product",
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.black)),
-            ),
-            Container(
-              child: Column(
-                children: [
-                  // SizedBox(
-                  //   height: 200.0,
-                  //   child: ListView.builder(
-                  //     scrollDirection: Axis.horizontal,
-                  //     itemCount: product.length,
-                  //     itemBuilder: (context, index) {
-                  //       return Card(
-                  //         shape: RoundedRectangleBorder(
-                  //             borderRadius: BorderRadius.circular(10)),
-                  //         elevation: 2,
-                  //         child: InkWell(
-                  //           onTap: () {
-                  //             // Navigator.of(context)
-                  //             //     .pushReplacementNamed('/detailStockPage');
-                  //           },
-                  //           child: SizedBox(
-                  //             width: 500,
-                  //             height: 80,
-                  //             child: Column(
-                  //                 mainAxisAlignment: MainAxisAlignment.center,
-                  //                 children: [
-                  //                   Text(product[index]),
-                  //                   // Text('Rp 25.000,00'),
-                  //                 ]),
-                  //           ),
-                  //         ),
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
-
-                  Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    elevation: 2,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.of(context)
-                            .pushReplacementNamed('/detailStockPage');
-                      },
-                      child: SizedBox(
-                        width: 500,
-                        height: 80,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('Product 1'),
-                              Text('Rp 25.000,00'),
-                            ]),
-                      ),
-                    ),
-                  ),
-                ],
+      body: BlocProvider(
+        create: (context) =>
+            ShowProductBloc(getProductRepository: getProductRepository),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 15.0, 180.0, 15.0),
+                child: Text("List Product",
+                    style: TextStyle(
+                        fontSize: 30,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.black)),
               ),
-            ),
-          ],
+              Container(
+                child: Column(
+                  children: [
+                    Container(
+                      height: size.height *0.9,
+                      child: _listProduct()
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -131,4 +78,48 @@ class _ListStockPage extends State<ListStockPage> {
       ),
     );
   }
+
+  Widget _listProduct() {
+    return BlocBuilder<ShowProductBloc,ShowProductState>(
+      builder: (context, state) {
+        if (state is ShowProductLoading) {
+          CircularProgressIndicator(color: Colors.white);
+        } else if (state is ShowProductFailed) {
+          print('Show Product Failed');
+        } else if (state is ShowProductDone) {
+            return ListView.builder(
+              itemCount: state.product.data!.length,
+              itemBuilder: (context, index) { 
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  elevation: 2,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushReplacementNamed('/detailStockPage');
+                    },
+                    child: SizedBox(
+                      width: 500,
+                      height: 80,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('${state.product.data![index].productName.toString()}'),
+                          Text('${state.product.data![index].price.toString()}'),
+                        ]
+                      ),
+                    ),
+                  ),
+                );
+              }
+            );
+        } return Container();
+      }
+    );
+  }
 }
+
+
+
+

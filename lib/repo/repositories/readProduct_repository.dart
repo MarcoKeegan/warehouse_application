@@ -9,11 +9,11 @@ class GetProductRepository {
 
   final WarehouseApiProvider _provider;
 
-  Future<List<ProductData>> getProduct({productId}) async {
+  Future<ReadAllProduct> getProduct({productId}) async {
     try {
       final result = await _provider.getProduct(productId);
-      print(result.message);
-      return result.data;
+      print(result);
+      return result;
     } catch (e) {
       print(e.toString());
       throw GetProductFailure();
