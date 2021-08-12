@@ -115,15 +115,16 @@ class WarehouseApiProvider {
     }
   }
 
-  Future<ReadAllProduct> getProduct(int readAllProduct) async {
+  Future getAllProduct(int readAllProduct) async {
     final Uri _url = Uri.parse('$_baseUrl/product/Product_all');
 
     try {
       final http.Response response = await _warehouse.get(_url);
       if (response.statusCode == 200) {
         return ReadAllProduct.fromJson(jsonDecode(response.body));
+      } else {
+        return ResponseGagal.fromJson(jsonDecode(response.body));
       }
-      throw Exception(response.statusCode);
     } catch (e) {
       throw Exception(e);
     }

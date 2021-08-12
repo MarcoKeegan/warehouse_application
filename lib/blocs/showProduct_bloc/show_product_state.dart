@@ -11,6 +11,8 @@ class ShowProductInitial extends ShowProductState {}
 
 class ShowProductFailed extends ShowProductState {}
 
+class ShowProductFailedById extends ShowProductFailed {}
+
 class ShowProductLoading extends ShowProductState {}
 
 class ShowProductDone extends ShowProductState {

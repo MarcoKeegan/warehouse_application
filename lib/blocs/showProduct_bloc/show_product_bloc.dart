@@ -24,8 +24,10 @@ class ShowProductBloc extends Bloc<ShowProductEvent, ShowProductState> {
       yield ShowProductLoading();
       try {
         final result =
-            await getProductRepository.getProduct(productId: 1);
+            await getProductRepository.getAllProduct(readAllProduct: 1);
         yield ShowProductDone(product: result);
+      } on GetProductFailureInvalidProductId {
+        yield ShowProductFailedById();
       } catch (e) {
         yield ShowProductFailed();
       }

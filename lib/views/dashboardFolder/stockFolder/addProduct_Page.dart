@@ -25,7 +25,7 @@ class _AddProductPage extends State<AddProductPage> {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late CreateproductBloc _createproductBloc;
   String? type;
-  bool _load = false;
+  bool isLoading = false;
  
   @override
   void initState() {
@@ -40,8 +40,8 @@ class _AddProductPage extends State<AddProductPage> {
   @override
   Widget build(BuildContext context) {
 
-    Widget loadingIndicator =_load? 
-    new Center(child: new CircularProgressIndicator()):new Container();
+    // Widget loadingIndicator =isLoading? 
+    // new Center(child: new CircularProgressIndicator()):new Container();
 
     return Scaffold(
       appBar: AppBar(
@@ -63,32 +63,36 @@ class _AddProductPage extends State<AddProductPage> {
               size: 30,
             )),
       ),
-      body: FormBuilder(
-        key: _formKey,
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider<CreateproductBloc>(
-              create: (BuildContext context) => CreateproductBloc(
-                  createProductRepository: createProductRepository),
-            ),
-            BlocProvider<ProducttypeBloc>(
-              create: (BuildContext context) =>
-                  ProducttypeBloc(productTypeRepository: productTypeRepository),
-            )
-          ],
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                _title(),
-                _uploadImage(),
-                _dropdownType(),
-                _namaBarang(context),
-                _hargaBarang(context),
-                // _namaWarehouse(),
-                // _alamatWarehouse(),
-                _addProductButton(),
-                new Align(child: loadingIndicator,alignment: FractionalOffset.center,),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: FormBuilder(
+            key: _formKey,
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider<CreateproductBloc>(
+                  create: (BuildContext context) => CreateproductBloc(
+                      createProductRepository: createProductRepository),
+                ),
+                BlocProvider<ProducttypeBloc>(
+                  create: (BuildContext context) =>
+                      ProducttypeBloc(productTypeRepository: productTypeRepository),
+                )
               ],
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _title(),
+                    _uploadImage(),
+                    _dropdownType(),
+                    _namaBarang(context),
+                    _hargaBarang(context),
+                    // _namaWarehouse(),
+                    // _alamatWarehouse(),
+                    _addProductButton(),
+                    // new Align(child: loadingIndicator,alignment: FractionalOffset.center,),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
@@ -269,9 +273,9 @@ class _AddProductPage extends State<AddProductPage> {
                 firebaseUid:
                     BlocProvider.of<AuthenticationBloc>(context).user.uid));
           }
-          setState((){
-            _load=true;
-          });
+          // setState((){
+          //   _load=true;
+          // });
           Navigator.of(context).pushReplacementNamed('/viewListStckPage');
         },
         child: Text(
