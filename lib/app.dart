@@ -101,8 +101,8 @@ class _AppState extends State<App> {
                     ));
           case '/viewListStckPage':
             return MaterialPageRoute(builder: (context) => ListStockPage());
-          case '/detailStockPage':
-            return MaterialPageRoute(builder: (context) => DetailStockPage());
+          // case '/detailStockPage':
+          //   return MaterialPageRoute(builder: (context) => DetailStockPage(product: null,));
           case '/addStockPage':
             return MaterialPageRoute(builder: (context) => AddStockPage());
         }

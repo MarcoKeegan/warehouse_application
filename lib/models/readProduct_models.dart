@@ -5,13 +5,13 @@ ReadAllProduct allProductFromJson(String str) => ReadAllProduct.fromJson(json.de
 String allProductToJson(ReadAllProduct data) => json.encode(data.toJson());
 
 class ReadAllProduct {
+  String? message;
+  List<ProductData>? data;
+
   ReadAllProduct({
     this.message,
     this.data,
   });
-
-  String? message;
-  List<ProductData>? data;
 
   factory ReadAllProduct.fromJson(Map<String, dynamic> json) => ReadAllProduct(
         message: json["message"],
@@ -25,6 +25,13 @@ class ReadAllProduct {
 }
 
 class ProductData {
+  int? productId;
+  int? productTypeId;
+  String? imageUrl;
+  String? productName;
+  int? price;
+  bool? softDelete;
+
   ProductData({
     this.productId,
     this.productTypeId,
@@ -33,14 +40,6 @@ class ProductData {
     this.price,
     this.softDelete,
   });
-
-  int? productId;
-  int? productTypeId;
-  String? imageUrl;
-  String? productName;
-  int? price;
-  bool? softDelete;
-
   factory ProductData.fromJson(Map<String, dynamic> json) => ProductData(
         productId: json["Product_ID"],
         productTypeId: json["Product_Type_ID"],

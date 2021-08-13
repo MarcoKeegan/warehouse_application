@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/showProduct_bloc/show_product_bloc.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 import 'package:warehouse_application/repo/repositories/readProduct_repository.dart';
+import 'package:warehouse_application/views/dashboardFolder/stockFolder/detailStock_Page.dart';
 
 class ListStockPage extends StatefulWidget {
   const ListStockPage({Key? key}) : super(key: key);
@@ -97,7 +98,7 @@ class _ListStockPage extends State<ListStockPage> {
                   elevation: 2,
                   child: InkWell(
                     onTap: () {
-                      Navigator.of(context).pushReplacementNamed('/detailStockPage');
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailStockPage(productId: state.product.data![index].productId,)));
                     },
                     child: SizedBox(
                       width: 500,

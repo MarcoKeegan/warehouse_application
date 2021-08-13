@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:warehouse_application/models/readProduct_models.dart';
+import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
-class DetailStockPage extends StatelessWidget {
-  DetailStockPage({Key? key}) : super(key: key);
+class DetailStockPage extends StatefulWidget {
+  const DetailStockPage({Key? key, required this.productId}) : super(key: key);
 
+  @override
+  _DetailStockPage createState() => _DetailStockPage();
+  final int? productId;
+}
+
+
+class _DetailStockPage extends State<DetailStockPage> {
+  WarehouseApiProvider provider = WarehouseApiProvider();
+  // int? productId;
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
