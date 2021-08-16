@@ -2,49 +2,54 @@ import 'package:warehouse_application/models/createProduct_models.dart';
 import 'package:warehouse_application/models/response_model.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
-class CreateProductFailure implements Exception {}
+class UpdateProductFailure implements Exception {}
 
-class CreateProductOthersFailures implements CreateProductFailure {}
+class UpdateProductOthersFailure implements UpdateProductFailure {}
 
-class CreateProductRepository {
-  CreateProductRepository({WarehouseApiProvider? provider})
+class UpdateProductRepository {
+  UpdateProductRepository({WarehouseApiProvider? provider})
       : _provider = provider ?? WarehouseApiProvider();
 
   final WarehouseApiProvider _provider;
 
-  Future<ResponseBerhasil> createProduct({
+  Future<ResponseBerhasil> updateProduct({
     required int productTypeId,
     required String productName,
     required String price,
     required ImageProduct images,
     required String firebaseUid,
+    idProduct,
   }) async {
-    CreateProduct createProduct = CreateProduct(
-      price: price,
-      productName: productName,
+    CreateProduct updateProduct = CreateProduct(
       productTypeId: productTypeId,
+      productName: productName,
+      price: price,
       images: images,
     );
 
-    final result = await _provider.createProduct(createProduct, firebaseUid);
+    final result = await _provider.updateProduct(
+      updateProduct,
+      idProduct,
+      firebaseUid,
+    );
+
     if (result is ResponseBerhasil) {
-      print(result.message);
       return result;
     } else if (result is ResponseGagal) {
       switch (result.errorkey) {
         case "error_invalid_product_id":
-          throw CreateProductOthersFailures();
+          throw UpdateProductOthersFailure();
         case "error_param":
-          throw CreateProductOthersFailures();
-        case "error_content-type":
-          throw CreateProductOthersFailures();
+          throw UpdateProductOthersFailure();
+        case "error_content-type-type":
+          throw UpdateProductOthersFailure();
         case "error_internal_server":
-          throw CreateProductOthersFailures();
+          throw UpdateProductOthersFailure();
         case "error_invalid_uid":
-          throw CreateProductOthersFailures();
+          throw UpdateProductOthersFailure();
 
         default:
-          throw CreateProductFailure();
+          throw UpdateProductFailure();
       }
     } else {
       throw Exception();

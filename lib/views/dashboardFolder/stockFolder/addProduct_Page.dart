@@ -26,21 +26,20 @@ class _AddProductPage extends State<AddProductPage> {
   late CreateproductBloc _createproductBloc;
   String? type;
   bool isLoading = false;
- 
+
   @override
   void initState() {
     _createproductBloc = CreateproductBloc(
         createProductRepository: widget._createProductRepository);
     super.initState();
   }
-  
+
   ProductTypeRepository productTypeRepository = ProductTypeRepository();
   CreateProductRepository createProductRepository = CreateProductRepository();
 
   @override
   Widget build(BuildContext context) {
-
-    // Widget loadingIndicator =isLoading? 
+    // Widget loadingIndicator =isLoading?
     // new Center(child: new CircularProgressIndicator()):new Container();
 
     return Scaffold(
@@ -74,8 +73,8 @@ class _AddProductPage extends State<AddProductPage> {
                       createProductRepository: createProductRepository),
                 ),
                 BlocProvider<ProducttypeBloc>(
-                  create: (BuildContext context) =>
-                      ProducttypeBloc(productTypeRepository: productTypeRepository),
+                  create: (BuildContext context) => ProducttypeBloc(
+                      productTypeRepository: productTypeRepository),
                 )
               ],
               child: SingleChildScrollView(
@@ -257,7 +256,7 @@ class _AddProductPage extends State<AddProductPage> {
             // print(_formKey.currentState!.value['harga'].runtimeType);
             // print(_formKey.currentState!.value['namaB'].runtimeType);
             // print(_formKey.currentState!.value['image'].runtimeType);
-  
+
             _createproductBloc.add(CreateProductReq(
                 productName: _formKey.currentState!.value['namaB'],
                 productTypeId: _formKey.currentState!.value['type'],
@@ -283,6 +282,6 @@ class _AddProductPage extends State<AddProductPage> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-    );      
+    );
   }
 }

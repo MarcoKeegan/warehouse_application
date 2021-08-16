@@ -55,10 +55,7 @@ class _ListStockPage extends State<ListStockPage> {
               Container(
                 child: Column(
                   children: [
-                    Container(
-                      height: size.height *0.9,
-                      child: _listProduct()
-                    )
+                    Container(height: size.height * 0.9, child: _listProduct())
                   ],
                 ),
               ),
@@ -81,46 +78,43 @@ class _ListStockPage extends State<ListStockPage> {
   }
 
   Widget _listProduct() {
-    return BlocBuilder<ShowProductBloc,ShowProductState>(
-      builder: (context, state) {
-        if (state is ShowProductLoading) {
-          CircularProgressIndicator(color: Colors.white);
-        } else if (state is ShowProductFailed) {
-          print('Show Product Failed');
-        } else if (state is ShowProductDone) {
-            return ListView.builder(
-              itemCount: state.product.data!.length,
-              itemBuilder: (context, index) { 
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  elevation: 2,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailStockPage(productId: state.product.data![index].productId,)));
-                    },
-                    child: SizedBox(
-                      width: 500,
-                      height: 80,
-                      child: Column(
+    return BlocBuilder<ShowProductBloc, ShowProductState>(
+        builder: (context, state) {
+      if (state is ShowProductLoading) {
+        CircularProgressIndicator(color: Colors.white);
+      } else if (state is ShowProductFailed) {
+        print('Show Product Failed');
+      } else if (state is ShowProductDone) {
+        return ListView.builder(
+            itemCount: state.product.data!.length,
+            itemBuilder: (context, index) {
+              return Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10)),
+                elevation: 2,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => DetailStockPage(
+                            productId: state.product.data![index].productId!)));
+                  },
+                  child: SizedBox(
+                    width: 500,
+                    height: 80,
+                    child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('${state.product.data![index].productName.toString()}'),
-                          Text('${state.product.data![index].price.toString()}'),
-                        ]
-                      ),
-                    ),
+                          Text(
+                              '${state.product.data![index].productName.toString()}'),
+                          Text(
+                              '${state.product.data![index].price.toString()}'),
+                        ]),
                   ),
-                );
-              }
-            );
-        } return Container();
+                ),
+              );
+            });
       }
-    );
+      return Container();
+    });
   }
 }
-
-
-
-

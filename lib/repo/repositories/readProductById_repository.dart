@@ -8,7 +8,7 @@ class GetProductByIdFailure implements Exception {}
 class GetProductByIdFailureInvalidProductId implements GetProductByIdFailure {}
 
 class GetProductByIdRepository {
-  GetProductByIdRepository({WarehouseApiProvider? provider}) 
+  GetProductByIdRepository({WarehouseApiProvider? provider})
       : _provider = provider ?? WarehouseApiProvider();
 
   final WarehouseApiProvider _provider;
@@ -20,14 +20,22 @@ class GetProductByIdRepository {
         return result;
       } else if (result is ResponseGagal) {
         switch (result.errorkey) {
-          case "error_invalid_product_id": throw GetProductFailureInvalidProductId();
+          case "error_invalid_product_id":
+            throw GetProductFailureInvalidProductId();
+          case "error_param":
+            throw GetProductFailureInvalidProductId();
+          case "error_content-type":
+            throw GetProductFailureInvalidProductId();
+          case "error_internal_server":
+            throw GetProductFailureInvalidProductId();
 
-          default: throw GetProductByIdFailure();
+          default:
+            throw GetProductByIdFailure();
         }
       } else {
         throw Exception();
       }
-    }catch (e) {
+    } catch (e) {
       print(e.toString());
       throw GetProductFailure();
     }

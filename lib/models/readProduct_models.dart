@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-ReadAllProduct allProductFromJson(String str) => ReadAllProduct.fromJson(json.decode(str));
+ReadAllProduct allProductFromJson(String str) =>
+    ReadAllProduct.fromJson(json.decode(str));
 
 String allProductToJson(ReadAllProduct data) => json.encode(data.toJson());
 
@@ -13,10 +14,13 @@ class ReadAllProduct {
     this.data,
   });
 
-  factory ReadAllProduct.fromJson(Map<String, dynamic> json) => ReadAllProduct(
-        message: json["message"],
-        data: List<ProductData>.from(json["data"].map((x) => ProductData.fromJson(x))),
-      );
+  factory ReadAllProduct.fromJson(Map<String, dynamic> json) {
+    return ReadAllProduct(
+      message: json["message"],
+      data: List<ProductData>.from(
+          json["data"].map((x) => ProductData.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "message": message,
@@ -40,14 +44,16 @@ class ProductData {
     this.price,
     this.softDelete,
   });
-  factory ProductData.fromJson(Map<String, dynamic> json) => ProductData(
-        productId: json["Product_ID"],
-        productTypeId: json["Product_Type_ID"],
-        imageUrl: json["Image_Url"] == null ? null : json["Image_Url"],
-        productName: json["Product_Name"],
-        price: json["Single_Price"],
-        softDelete: json["Soft_Delete"],
-      );
+  factory ProductData.fromJson(Map<String, dynamic> json) {
+    return ProductData(
+      productId: json["Product_ID"],
+      productTypeId: json["Product_Type_ID"],
+      imageUrl: json["Image_Url"] == null ? null : json["Image_Url"],
+      productName: json["Product_Name"],
+      price: json["Single_Price"],
+      softDelete: json["Soft_Delete"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "Product_ID": productId,
