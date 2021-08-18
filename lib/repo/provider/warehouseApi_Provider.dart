@@ -174,6 +174,7 @@ class WarehouseApiProvider {
       throw Exception(response.statusCode);
     } catch (e) {
       print('$e');
+      throw Exception(e);
     }
   }
 }

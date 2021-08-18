@@ -31,11 +31,12 @@ class UpdateproductBloc extends Bloc<UpdateproductEvent, UpdateproductState> {
             ImageProduct(imageType: event.imageType, image64: image64);
 
         await updateProductRepository.updateProduct(
-            productTypeId: event.productId,
+            productTypeId: event.productTypeId,
             productName: event.productName,
             price: event.price,
             images: image,
-            firebaseUid: event.firebaseUid);
+            firebaseUid: event.firebaseUid,
+            idProduct: event.productId);
 
         yield UpdateproductDone();
       } catch (e) {

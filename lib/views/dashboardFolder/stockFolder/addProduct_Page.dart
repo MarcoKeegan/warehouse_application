@@ -34,6 +34,13 @@ class _AddProductPage extends State<AddProductPage> {
     super.initState();
   }
 
+  Future<void> _showSnackbar() async {
+    final snackBar = SnackBar(
+      content: const Text('Add Product Succes!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   ProductTypeRepository productTypeRepository = ProductTypeRepository();
   CreateProductRepository createProductRepository = CreateProductRepository();
 
@@ -271,11 +278,10 @@ class _AddProductPage extends State<AddProductPage> {
                     .extension!,
                 firebaseUid:
                     BlocProvider.of<AuthenticationBloc>(context).user.uid));
+
+            Navigator.of(context).pushReplacementNamed('/viewListStckPage');
+            _showSnackbar();
           }
-          // setState((){
-          //   _load=true;
-          // });
-          Navigator.of(context).pushReplacementNamed('/viewListStckPage');
         },
         child: Text(
           "Add Product",

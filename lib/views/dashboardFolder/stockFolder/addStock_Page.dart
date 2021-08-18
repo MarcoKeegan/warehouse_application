@@ -68,7 +68,7 @@ class AddStockPage extends StatelessWidget {
             onPressed: () {},
             child: Text(
               "Add Stock",
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.white),
             ),
           ),
         ],

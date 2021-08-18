@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/showProductById_bloc/showproductbyid_bloc.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 import 'package:warehouse_application/repo/repositories/readProductById_repository.dart';
+import 'package:warehouse_application/repo/repositories/updateProduct_repository.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/addStock_Page.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/updateProduct_Page.dart';
 
@@ -18,6 +19,7 @@ class _DetailStockPage extends State<DetailStockPage> {
   WarehouseApiProvider provider = WarehouseApiProvider();
   GetProductByIdRepository getProductByIdRepository =
       GetProductByIdRepository();
+  UpdateProductRepository updateProductRepository = UpdateProductRepository();
 
   late ShowproductbyidBloc showproductbyidBloc;
 
@@ -173,26 +175,30 @@ class _DetailStockPage extends State<DetailStockPage> {
               },
               child: Text(
                 "Add Stock",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               ),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => UpdateProductPage()),
+                  MaterialPageRoute(
+                      builder: (context) => UpdateProductPage(
+                            productId: state.productID.data!.productId!,
+                            updateProductRepository: updateProductRepository,
+                          )),
                 );
               },
               child: Text(
                 "Edit Product",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               ),
             ),
             ElevatedButton(
               onPressed: () {},
               child: Text(
                 "Disable Product",
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.white),
               ),
             ),
           ],
