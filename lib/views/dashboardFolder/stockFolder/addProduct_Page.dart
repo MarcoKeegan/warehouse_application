@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/blocs/createProduct_bloc/createproduct_bloc.dart';
@@ -21,11 +22,11 @@ class AddProductPage extends StatefulWidget {
   _AddProductPage createState() => _AddProductPage();
 }
 
-class _AddProductPage extends State<AddProductPage> {
+class _AddProductPage extends State<AddProductPage> with TickerProviderStateMixin {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late CreateproductBloc _createproductBloc;
   String? type;
-  bool isLoading = false;
+  // bool isLoading = false;
 
   @override
   void initState() {
@@ -41,14 +42,24 @@ class _AddProductPage extends State<AddProductPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  Future<void> _showLoading() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SpinKitFadingCircle(
+            color: Colors.cyan,
+            size: 50,
+            controller: AnimationController(
+                vsync: this, duration: const Duration(milliseconds: 2000)),
+          );
+        });
+  }
+
   ProductTypeRepository productTypeRepository = ProductTypeRepository();
   CreateProductRepository createProductRepository = CreateProductRepository();
 
   @override
   Widget build(BuildContext context) {
-    // Widget loadingIndicator =isLoading?
-    // new Center(child: new CircularProgressIndicator()):new Container();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.cyan[400],
@@ -85,20 +96,32 @@ class _AddProductPage extends State<AddProductPage> {
                 )
               ],
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    _title(),
-                    _uploadImage(),
-                    _dropdownType(),
-                    _namaBarang(context),
-                    _hargaBarang(context),
-                    // _namaWarehouse(),
-                    // _alamatWarehouse(),
-                    _addProductButton(),
-                    // new Align(child: loadingIndicator,alignment: FractionalOffset.center,),
-                  ],
+                // child: Builder(
+                //   builder: (context) => 
+                //       BlocListener<CreateproductBloc, CreateproductState>(
+                //         listener: (context, state) {
+                //           if (state is CreateproductLoading) {
+                //             _showLoading();
+                //           } else if (state is CreateproductDone) {
+                //              _showSnackbar();
+                            
+                //           }
+                //         },
+                      
+                  child: Column(
+                    children: [
+                      _title(),
+                      _uploadImage(),
+                      _dropdownType(),
+                      _namaBarang(context),
+                      _hargaBarang(context),
+                      // _namaWarehouse(),
+                      // _alamatWarehouse(),
+                      _addProductButton(),
+                    ],
+                  ),
                 ),
-              ),
+              // ),
             ),
           ),
         ),
@@ -278,7 +301,8 @@ class _AddProductPage extends State<AddProductPage> {
                     .extension!,
                 firebaseUid:
                     BlocProvider.of<AuthenticationBloc>(context).user.uid));
-
+                    
+            _showLoading();
             Navigator.of(context).pushReplacementNamed('/viewListStckPage');
             _showSnackbar();
           }

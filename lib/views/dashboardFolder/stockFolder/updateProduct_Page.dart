@@ -26,7 +26,8 @@ class UpdateProductPage extends StatefulWidget {
 }
 
 class _UpdateProductPage extends State<UpdateProductPage> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey();
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey();  
+  late UpdateproductBloc _updateproductBloc;
   String? type;
   ProductTypeRepository productTypeRepository = ProductTypeRepository();
   GetProductByIdRepository getProductByIdRepository =
@@ -35,20 +36,11 @@ class _UpdateProductPage extends State<UpdateProductPage> {
 
   late ShowproductbyidBloc showproductbyidBloc;
 
-  // @override
-  // void initState() {
-  //   showproductbyidBloc =
-  //       ShowproductbyidBloc(getProductByIdRepository: getProductByIdRepository);
-  //   super.initState();
-  // }
-
   @override
   void didChangeDependencies() {
     showproductbyidBloc.add(ShowProductByIdLoad(productId: widget.productId));
     super.didChangeDependencies();
   }
-
-  late UpdateproductBloc _updateproductBloc;
 
   @override
   void initState() {
@@ -114,6 +106,8 @@ class _UpdateProductPage extends State<UpdateProductPage> {
                         Navigator.of(context)
                             .pushReplacementNamed('/viewListStckPage');
                         _showSnackbar();
+                      } else {
+                        Navigator.of(context).pop(context);
                       }
                     },
                     child: Text('Yes'),
@@ -167,6 +161,7 @@ class _UpdateProductPage extends State<UpdateProductPage> {
                   child: Column(
                     children: [
                       _title(),
+                      // _image(),
                       _uploadImage(),
                       _dropdownType(),
                       _namaBarang(context),
@@ -296,30 +291,53 @@ class _UpdateProductPage extends State<UpdateProductPage> {
     );
   }
 
+  // Widget _image() {
+  //   return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
+  //     builder: (context, state) {
+  //       if (state is ShowproductbyidDone) {
+  //         return SizedBox(
+  //             width: 200,
+  //             height: 200,
+  //             child: Image.network('${state.productID.data!.imageUrl}'),
+  //           );
+  //       }
+  //       return Container();
+  //     }
+  //   );
+  // }
+
   Widget _uploadImage() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        child: FormBuilderFilePicker(
-          name: 'image',
-          decoration: InputDecoration(
-              border: OutlineInputBorder(), labelText: 'Upload Image'),
-          maxFiles: 1,
-          withData: true,
-          previewImages: true,
-          onChanged: (value) => print(value),
-          selector: Center(
-            child: Icon(Icons.upload),
-          ),
-          onFileLoading: (val) {
-            print('Load Data');
-          },
-          validator: FormBuilderValidators.compose([
-            FormBuilderValidators.required(context),
-          ]),
-        ),
-      ),
+    return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
+      builder: (context, state) {
+        if (state is ShowproductbyidDone) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+              child: FormBuilderFilePicker(
+                name: 'image',
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), labelText: 'Upload New Image', ),
+                maxFiles: 1,
+                withData: true,
+                previewImages: true,
+                onChanged: (value) => print(value),
+                selector: Row(
+                  children: [
+                    Icon(Icons.upload),
+                  ],
+                ),
+                onFileLoading: (val) {
+                  print('Load Data');
+                },
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(context),
+                ]),
+              ),
+          );
+        }
+        return Container();
+      }
     );
+    
   }
 
   Widget _addProductButton() {
