@@ -177,4 +177,32 @@ class WarehouseApiProvider {
       throw Exception(e);
     }
   }
+
+  Future deleteProduct(String firebaseUid, int productId) async {
+    final Uri _url = Uri.parse('$_baseUrl/product/Product/$productId');
+
+    try {
+      final http.Response response =
+          await _warehouse.delete(_url, headers: <String, String>{
+        "Content-Type": "application/json",
+        "Firebase_UID": firebaseUid,
+      });
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseJson = jsonDecode(response.body);
+        if (responseJson['message'] == 'Success') {
+          print('Success');
+          return ResponseBerhasil.fromJson(responseJson);
+        } else {
+          print('Failed');
+          print(response.body);
+
+          return ResponseGagal.fromJson(responseJson);
+        }
+      }
+      throw Exception(response.statusCode);
+    } catch (e) {
+      print('$e');
+    }
+  }
 }

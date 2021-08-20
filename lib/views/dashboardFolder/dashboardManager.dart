@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/blocs/dashboard_bloc/dashboard_bloc.dart';
+import 'package:warehouse_application/views/dashboardFolder/userPageFolder/userPage.dart';
 
 class DashManagerPage extends StatefulWidget {
   DashManagerPage({Key? key}) : super(key: key);
@@ -34,7 +35,10 @@ class _DashManagerPage extends State<DashManagerPage> {
             actions: <Widget>[
               IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed('/userPage');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => UserPage()),
+                  );
                 },
                 icon: Icon(
                   Icons.account_circle_sharp,

@@ -22,11 +22,11 @@ class AddProductPage extends StatefulWidget {
   _AddProductPage createState() => _AddProductPage();
 }
 
-class _AddProductPage extends State<AddProductPage> with TickerProviderStateMixin {
+class _AddProductPage extends State<AddProductPage>
+    with TickerProviderStateMixin {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late CreateproductBloc _createproductBloc;
   String? type;
-  // bool isLoading = false;
 
   @override
   void initState() {
@@ -82,48 +82,57 @@ class _AddProductPage extends State<AddProductPage> with TickerProviderStateMixi
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: FormBuilder(
-            key: _formKey,
-            child: MultiBlocProvider(
-              providers: [
-                BlocProvider<CreateproductBloc>(
-                  create: (BuildContext context) => CreateproductBloc(
-                      createProductRepository: createProductRepository),
-                ),
-                BlocProvider<ProducttypeBloc>(
-                  create: (BuildContext context) => ProducttypeBloc(
-                      productTypeRepository: productTypeRepository),
-                )
-              ],
-              child: SingleChildScrollView(
-                // child: Builder(
-                //   builder: (context) => 
-                //       BlocListener<CreateproductBloc, CreateproductState>(
-                //         listener: (context, state) {
-                //           if (state is CreateproductLoading) {
-                //             _showLoading();
-                //           } else if (state is CreateproductDone) {
-                //              _showSnackbar();
-                            
-                //           }
-                //         },
-                      
-                  child: Column(
-                    children: [
-                      _title(),
-                      _uploadImage(),
-                      _dropdownType(),
-                      _namaBarang(context),
-                      _hargaBarang(context),
-                      // _namaWarehouse(),
-                      // _alamatWarehouse(),
-                      _addProductButton(),
-                    ],
+          child: Center(
+            child: Container(
+              child: FormBuilder(
+                key: _formKey,
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider<CreateproductBloc>(
+                      create: (BuildContext context) => CreateproductBloc(
+                          createProductRepository: createProductRepository),
+                    ),
+                    BlocProvider<ProducttypeBloc>(
+                      create: (BuildContext context) => ProducttypeBloc(
+                          productTypeRepository: productTypeRepository),
+                    )
+                  ],
+                  // child: SingleChildScrollView(
+                  child: Builder(
+                    builder: (context) =>
+                        BlocListener<CreateproductBloc, CreateproductState>(
+                      listener: (context, state) {
+                        print('Edit dataBloc');
+                        if (state is CreateproductLoading) {
+                          print('Loading...');
+                          _showLoading();
+                        } else if (state is CreateproductDone) {
+                          Navigator.of(context).pop();
+                          Navigator.of(context)
+                              .pushReplacementNamed('/viewListStckPage');
+                          _showSnackbar();
+                        }
+                      },
+                      child: Column(
+                        children: [
+                          _title(),
+                          _uploadImage(),
+                          _dropdownType(),
+                          _namaBarang(context),
+                          _hargaBarang(context),
+                          // _namaWarehouse(),
+                          // _alamatWarehouse(),
+                          _addProductButton(),
+                        ],
+                      ),
+                    ),
+                    // ),
                   ),
                 ),
-              // ),
+              ),
             ),
           ),
+          // ),
         ),
       ),
     );
@@ -152,11 +161,12 @@ class _AddProductPage extends State<AddProductPage> with TickerProviderStateMixi
             padding: EdgeInsets.all(8.0),
             child: FormBuilderDropdown(
               decoration: InputDecoration(
+                labelText: 'Product Type',
                 border: OutlineInputBorder(),
               ),
-              hint: Text(
-                'Select Product Type',
-              ),
+              // hint: Text(
+              //   'Select Product Type',
+              // ),
               name: 'type',
               items: state.type.map((ProductType item) {
                 return DropdownMenuItem(
@@ -301,10 +311,11 @@ class _AddProductPage extends State<AddProductPage> with TickerProviderStateMixi
                     .extension!,
                 firebaseUid:
                     BlocProvider.of<AuthenticationBloc>(context).user.uid));
-                    
-            _showLoading();
-            Navigator.of(context).pushReplacementNamed('/viewListStckPage');
-            _showSnackbar();
+
+            // _showLoading();
+            // Navigator.of(context).pop();
+            // Navigator.of(context).pushReplacementNamed('/viewListStckPage');
+            // _showSnackbar();
           }
         },
         child: Text(

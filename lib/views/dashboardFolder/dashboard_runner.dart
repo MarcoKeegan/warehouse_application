@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/blocs/dashboard_bloc/dashboard_bloc.dart';
+import 'package:warehouse_application/models/firebaseUid_models.dart';
 import 'package:warehouse_application/models/firebaseUser_models.dart';
+import 'package:warehouse_application/repo/repositories/firebaseUID_repository.dart';
 import 'package:warehouse_application/views/dashboardFolder/dashboardManager.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -12,6 +14,8 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPage extends State<DashboardPage> {
+  // final UserData _userData;
+
   FirebaseUser firebaseUser = FirebaseUser(
       uid: '5HAikyaWYcXS62b5EneqyXulOrt2'); // cari cara uid ambil otomatis
 

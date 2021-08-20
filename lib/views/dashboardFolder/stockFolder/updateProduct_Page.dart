@@ -26,7 +26,7 @@ class UpdateProductPage extends StatefulWidget {
 }
 
 class _UpdateProductPage extends State<UpdateProductPage> {
-  final GlobalKey<FormBuilderState> _formKey = GlobalKey();  
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late UpdateproductBloc _updateproductBloc;
   String? type;
   ProductTypeRepository productTypeRepository = ProductTypeRepository();
@@ -161,9 +161,17 @@ class _UpdateProductPage extends State<UpdateProductPage> {
                   child: Column(
                     children: [
                       _title(),
-                      // _image(),
+                      _image(),
                       _uploadImage(),
-                      _dropdownType(),
+                      BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
+                        builder: (context, state) {
+                          if (state is ShowproductbyidDone) {
+                            return _dropdownType(
+                                state.productID.data!.productTypeId!);
+                          }
+                          return Container();
+                        },
+                      ),
                       _namaBarang(context),
                       _hargaBarang(context),
                       // _namaWarehouse(),
@@ -188,7 +196,7 @@ class _UpdateProductPage extends State<UpdateProductPage> {
     );
   }
 
-  Widget _dropdownType() {
+  Widget _dropdownType(int initialValue) {
     return BlocBuilder<ProducttypeBloc, ProducttypeState>(
         builder: (context, state) {
       if (state is ProducttypeLoading) {
@@ -202,6 +210,7 @@ class _UpdateProductPage extends State<UpdateProductPage> {
             padding: EdgeInsets.all(8.0),
             child: FormBuilderDropdown(
               decoration: InputDecoration(
+                labelText: 'Product Type',
                 border: OutlineInputBorder(),
               ),
               hint: BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
@@ -214,6 +223,7 @@ class _UpdateProductPage extends State<UpdateProductPage> {
                   return Container();
                 },
               ),
+              initialValue: initialValue,
               name: 'type',
               items: state.type.map((ProductType item) {
                 return DropdownMenuItem(
@@ -250,11 +260,12 @@ class _UpdateProductPage extends State<UpdateProductPage> {
           return Padding(
               padding: EdgeInsets.all(8.0),
               child: FormBuilderTextField(
+                initialValue: '${state.productID.data!.productName}',
                 name: 'namaB',
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: '${state.productID.data!.productName}',
-                  // labelText: 'Nama Barang',
+                  // hintText: '${state.productID.data!.productName}',
+                  labelText: 'Nama Barang',
                 ),
                 textInputAction: TextInputAction.next,
                 validator: FormBuilderValidators.compose([
@@ -274,11 +285,13 @@ class _UpdateProductPage extends State<UpdateProductPage> {
           return Padding(
               padding: EdgeInsets.all(8.0),
               child: FormBuilderTextField(
+                initialValue: '${state.productID.data!.singlePrice}',
                 name: 'harga',
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    // labelText: 'Harga Barang',
-                    hintText: '${state.productID.data!.singlePrice}'),
+                  border: OutlineInputBorder(),
+                  labelText: 'Harga Barang',
+                  // hintText: '${state.productID.data!.singlePrice}'
+                ),
                 textInputAction: TextInputAction.next,
                 validator: FormBuilderValidators.compose([
                   FormBuilderValidators.required(context),
@@ -291,53 +304,48 @@ class _UpdateProductPage extends State<UpdateProductPage> {
     );
   }
 
-  // Widget _image() {
-  //   return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
-  //     builder: (context, state) {
-  //       if (state is ShowproductbyidDone) {
-  //         return SizedBox(
-  //             width: 200,
-  //             height: 200,
-  //             child: Image.network('${state.productID.data!.imageUrl}'),
-  //           );
-  //       }
-  //       return Container();
-  //     }
-  //   );
-  // }
+  Widget _image() {
+    return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
+        builder: (context, state) {
+      if (state is ShowproductbyidDone) {
+        return SizedBox(
+          width: 150,
+          height: 150,
+          child: Image.network('${state.productID.data!.imageUrl}'),
+        );
+      }
+      return Container();
+    });
+  }
 
   Widget _uploadImage() {
     return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
-      builder: (context, state) {
-        if (state is ShowproductbyidDone) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-              child: FormBuilderFilePicker(
-                name: 'image',
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(), labelText: 'Upload New Image', ),
-                maxFiles: 1,
-                withData: true,
-                previewImages: true,
-                onChanged: (value) => print(value),
-                selector: Row(
-                  children: [
-                    Icon(Icons.upload),
-                  ],
-                ),
-                onFileLoading: (val) {
-                  print('Load Data');
-                },
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context),
-                ]),
-              ),
-          );
-        }
-        return Container();
+        builder: (context, state) {
+      if (state is ShowproductbyidDone) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: FormBuilderFilePicker(
+            name: 'image',
+            decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Upload New Image',
+            ),
+            maxFiles: 1,
+            withData: true,
+            previewImages: true,
+            selector: Icon(Icons.upload),
+            // onChanged: ,
+            onFileLoading: (val) {
+              _image();
+            },
+            validator: FormBuilderValidators.compose([
+              FormBuilderValidators.required(context),
+            ]),
+          ),
+        );
       }
-    );
-    
+      return Container();
+    });
   }
 
   Widget _addProductButton() {
