@@ -41,6 +41,31 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
           );
         });
   }
+
+  // Future<void> _alertDialog() async {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Text('ALERT!'),
+  //           content: Text('User Not Found!, Try another Account'),
+  //           actions: [
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.end,
+  //               children: [
+  //                 OutlinedButton(
+  //                   onPressed: () => Navigator.of(context).pop(context),
+  //                   child: Text('OK'),
+  //                 ),
+  //                 SizedBox(
+  //                   width: 10,
+  //                 ),
+  //               ],
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
   
   @override
   Widget build(BuildContext context) {
@@ -73,6 +98,8 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
                               _showLoading();
                             // } else if (state is LoginDone) {
                             //   Navigator.of(context).pop();
+                            // } else if (state is LoginFailedNoDataFound) {
+                            //   _alertDialog();
                             }
                           },
                           child: Column(
@@ -153,7 +180,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
           _loginBloc.add(Login(
               email: _formKey.currentState!.value['email'],
               password: _formKey.currentState!.value['password']));
-        }
+        } 
       },
     );
   }

@@ -5,7 +5,7 @@ import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
 class LoginFailure implements Exception {}
 
-class LoginOtherFailure implements Exception {}
+class LoginFailureNoDataFound implements Exception {}
 
 class FirebaseUIDRepository {
   FirebaseUIDRepository({WarehouseApiProvider? warehouseApiProvider})
@@ -21,7 +21,7 @@ class FirebaseUIDRepository {
     } else if (result is ResponseGagal) {
       switch (result.errorkey) {
         case "error_no_data_found":
-          throw LoginOtherFailure();
+          throw LoginFailureNoDataFound();
 
         default:
           throw LoginFailure();
