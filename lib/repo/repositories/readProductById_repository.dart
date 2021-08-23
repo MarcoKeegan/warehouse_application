@@ -7,6 +7,13 @@ class GetProductByIdFailure implements Exception {}
 
 class GetProductByIdFailureInvalidProductId implements GetProductByIdFailure {}
 
+class GetProductByIdFailureErrorParam implements GetProductByIdFailure {}
+
+class GetProductByIdFailureErrorContentType implements GetProductByIdFailure {}
+
+class GetProductByIdFailureErrorInternalServer implements GetProductByIdFailure {}
+
+
 class GetProductByIdRepository {
   GetProductByIdRepository({WarehouseApiProvider? provider})
       : _provider = provider ?? WarehouseApiProvider();
@@ -23,11 +30,11 @@ class GetProductByIdRepository {
           case "error_invalid_product_id":
             throw GetProductFailureInvalidProductId();
           case "error_param":
-            throw GetProductFailureInvalidProductId();
+            throw GetProductByIdFailureErrorParam();
           case "error_content-type":
-            throw GetProductFailureInvalidProductId();
+            throw GetProductByIdFailureErrorContentType();
           case "error_internal_server":
-            throw GetProductFailureInvalidProductId();
+            throw GetProductByIdFailureErrorInternalServer();
 
           default:
             throw GetProductByIdFailure();

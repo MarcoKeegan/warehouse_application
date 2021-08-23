@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:warehouse_application/blocs/showProductById_bloc/showproductbyid_bloc.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 import 'package:warehouse_application/repo/repositories/readProductById_repository.dart';
@@ -15,7 +16,7 @@ class DetailStockPage extends StatefulWidget {
   final int productId;
 }
 
-class _DetailStockPage extends State<DetailStockPage> {
+class _DetailStockPage extends State<DetailStockPage> with TickerProviderStateMixin {
   WarehouseApiProvider provider = WarehouseApiProvider();
   GetProductByIdRepository getProductByIdRepository =
       GetProductByIdRepository();
@@ -34,6 +35,19 @@ class _DetailStockPage extends State<DetailStockPage> {
   void didChangeDependencies() {
     showproductbyidBloc.add(ShowProductByIdLoad(productId: widget.productId));
     super.didChangeDependencies();
+  }
+
+  Future<void> _showLoading() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SpinKitFadingCircle(
+            color: Colors.cyan[400],
+            size: 50,
+            controller: AnimationController(
+                vsync: this, duration: const Duration(milliseconds: 2000)),
+          );
+        });
   }
 
   @override
@@ -61,10 +75,21 @@ class _DetailStockPage extends State<DetailStockPage> {
       body: SingleChildScrollView(
         child: BlocProvider(
           create: (context) => showproductbyidBloc,
-          child: _detailProduct(),
+          child: Builder(
+             builder: (context) =>
+                        BlocListener<ShowproductbyidBloc, ShowproductbyidState>(
+                      listener: (context, state) {
+                        if (state is ShowproductbyidLoading) {
+                          print('Loading...');
+                          _showLoading();
+                        } else if (state is ShowproductbyidDone) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+            child: _detailProduct()),
         ),
       ),
-    );
+    ));
   }
 
   Widget _detailProduct() {
@@ -203,8 +228,118 @@ class _DetailStockPage extends State<DetailStockPage> {
             ),
           ],
         );
-      } else if (state is ShowproductbyidLoading) {
-        return Center(child: CircularProgressIndicator());
+      } else if (state is ShowproductbyidFailedById) {
+        return AlertDialog(
+            title: Text('ALERT!'),
+            content: Text('ShowproductbyidFailedById'),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      // Navigator.of(context).pop(context);
+                    },
+                    child: Text('No'),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      
+                    },
+                    child: Text('Yes'),
+                  ),
+                ],
+              )
+            ],
+          );
+        
+      } else if (state is ShowproductbyidErrorParam) {
+        return AlertDialog(
+            title: Text('ALERT!'),
+            content: Text('ShowproductbyidErrorParam'),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      // Navigator.of(context).pop(context);
+                    },
+                    child: Text('No'),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      
+                    },
+                    child: Text('Yes'),
+                  ),
+                ],
+              )
+            ],
+          );
+
+      } else if (state is ShowproductbyidErrorContentType) {
+        return AlertDialog(
+            title: Text('ALERT!'),
+            content: Text('ShowproductbyidErrorContentType'),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      // Navigator.of(context).pop(context);
+                    },
+                    child: Text('No'),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      
+                    },
+                    child: Text('Yes'),
+                  ),
+                ],
+              )
+            ],
+          );
+
+      }else if (state is ShowproductbyidErrorInternalServer) {
+        return AlertDialog(
+            title: Text('ALERT!'),
+            content: Text('ShowproductbyidErrorInternalServer'),
+            actions: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      // Navigator.of(context).pop(context);
+                    },
+                    child: Text('No'),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      
+                    },
+                    child: Text('Yes'),
+                  ),
+                ],
+              )
+            ],
+          );
+
       } else {
         return Container();
       }

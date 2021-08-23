@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:warehouse_application/blocs/dropdown_role_bloc/dropdown_role_bloc.dart';
 import 'package:warehouse_application/blocs/register_bloc/register_bloc.dart';
 import 'package:warehouse_application/models/userRole_model.dart';
@@ -18,7 +19,7 @@ class RegisPage extends StatefulWidget {
   _RegisPage createState() => _RegisPage();
 }
 
-class _RegisPage extends State<RegisPage> {
+class _RegisPage extends State<RegisPage> with TickerProviderStateMixin {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late RegisterBloc _registerBloc;
   bool _obscureText = true;
@@ -30,11 +31,25 @@ class _RegisPage extends State<RegisPage> {
     super.initState();
   }
 
+  Future<void> _showLoading() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SpinKitFadingCircle(
+            color: Colors.cyan[400],
+            size: 50,
+            controller: AnimationController(
+                vsync: this, duration: const Duration(milliseconds: 2000)),
+          );
+        });
+  }
+  
   RoleApiRepository roleApiRepository = RoleApiRepository();
   RegisApiRepository provider = RegisApiRepository();
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: FormBuilder(
             child: Stack(
@@ -47,39 +62,55 @@ class _RegisPage extends State<RegisPage> {
           child: MultiBlocProvider(
             providers: [
               BlocProvider<RegisterBloc>(
-                create: (BuildContext context) =>
-                    RegisterBloc(regisRepository: provider),
+                create: (BuildContext context) =>_registerBloc,
               ),
               BlocProvider<DropdownRoleBloc>(
                 create: (BuildContext context) =>
                     DropdownRoleBloc(apiRepository: roleApiRepository),
               ),
             ],
-            child: FormBuilder(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Spacer(flex: 3),
-                  Text("Warehouse",
-                      style: TextStyle(
-                          fontSize: 50,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black)),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
+            child: SingleChildScrollView(
+              child: FormBuilder(
+                key: _formKey,
+                child: Container(
+                  height: size.height * 0.9, 
+                  child: Column(
                     children: [
-                      _dropdownRole(),
-                      _nameField(context),
-                      _emailField(context),
-                      _passField(context),
-                      _regisButton(),
-                      _showLoginButton(context),
+                      Spacer(flex: 3),
+                      Text("Warehouse",
+                          style: TextStyle(
+                              fontSize: 50,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.black)),
+                      Builder(
+                        builder: (context) =>
+                        BlocListener<RegisterBloc, RegisState>(
+                      listener: (context, state) {
+                        if (state is RegisLoading) {
+                          print('Loading...');
+                          _showLoading();
+                        } else if (state is RegisDone) {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushReplacementNamed('/login');
+                        }
+                      },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            _dropdownRole(),
+                            _nameField(context),
+                            _emailField(context),
+                            _passField(context),
+                            _regisButton(),
+                            _showLoginButton(context),
+                          ],
+                        ),
+                      ),
+                      ),
+                      Spacer(flex: 1),
                     ],
                   ),
-                  Spacer(
-                    flex: 3,
-                  ),
-                ],
+                ),
               ),
             ),
           ),
@@ -207,7 +238,6 @@ class _RegisPage extends State<RegisPage> {
               nama: _formKey.currentState!.value['name'],
               roleId: _formKey.currentState!.value['role'],
             ));
-            Navigator.of(context).pushReplacementNamed('/login');
           }
         },
       ),

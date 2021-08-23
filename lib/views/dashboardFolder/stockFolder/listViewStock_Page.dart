@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:warehouse_application/blocs/showProduct_bloc/show_product_bloc.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 import 'package:warehouse_application/repo/repositories/readProduct_repository.dart';
@@ -11,10 +12,23 @@ class ListStockPage extends StatefulWidget {
   _ListStockPage createState() => _ListStockPage();
 }
 
-class _ListStockPage extends State<ListStockPage> {
+class _ListStockPage extends State<ListStockPage> with TickerProviderStateMixin {
   WarehouseApiProvider warehouseApiProvider = WarehouseApiProvider();
   GetProductRepository getProductRepository = GetProductRepository();
 
+  Future<void> _showLoading() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SpinKitFadingCircle(
+            color: Colors.cyan[400],
+            size: 50,
+            controller: AnimationController(
+                vsync: this, duration: const Duration(milliseconds: 2000)),
+          );
+        });
+  }
+  
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -42,38 +56,53 @@ class _ListStockPage extends State<ListStockPage> {
         create: (context) =>
             ShowProductBloc(getProductRepository: getProductRepository),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(8.0, 15.0, 180.0, 15.0),
-                child: Text("List Product",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontStyle: FontStyle.italic,
-                        color: Colors.black)),
-              ),
-              Container(
+          child: Builder(
+            builder: (context) =>
+              BlocListener<ShowProductBloc, ShowProductState>(
+                listener: (context, state) {
+                  if (state is ShowProductLoading) {
+                    print('Loading...');
+                    _showLoading();
+                  } else if (state is ShowProductDone) {
+                      Navigator.of(context).pop();
+                  }
+                },
                 child: Column(
                   children: [
-                    Container(height: size.height * 0.9, child: _listProduct())
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8.0, 15.0, 180.0, 15.0),
+                      child: Text("List Product",
+                        style: TextStyle(
+                            fontSize: 30,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black)),
+                    ),
+                    Container(
+                      child: Column(
+                        children: [
+                          Container(height: size.height * 0.9, 
+                            child: _listProduct(),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
-            ],
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Add New Product',
-        backgroundColor: Colors.cyan[400],
-        child: Icon(
-          Icons.add,
-          size: 40,
+          tooltip: 'Add New Product',
+          backgroundColor: Colors.cyan[400],
+          child: Icon(
+            Icons.add,
+            size: 40,
+          ),
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed('/addStckPage');
+          },
         ),
-        onPressed: () {
-          Navigator.of(context).pushReplacementNamed('/addStckPage');
-        },
-      ),
     );
   }
 

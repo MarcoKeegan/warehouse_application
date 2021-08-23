@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:warehouse_application/blocs/login_bloc/login_bloc.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 
@@ -16,7 +17,7 @@ class LoginPage extends StatefulWidget {
   _LoginPage createState() => _LoginPage();
 }
 
-class _LoginPage extends State<LoginPage> {
+class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late bool isPasswordShown;
   late LoginBloc _loginBloc;
@@ -28,6 +29,19 @@ class _LoginPage extends State<LoginPage> {
     super.initState();
   }
 
+  Future<void> _showLoading() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SpinKitFadingCircle(
+            color: Colors.cyan[400],
+            size: 50,
+            controller: AnimationController(
+                vsync: this, duration: const Duration(milliseconds: 2000)),
+          );
+        });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,19 +64,31 @@ class _LoginPage extends State<LoginPage> {
                   ),
                   FormBuilder(
                     key: _formKey,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        _emailField(context),
-                        _passField(context),
-                        _loginButton(),
-                        _showRegisButton(context),
-                      ],
+                    child: SingleChildScrollView(
+                      child: Builder( 
+                        builder: (context) => BlocListener<LoginBloc, LoginState>(
+                          listener: (context, state) {
+                            if (state is LoginLoading) {
+                              print('Loading...');
+                              _showLoading();
+                            // } else if (state is LoginDone) {
+                            //   Navigator.of(context).pop();
+                            }
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _emailField(context),
+                              _passField(context),
+                              _loginButton(),
+                              _showRegisButton(context),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  Spacer(
-                    flex: 1,
-                  ),
+                  Spacer(flex: 1),
                 ],
               ),
             ),

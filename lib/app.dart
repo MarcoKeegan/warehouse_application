@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:warehouse_application/blocs/login_bloc/login_bloc.dart';
 import 'package:warehouse_application/repo/repositories/createProduct_repository.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
@@ -38,7 +40,7 @@ class App extends StatefulWidget {
   _AppState createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with TickerProviderStateMixin {
   late AuthenticationBloc _authBloc;
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
@@ -49,6 +51,19 @@ class _AppState extends State<App> {
   void initState() {
     _authBloc = AuthenticationBloc(firebaseAuth: widget._firebaseAuthRepo);
     super.initState();
+  }
+
+  Future<void> _showLoading() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SpinKitFadingCircle(
+            color: Colors.cyan,
+            size: 50,
+            controller: AnimationController(
+                vsync: this, duration: const Duration(milliseconds: 2000)),
+          );
+        });
   }
 
   @override

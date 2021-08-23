@@ -47,7 +47,7 @@ class _AddProductPage extends State<AddProductPage>
         context: context,
         builder: (BuildContext context) {
           return SpinKitFadingCircle(
-            color: Colors.cyan,
+            color: Colors.cyan[400],
             size: 50,
             controller: AnimationController(
                 vsync: this, duration: const Duration(milliseconds: 2000)),
@@ -89,50 +89,46 @@ class _AddProductPage extends State<AddProductPage>
                 child: MultiBlocProvider(
                   providers: [
                     BlocProvider<CreateproductBloc>(
-                      create: (BuildContext context) => CreateproductBloc(
-                          createProductRepository: createProductRepository),
+                      create: (BuildContext context) => _createproductBloc,
                     ),
                     BlocProvider<ProducttypeBloc>(
                       create: (BuildContext context) => ProducttypeBloc(
                           productTypeRepository: productTypeRepository),
                     )
                   ],
-                  // child: SingleChildScrollView(
-                  child: Builder(
-                    builder: (context) =>
-                        BlocListener<CreateproductBloc, CreateproductState>(
-                      listener: (context, state) {
-                        print('Edit dataBloc');
-                        if (state is CreateproductLoading) {
-                          print('Loading...');
-                          _showLoading();
-                        } else if (state is CreateproductDone) {
-                          Navigator.of(context).pop();
-                          Navigator.of(context)
-                              .pushReplacementNamed('/viewListStckPage');
-                          _showSnackbar();
-                        }
-                      },
-                      child: Column(
-                        children: [
-                          _title(),
-                          _uploadImage(),
-                          _dropdownType(),
-                          _namaBarang(context),
-                          _hargaBarang(context),
-                          // _namaWarehouse(),
-                          // _alamatWarehouse(),
-                          _addProductButton(),
-                        ],
+                  child: SingleChildScrollView(
+                    child: Builder(
+                      builder: (context) => BlocListener<CreateproductBloc, CreateproductState>(
+                        listener: (context, state) {
+                          if (state is CreateproductLoading) {
+                            print('Loading...');
+                            _showLoading();
+                          } else if (state is CreateproductDone) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context)
+                                .pushReplacementNamed('/viewListStckPage');
+                            _showSnackbar();
+                          }
+                        },
+                        child: Column(
+                          children: [
+                            _title(),
+                            _uploadImage(),
+                            _dropdownType(),
+                            _namaBarang(context),
+                            _hargaBarang(context),
+                            // _namaWarehouse(),
+                            // _alamatWarehouse(),
+                            _addProductButton(),
+                          ],
+                        ),
                       ),
                     ),
-                    // ),
                   ),
                 ),
               ),
             ),
           ),
-          // ),
         ),
       ),
     );
@@ -326,3 +322,8 @@ class _AddProductPage extends State<AddProductPage>
     );
   }
 }
+
+
+
+
+

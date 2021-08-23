@@ -335,9 +335,9 @@ class _UpdateProductPage extends State<UpdateProductPage> {
             previewImages: true,
             selector: Icon(Icons.upload),
             // onChanged: ,
-            onFileLoading: (val) {
-              _image();
-            },
+            // onFileLoading: (val) {
+            //   _image();
+            // },
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(context),
             ]),

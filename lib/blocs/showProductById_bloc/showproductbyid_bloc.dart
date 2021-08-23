@@ -28,6 +28,12 @@ class ShowproductbyidBloc
         yield ShowproductbyidDone(productID: result);
       } on GetProductByIdFailureInvalidProductId {
         yield ShowproductbyidFailedById();
+      } on GetProductByIdFailureErrorParam {
+        yield ShowproductbyidErrorParam();
+      } on GetProductByIdFailureErrorContentType {
+        yield ShowproductbyidErrorContentType();
+      } on GetProductByIdFailureErrorInternalServer {
+        yield ShowproductbyidErrorInternalServer();
       } catch (e) {
         yield ShowproductbyidFailed();
       }

@@ -13,6 +13,12 @@ class ShowproductbyidFailed extends ShowproductbyidState {}
 
 class ShowproductbyidFailedById extends ShowproductbyidState {}
 
+class ShowproductbyidErrorParam extends ShowproductbyidState {}
+
+class ShowproductbyidErrorContentType extends ShowproductbyidState {}
+
+class ShowproductbyidErrorInternalServer extends ShowproductbyidState {}
+
 class ShowproductbyidLoading extends ShowproductbyidState {}
 
 class ShowproductbyidDone extends ShowproductbyidState {
