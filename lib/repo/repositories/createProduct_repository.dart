@@ -4,7 +4,15 @@ import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
 class CreateProductFailure implements Exception {}
 
-class CreateProductOthersFailures implements CreateProductFailure {}
+class CreateProductFailureInvalidProductId implements CreateProductFailure {}
+
+class CreateProductFailureErrorParam implements CreateProductFailure {}
+
+class CreateProductFailureContentType implements CreateProductFailure {}
+
+class CreateProductFailureInternalServer implements CreateProductFailure {}
+
+class CreateProductFailureInvalidUid implements CreateProductFailure {}
 
 class CreateProductRepository {
   CreateProductRepository({WarehouseApiProvider? provider})
@@ -33,15 +41,15 @@ class CreateProductRepository {
     } else if (result is ResponseGagal) {
       switch (result.errorkey) {
         case "error_invalid_product_id":
-          throw CreateProductOthersFailures();
+          throw CreateProductFailureInvalidProductId();
         case "error_param":
-          throw CreateProductOthersFailures();
+          throw CreateProductFailureErrorParam();
         case "error_content-type":
-          throw CreateProductOthersFailures();
+          throw CreateProductFailureContentType();
         case "error_internal_server":
-          throw CreateProductOthersFailures();
+          throw CreateProductFailureInternalServer();
         case "error_invalid_uid":
-          throw CreateProductOthersFailures();
+          throw CreateProductFailureInvalidUid();
 
         default:
           throw CreateProductFailure();

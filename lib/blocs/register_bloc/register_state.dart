@@ -2,14 +2,22 @@ part of 'register_bloc.dart';
 
 class RegisState extends Equatable {
   const RegisState();
-  
+
   @override
   List<Object> get props => [];
 }
 
 class RegisInitial extends RegisState {}
 
-class RegisFailed extends RegisState {}
+// class RegisFailed extends RegisState {}
+
+class RegisFailedErrorParam extends RegisState {}
+
+class RegisFailedEmailUsedFb extends RegisState {}
+
+class RegisFailedEmailUsed extends RegisState {}
+
+class RegisFailedErrorInternalServer extends RegisState {}
 
 class RegisLoading extends RegisState {}
 

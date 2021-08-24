@@ -4,7 +4,13 @@ import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
 class GetUserRegisterFailure implements Exception {}
 
-class GetUserRegisterOthersFailure implements Exception {}
+class GetUserRegisterErrorParam implements GetUserRegisterFailure {}
+
+class GetUserRegisterEmailUsedFb implements GetUserRegisterFailure {}
+
+class GetUserRegisterEmailUsed implements GetUserRegisterFailure {}
+
+class GetUserRegisterErrorInternalServer implements GetUserRegisterFailure {}
 
 class RegisApiRepository {
   RegisApiRepository({WarehouseApiProvider? provider})
@@ -26,13 +32,13 @@ class RegisApiRepository {
     } else if (result is ResponseGagal) {
       switch (result.errorkey) {
         case "error_param":
-          throw GetUserRegisterOthersFailure();
+          throw GetUserRegisterErrorParam();
         case "error_email_is_used_fb":
-          throw GetUserRegisterOthersFailure();
+          throw GetUserRegisterEmailUsedFb();
         case "error_email_is_used":
-          throw GetUserRegisterOthersFailure();
+          throw GetUserRegisterEmailUsed();
         case "error_internal_server":
-          throw GetUserRegisterOthersFailure();
+          throw GetUserRegisterErrorInternalServer();
 
         default:
           throw GetUserRegisterFailure();

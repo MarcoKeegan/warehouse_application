@@ -5,7 +5,7 @@ import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
 class LoginFailure implements Exception {}
 
-class LoginFailureNoDataFound implements Exception {}
+class LoginFailureNoDataFound implements LoginFailure {}
 
 class FirebaseUIDRepository {
   FirebaseUIDRepository({WarehouseApiProvider? warehouseApiProvider})

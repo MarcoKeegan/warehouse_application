@@ -11,8 +11,8 @@ class GetProductByIdFailureErrorParam implements GetProductByIdFailure {}
 
 class GetProductByIdFailureErrorContentType implements GetProductByIdFailure {}
 
-class GetProductByIdFailureErrorInternalServer implements GetProductByIdFailure {}
-
+class GetProductByIdFailureErrorInternalServer
+    implements GetProductByIdFailure {}
 
 class GetProductByIdRepository {
   GetProductByIdRepository({WarehouseApiProvider? provider})
@@ -21,30 +21,30 @@ class GetProductByIdRepository {
   final WarehouseApiProvider _provider;
 
   Future<ReadProductId> getAllProductById({productId}) async {
-    try {
-      final result = await _provider.getAllProductById(productId);
-      if (result is ReadProductId) {
-        return result;
-      } else if (result is ResponseGagal) {
-        switch (result.errorkey) {
-          case "error_invalid_product_id":
-            throw GetProductFailureInvalidProductId();
-          case "error_param":
-            throw GetProductByIdFailureErrorParam();
-          case "error_content-type":
-            throw GetProductByIdFailureErrorContentType();
-          case "error_internal_server":
-            throw GetProductByIdFailureErrorInternalServer();
+    // try {
+    final result = await _provider.getAllProductById(productId);
+    if (result is ReadProductId) {
+      return result;
+    } else if (result is ResponseGagal) {
+      switch (result.errorkey) {
+        case "error_invalid_product_id":
+          throw GetProductByIdFailureInvalidProductId();
+        case "error_param":
+          throw GetProductByIdFailureErrorParam();
+        case "error_content-type":
+          throw GetProductByIdFailureErrorContentType();
+        case "error_internal_server":
+          throw GetProductByIdFailureErrorInternalServer();
 
-          default:
-            throw GetProductByIdFailure();
-        }
-      } else {
-        throw Exception();
+        default:
+          throw GetProductByIdFailure();
       }
-    } catch (e) {
-      print(e.toString());
-      throw GetProductFailure();
+    } else {
+      throw Exception();
     }
+    // } catch (e) {
+    //   print(e.toString());
+    //   throw GetProductFailure();
   }
 }
+// }

@@ -66,7 +66,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
   //         );
   //       });
   // }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,16 +90,39 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
                   FormBuilder(
                     key: _formKey,
                     child: SingleChildScrollView(
-                      child: Builder( 
-                        builder: (context) => BlocListener<LoginBloc, LoginState>(
+                      child: Builder(
+                        builder: (context) =>
+                            BlocListener<LoginBloc, LoginState>(
                           listener: (context, state) {
                             if (state is LoginLoading) {
                               print('Loading...');
                               _showLoading();
-                            // } else if (state is LoginDone) {
-                            //   Navigator.of(context).pop();
-                            // } else if (state is LoginFailedNoDataFound) {
-                            //   _alertDialog();
+                              // } else if (state is LoginDone) {
+                              //   Navigator.of(context).pop();
+                              // } else if (state is LoginFailed) {
+                              //   Navigator.of(context).pop();
+                              //   showDialog(
+                              //       context: context,
+                              //       builder: (builder) {
+                              //         return AlertDialog(
+                              //           title: Text('ALERT!'),
+                              //           content: Text('FFAAAIILLLLEEEDDDDDD'),
+                              //           actions: [
+                              //             Row(
+                              //               mainAxisAlignment:
+                              //                   MainAxisAlignment.end,
+                              //               children: [
+                              //                 OutlinedButton(
+                              //                   onPressed: () {
+                              //                     Navigator.of(context).pop();
+                              //                   },
+                              //                   child: Text('OK'),
+                              //                 ),
+                              //               ],
+                              //             )
+                              //           ],
+                              //         );
+                              //       });
                             }
                           },
                           child: Column(
@@ -180,7 +203,7 @@ class _LoginPage extends State<LoginPage> with TickerProviderStateMixin {
           _loginBloc.add(Login(
               email: _formKey.currentState!.value['email'],
               password: _formKey.currentState!.value['password']));
-        } 
+        }
       },
     );
   }

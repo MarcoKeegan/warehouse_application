@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:form_builder_file_picker/form_builder_file_picker.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/blocs/productType_bloc/producttype_bloc.dart';
@@ -25,7 +26,8 @@ class UpdateProductPage extends StatefulWidget {
   final int productId;
 }
 
-class _UpdateProductPage extends State<UpdateProductPage> {
+class _UpdateProductPage extends State<UpdateProductPage>
+    with TickerProviderStateMixin {
   final GlobalKey<FormBuilderState> _formKey = GlobalKey();
   late UpdateproductBloc _updateproductBloc;
   String? type;
@@ -56,6 +58,19 @@ class _UpdateProductPage extends State<UpdateProductPage> {
       content: const Text('Update Product Succes!'),
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<void> _showLoading() async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SpinKitFadingCircle(
+            color: Colors.cyan[400],
+            size: 50,
+            controller: AnimationController(
+                vsync: this, duration: const Duration(milliseconds: 2000)),
+          );
+        });
   }
 
   Future<void> _showAlertDialog() async {
@@ -142,49 +157,180 @@ class _UpdateProductPage extends State<UpdateProductPage> {
               )),
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: FormBuilder(
-              key: _formKey,
-              child: MultiBlocProvider(
-                providers: [
-                  BlocProvider<UpdateproductBloc>(
-                    create: (BuildContext context) => UpdateproductBloc(
-                        updateProductRepository: updateProductRepository),
-                  ),
-                  BlocProvider<ProducttypeBloc>(
-                    create: (BuildContext context) => ProducttypeBloc(
-                        productTypeRepository: productTypeRepository),
-                  ),
-                  BlocProvider(create: (context) => showproductbyidBloc),
-                ],
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _title(),
-                      _image(),
-                      _uploadImage(),
-                      BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
-                        builder: (context, state) {
-                          if (state is ShowproductbyidDone) {
-                            return _dropdownType(
-                                state.productID.data!.productTypeId!);
-                          }
-                          return Container();
-                        },
-                      ),
-                      _namaBarang(context),
-                      _hargaBarang(context),
-                      // _namaWarehouse(),
-                      // _alamatWarehouse(),
-                      _addProductButton(),
-                      // new Align(child: loadingIndicator,alignment: FractionalOffset.center,),
-                    ],
+            child: SingleChildScrollView(
+          child: FormBuilder(
+            key: _formKey,
+            child: MultiBlocProvider(
+              providers: [
+                BlocProvider<UpdateproductBloc>(
+                  create: (BuildContext context) => _updateproductBloc,
+                ),
+                BlocProvider<ProducttypeBloc>(
+                  create: (BuildContext context) => ProducttypeBloc(
+                      productTypeRepository: productTypeRepository),
+                ),
+                BlocProvider(create: (context) => showproductbyidBloc),
+              ],
+              child: SingleChildScrollView(
+                child: Builder(
+                  builder: (context) =>
+                      BlocListener<UpdateproductBloc, UpdateproductState>(
+                    listener: (context, state) {
+                      if (state is UpdateproductLoading) {
+                        print('Loading...');
+                        _showLoading();
+                      } else if (state is UpdateproductDone) {
+                        Navigator.of(context).pop();
+                      } else if (state is UpdateproductInvalidProductId) {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return AlertDialog(
+                                title: Text('ALERT!'),
+                                content: Text(
+                                    'Something went wrong with product id, please try another product.'),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
+                      } else if (state is UpdateproductErrorParam) {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return AlertDialog(
+                                title: Text('ALERT!'),
+                                content: Text(
+                                    'Something went wrong, please try again later.'),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
+                      } else if (state is UpdateproductContentType) {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return AlertDialog(
+                                title: Text('ALERT!'),
+                                content: Text(
+                                    'Something went wrong with this content, please try again later.'),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
+                      } else if (state is UpdateproductInternalServer) {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return AlertDialog(
+                                title: Text('ALERT!'),
+                                content: Text(
+                                    'Something went wrong on our server, please try again later.'),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
+                      } else if (state is UpdateproductInvalidUid) {
+                        Navigator.of(context).pop();
+                        showDialog(
+                            context: context,
+                            builder: (builder) {
+                              return AlertDialog(
+                                title: Text('ALERT!'),
+                                content: Text(
+                                    'This account has not authority for this page.'),
+                                actions: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      OutlinedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('OK'),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              );
+                            });
+                      }
+                    },
+                    child: Column(
+                      children: [
+                        _title(),
+                        _image(),
+                        _uploadImage(),
+                        BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
+                          builder: (context, state) {
+                            if (state is ShowproductbyidDone) {
+                              return _dropdownType(
+                                  state.productID.data!.productTypeId!);
+                            }
+                            return Container();
+                          },
+                        ),
+                        _namaBarang(context),
+                        _hargaBarang(context),
+                        // _namaWarehouse(),
+                        // _alamatWarehouse(),
+                        _addProductButton(),
+                        // new Align(child: loadingIndicator,alignment: FractionalOffset.center,),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
-        ));
+        )));
   }
 
   Widget _title() {

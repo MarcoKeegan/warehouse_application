@@ -19,9 +19,11 @@ class GetProductRepository {
         return result;
       } else if (result is ResponseGagal) {
         switch (result.errorkey) {
-          case "error_invalid_product_id": throw GetProductFailureInvalidProductId();
+          case "error_invalid_product_id":
+            throw GetProductFailureInvalidProductId();
 
-          default: throw GetProductFailure();
+          default:
+            throw GetProductFailure();
         }
       } else {
         throw Exception();

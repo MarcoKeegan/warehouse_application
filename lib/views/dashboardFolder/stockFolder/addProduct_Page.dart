@@ -98,7 +98,8 @@ class _AddProductPage extends State<AddProductPage>
                   ],
                   child: SingleChildScrollView(
                     child: Builder(
-                      builder: (context) => BlocListener<CreateproductBloc, CreateproductState>(
+                      builder: (context) =>
+                          BlocListener<CreateproductBloc, CreateproductState>(
                         listener: (context, state) {
                           if (state is CreateproductLoading) {
                             print('Loading...');
@@ -108,6 +109,133 @@ class _AddProductPage extends State<AddProductPage>
                             Navigator.of(context)
                                 .pushReplacementNamed('/viewListStckPage');
                             _showSnackbar();
+                          } else if (state
+                              is CreateproductFailedInvalidProductId) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong with product id, please try another product.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else if (state is CreateproductFailedErrorParam) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong, please try again later.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else if (state is CreateproductFailedContentType) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong with this content, please try again later.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else if (state
+                              is CreateproductFailedInternalServer) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong on our server, please try again later.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else if (state is CreateproductFailedInvalidUid) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'This account has not authority for this page.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
                           }
                         },
                         child: Column(
@@ -322,8 +450,3 @@ class _AddProductPage extends State<AddProductPage>
     );
   }
 }
-
-
-
-
-

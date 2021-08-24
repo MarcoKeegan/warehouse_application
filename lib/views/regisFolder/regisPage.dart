@@ -43,7 +43,7 @@ class _RegisPage extends State<RegisPage> with TickerProviderStateMixin {
           );
         });
   }
-  
+
   RoleApiRepository roleApiRepository = RoleApiRepository();
   RegisApiRepository provider = RegisApiRepository();
 
@@ -62,7 +62,7 @@ class _RegisPage extends State<RegisPage> with TickerProviderStateMixin {
           child: MultiBlocProvider(
             providers: [
               BlocProvider<RegisterBloc>(
-                create: (BuildContext context) =>_registerBloc,
+                create: (BuildContext context) => _registerBloc,
               ),
               BlocProvider<DropdownRoleBloc>(
                 create: (BuildContext context) =>
@@ -73,7 +73,7 @@ class _RegisPage extends State<RegisPage> with TickerProviderStateMixin {
               child: FormBuilder(
                 key: _formKey,
                 child: Container(
-                  height: size.height * 0.9, 
+                  height: size.height * 0.9,
                   child: Column(
                     children: [
                       Spacer(flex: 3),
@@ -84,28 +84,130 @@ class _RegisPage extends State<RegisPage> with TickerProviderStateMixin {
                               color: Colors.black)),
                       Builder(
                         builder: (context) =>
-                        BlocListener<RegisterBloc, RegisState>(
-                      listener: (context, state) {
-                        if (state is RegisLoading) {
-                          print('Loading...');
-                          _showLoading();
-                        } else if (state is RegisDone) {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pushReplacementNamed('/login');
-                        }
-                      },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _dropdownRole(),
-                            _nameField(context),
-                            _emailField(context),
-                            _passField(context),
-                            _regisButton(),
-                            _showLoginButton(context),
-                          ],
+                            BlocListener<RegisterBloc, RegisState>(
+                          listener: (context, state) {
+                            if (state is RegisLoading) {
+                              print('Loading...');
+                              _showLoading();
+                            } else if (state is RegisDone) {
+                              Navigator.of(context).pop();
+                              Navigator.of(context)
+                                  .pushReplacementNamed('/login');
+                            } else if (state is RegisFailedErrorParam) {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  builder: (builder) {
+                                    return AlertDialog(
+                                      title: Text('ALERT!'),
+                                      content: Text(
+                                          'Something went wrong, please try again later.'),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            OutlinedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('OK'),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    );
+                                  });
+                            } else if (state is RegisFailedEmailUsedFb) {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  builder: (builder) {
+                                    return AlertDialog(
+                                      title: Text('ALERT!'),
+                                      content: Text(
+                                          'This email address already registered in our database. Try another email.'),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            OutlinedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('OK'),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    );
+                                  });
+                            } else if (state is RegisFailedEmailUsed) {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  builder: (builder) {
+                                    return AlertDialog(
+                                      title: Text('ALERT!'),
+                                      content: Text(
+                                          'There is already account with this email address. Try another email.'),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            OutlinedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('OK'),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    );
+                                  });
+                            } else if (state
+                                is RegisFailedErrorInternalServer) {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: context,
+                                  builder: (builder) {
+                                    return AlertDialog(
+                                      title: Text('ALERT!'),
+                                      content: Text(
+                                          'Something went wrong on our server, please try again later.'),
+                                      actions: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            OutlinedButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('OK'),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    );
+                                  });
+                            }
+                          },
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              _dropdownRole(),
+                              _nameField(context),
+                              _emailField(context),
+                              _passField(context),
+                              _regisButton(),
+                              _showLoginButton(context),
+                            ],
+                          ),
                         ),
-                      ),
                       ),
                       Spacer(flex: 1),
                     ],

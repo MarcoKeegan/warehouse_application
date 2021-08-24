@@ -39,8 +39,18 @@ class UpdateproductBloc extends Bloc<UpdateproductEvent, UpdateproductState> {
             idProduct: event.productId);
 
         yield UpdateproductDone();
-      } catch (e) {
-        yield UpdateproductFailed();
+      } on UpdateProductInvalidProductId {
+        yield UpdateproductInvalidProductId();
+      } on UpdateProductErrorParam {
+        yield UpdateproductErrorParam();
+      } on UpdateProductErrorContentType {
+        yield UpdateproductContentType();
+      } on UpdateProductErrorInternalServer {
+        yield UpdateproductInternalServer();
+      } on UpdateProductInvalidUid {
+        yield UpdateproductInvalidUid();
+        // } catch (e) {
+        //   yield UpdateproductFailed();
       }
     }
   }

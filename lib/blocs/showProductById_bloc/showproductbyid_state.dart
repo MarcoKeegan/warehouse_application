@@ -9,7 +9,7 @@ abstract class ShowproductbyidState extends Equatable {
 
 class ShowproductbyidInitial extends ShowproductbyidState {}
 
-class ShowproductbyidFailed extends ShowproductbyidState {}
+// class ShowproductbyidFailed extends ShowproductbyidState {}
 
 class ShowproductbyidFailedById extends ShowproductbyidState {}
 

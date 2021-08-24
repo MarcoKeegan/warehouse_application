@@ -39,8 +39,18 @@ class CreateproductBloc extends Bloc<CreateproductEvent, CreateproductState> {
           firebaseUid: event.firebaseUid,
         );
         yield CreateproductDone();
-      } catch (e) {
-        yield CreateproductFailed();
+      } on CreateProductFailureInvalidProductId {
+        yield CreateproductFailedInvalidProductId();
+      } on CreateProductFailureErrorParam {
+        yield CreateproductFailedErrorParam();
+      } on CreateProductFailureContentType {
+        yield CreateproductFailedContentType();
+      } on CreateProductFailureInternalServer {
+        yield CreateproductFailedInternalServer();
+      } on CreateProductFailureInvalidUid {
+        yield CreateproductFailedInvalidUid();
+        // } catch (e) {
+        //   yield CreateproductFailed();
       }
     }
   }

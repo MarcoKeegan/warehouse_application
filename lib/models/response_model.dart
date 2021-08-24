@@ -10,7 +10,7 @@ class ResponseGagal extends PostResponse {
 
   ResponseGagal({
     required String message,
-    this.errorkey,
+    required this.errorkey,
     this.errormessage,
     this.errordata,
   }) : super(message: message);

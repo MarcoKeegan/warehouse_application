@@ -34,8 +34,8 @@ class ShowproductbyidBloc
         yield ShowproductbyidErrorContentType();
       } on GetProductByIdFailureErrorInternalServer {
         yield ShowproductbyidErrorInternalServer();
-      } catch (e) {
-        yield ShowproductbyidFailed();
+        // } catch (e) {
+        //   yield ShowproductbyidFailed();
       }
     }
   }
