@@ -9,19 +9,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:warehouse_application/app.dart';
 import 'package:warehouse_application/repo/repositories/createProduct_repository.dart';
+import 'package:warehouse_application/repo/repositories/deleteProduct_repository.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 
 final FirebaseRepository _firebaseAuthRepo = FirebaseRepository();
 final RegisApiRepository _regisApiRepository = RegisApiRepository();
 final CreateProductRepository _createProductRepository = CreateProductRepository();
+final DeleteProductRepository _deleteProductRepository = DeleteProductRepository();
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(App(
       firebaseAuth: _firebaseAuthRepo, 
       regisApiRepository: _regisApiRepository,
-      createProductRepository: _createProductRepository,));
+      createProductRepository: _createProductRepository, 
+      deleteProductRepository: _deleteProductRepository,));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

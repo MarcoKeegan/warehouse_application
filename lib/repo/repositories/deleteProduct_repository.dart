@@ -3,7 +3,11 @@ import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
 
 class DeleteProductFailure implements Exception {}
 
-class DeleteProductOthersFailures implements DeleteProductFailure {}
+class DeleteProductInvalidProductId implements DeleteProductFailure {}
+
+class DeleteProductErrorrInternalServer implements DeleteProductFailure {}
+
+class DeleteProductInvalidUid implements DeleteProductFailure {}
 
 class DeleteProductRepository {
   DeleteProductRepository({WarehouseApiProvider? provider})
@@ -14,7 +18,7 @@ class DeleteProductRepository {
   Future<ResponseBerhasil> deleteProduct({
     required int idProduct,
     required String firebaseUid,
-    required bool softDelete,
+    // required bool softDelete,
   }) async {
     final result = await _provider.deleteProduct(
       firebaseUid,
@@ -26,11 +30,11 @@ class DeleteProductRepository {
     } else if (result is ResponseGagal) {
       switch (result.errorkey) {
         case "error_invalid_product_id":
-          throw DeleteProductOthersFailures();
+          throw DeleteProductInvalidProductId();
         case "error_internal_server":
-          throw DeleteProductOthersFailures();
+          throw DeleteProductErrorrInternalServer();
         case "error_invalid_uid":
-          throw DeleteProductOthersFailures();
+          throw DeleteProductInvalidUid();
 
         default:
           throw DeleteProductFailure();

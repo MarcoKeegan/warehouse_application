@@ -104,14 +104,16 @@ class _UpdateProductPage extends State<UpdateProductPage>
                           productName: _formKey.currentState!.value['namaB'],
                           productTypeId: _formKey.currentState!.value['type'],
                           price: _formKey.currentState!.value['harga'],
-                          image64: (_formKey.currentState!.value['image']
+                          image64: _formKey.currentState!.value['image'] != null ? 
+                          (_formKey.currentState!.value['image'] 
                                   as List<PlatformFile>)
                               .first
-                              .bytes!,
-                          imageType: (_formKey.currentState!.value['image']
+                              .bytes! : null,
+                          imageType: _formKey.currentState!.value['image'] != null ? 
+                          (_formKey.currentState!.value['image']
                                   as List<PlatformFile>)
                               .first
-                              .extension!,
+                              .extension! : null,
                           firebaseUid:
                               BlocProvider.of<AuthenticationBloc>(context)
                                   .user
@@ -306,7 +308,7 @@ class _UpdateProductPage extends State<UpdateProductPage>
                     child: Column(
                       children: [
                         _title(),
-                        _image(),
+                        // _image(),
                         _uploadImage(),
                         BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
                           builder: (context, state) {
@@ -450,44 +452,55 @@ class _UpdateProductPage extends State<UpdateProductPage>
     );
   }
 
-  Widget _image() {
-    return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
-        builder: (context, state) {
-      if (state is ShowproductbyidDone) {
-        return SizedBox(
-          width: 150,
-          height: 150,
-          child: Image.network('${state.productID.data!.imageUrl}'),
-        );
-      }
-      return Container();
-    });
-  }
+  // Widget _image() {
+  //   return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
+  //       builder: (context, state) {
+  //     if (state is ShowproductbyidDone) {
+  //       return SizedBox(
+  //         width: 150,
+  //         height: 150,
+  //         child: Image.network('${state.productID.data!.imageUrl}'),
+  //       );
+  //     }
+  //     return Container();
+  //   });
+  // }
 
   Widget _uploadImage() {
     return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
         builder: (context, state) {
       if (state is ShowproductbyidDone) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: FormBuilderFilePicker(
-            name: 'image',
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: 'Upload New Image',
+        return Column(
+          children: [Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FormBuilderFilePicker(
+              name: 'image',
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Upload New Image',
+              ),
+              maxFiles: 1,
+              withData: true,
+              // key: _formKey,
+              previewImages: true,
+              selector: Icon(Icons.upload),
+              onFileLoading: (val) {
+                print('val');
+              },
+
+              // validator: FormBuilderValidators.compose([
+              //   FormBuilderValidators.required(context),
+              // ]),
             ),
-            maxFiles: 1,
-            withData: true,
-            previewImages: true,
-            selector: Icon(Icons.upload),
-            // onChanged: ,
-            // onFileLoading: (val) {
-            //   _image();
-            // },
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(context),
-            ]),
           ),
+          _formKey.currentState?.value['image'] == null ?
+          Image.network(
+            state.productID.data!.imageUrl!, 
+            height: 100,
+            width: 100, 
+            fit: BoxFit.cover,
+          ): Container()
+          ]
         );
       }
       return Container();

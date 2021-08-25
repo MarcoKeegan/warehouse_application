@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:warehouse_application/blocs/showProduct_bloc/show_product_bloc.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
+import 'package:warehouse_application/repo/repositories/deleteProduct_repository.dart';
 import 'package:warehouse_application/repo/repositories/readProduct_repository.dart';
-import 'package:warehouse_application/views/dashboardFolder/stockFolder/detailStock_Page.dart';
 
 class ListStockPage extends StatefulWidget {
   const ListStockPage({Key? key}) : super(key: key);
+
   @override
   _ListStockPage createState() => _ListStockPage();
 }
@@ -15,6 +16,7 @@ class ListStockPage extends StatefulWidget {
 class _ListStockPage extends State<ListStockPage> with TickerProviderStateMixin {
   WarehouseApiProvider warehouseApiProvider = WarehouseApiProvider();
   GetProductRepository getProductRepository = GetProductRepository();
+  DeleteProductRepository deleteProductRepository = DeleteProductRepository();
 
   Future<void> _showLoading() async {
     return showDialog(
@@ -123,9 +125,12 @@ class _ListStockPage extends State<ListStockPage> with TickerProviderStateMixin 
                 elevation: 2,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => DetailStockPage(
-                            productId: state.product.data![index].productId!)));
+                    Navigator.of(context).pushNamed('/detailStockPage', arguments:  {'productId': state.product.data![index].productId});
+                        // builder: (context) => DetailStockPage(
+                        //     productId: state.product.data![index].productId!, 
+                            // deleteProductRepository: deleteProductRepository,
+                            // )
+                    // ));
                   },
                   child: SizedBox(
                     width: 500,

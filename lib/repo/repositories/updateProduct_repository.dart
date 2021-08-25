@@ -24,7 +24,7 @@ class UpdateProductRepository {
     required int productTypeId,
     required String productName,
     required String price,
-    required ImageProduct images,
+    ImageProduct? images,
     required String firebaseUid,
     required int idProduct,
   }) async {
@@ -62,5 +62,9 @@ class UpdateProductRepository {
     } else {
       throw Exception();
     }
+  }
+
+  Future<String> networkImageToBase64({required String imageUrl}) async {
+    return _provider.networkImageToBase64(imageUrl);
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:warehouse_application/app.dart';
 import 'package:warehouse_application/bloc_observer.dart';
 import 'package:warehouse_application/repo/repositories/createProduct_repository.dart';
+import 'package:warehouse_application/repo/repositories/deleteProduct_repository.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 
@@ -15,9 +16,11 @@ void main() async {
   final FirebaseRepository _firebaseAuthRepo = FirebaseRepository();
   final RegisApiRepository _regisApiRepository = RegisApiRepository();
   final CreateProductRepository _createProductRepository = CreateProductRepository();
+  final DeleteProductRepository _deleteProductRepository = DeleteProductRepository();
   runApp(App(
     firebaseAuth: _firebaseAuthRepo,
     regisApiRepository: _regisApiRepository,
     createProductRepository: _createProductRepository,
+    deleteProductRepository: _deleteProductRepository,
   ));
 }

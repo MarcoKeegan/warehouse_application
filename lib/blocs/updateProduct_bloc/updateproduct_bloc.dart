@@ -23,12 +23,21 @@ class UpdateproductBloc extends Bloc<UpdateproductEvent, UpdateproductState> {
     if (event is UpdateProductReq) {
       yield UpdateproductLoading();
       try {
-        Uint8List imageToUpladBytes = event.image64;
-        String image64 = base64Encode(imageToUpladBytes);
-        print(event.imageType);
+        // String imageType;
+        // String image64;
+        ImageProduct? image;
+        // = ImageProduct(imageType: imageType, image64: image64);
 
-        ImageProduct image =
-            ImageProduct(imageType: event.imageType, image64: image64);
+        if (event.imageType == null && event.imageType != null) {
+          image = null;
+        } else if (event.image64 != null && event.imageType != null) {
+          image = ImageProduct(image64: base64Encode(event.image64!), imageType: event.imageType);
+        } else {
+          yield UpdateproductFailed();
+          throw Exception();
+        }
+        // Uint8List imageToUpladBytes = event.image64;
+        // print(event.imageType);
 
         await updateProductRepository.updateProduct(
             productTypeId: event.productTypeId,

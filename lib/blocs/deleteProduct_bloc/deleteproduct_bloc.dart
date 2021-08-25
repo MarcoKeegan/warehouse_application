@@ -23,12 +23,19 @@ class DeleteproductBloc extends Bloc<DeleteproductEvent, DeleteproductState> {
         await deleteProductRepository.deleteProduct(
           firebaseUid: event.firebaseUid,
           idProduct: event.productId,
-          softDelete: event.softDelete,
+          // softDelete: event.softDelete,
         );
         yield DeleteProductDone();
-      } catch (e) {
-        yield DeleteProductFailed();
+      } on DeleteProductInvalidProductId {
+        yield DeleteProductFailedInvalidProductId(); 
+      } on DeleteProductErrorrInternalServer {
+        yield DeleteProductErrorInternalServer();
+      } on DeleteProductInvalidUid {
+        yield DeleteProductFailedInvalidUid();
       }
+      // catch (e) {
+      //   yield DeleteProductFailed();
+      // }
     }
   }
 }

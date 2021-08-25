@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
+import 'package:warehouse_application/blocs/deleteProduct_bloc/deleteproduct_bloc.dart';
 import 'package:warehouse_application/blocs/showProductById_bloc/showproductbyid_bloc.dart';
 import 'package:warehouse_application/repo/provider/warehouseApi_Provider.dart';
+import 'package:warehouse_application/repo/repositories/deleteProduct_repository.dart';
 import 'package:warehouse_application/repo/repositories/readProductById_repository.dart';
 import 'package:warehouse_application/repo/repositories/updateProduct_repository.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/addStock_Page.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/updateProduct_Page.dart';
 
 class DetailStockPage extends StatefulWidget {
-  const DetailStockPage({Key? key, required this.productId}) : super(key: key);
+  const DetailStockPage({Key? key, required this.productId, required DeleteProductRepository deleteProductRepository}) 
+      : _deleteProductRepository = deleteProductRepository, super(key: key);
 
   @override
   _DetailStockPage createState() => _DetailStockPage();
   final int productId;
+  final DeleteProductRepository _deleteProductRepository;
 }
 
 class _DetailStockPage extends State<DetailStockPage>
@@ -22,13 +27,16 @@ class _DetailStockPage extends State<DetailStockPage>
   GetProductByIdRepository getProductByIdRepository =
       GetProductByIdRepository();
   UpdateProductRepository updateProductRepository = UpdateProductRepository();
+  // DeleteProductRepository deleteProductRepository = DeleteProductRepository();
 
   late ShowproductbyidBloc showproductbyidBloc;
+  late DeleteproductBloc _deleteproductBloc;
 
   @override
   void initState() {
     showproductbyidBloc =
         ShowproductbyidBloc(getProductByIdRepository: getProductByIdRepository);
+    _deleteproductBloc = DeleteproductBloc(deleteProductRepository: widget._deleteProductRepository);
     super.initState();
   }
 
@@ -36,6 +44,13 @@ class _DetailStockPage extends State<DetailStockPage>
   void didChangeDependencies() {
     showproductbyidBloc.add(ShowProductByIdLoad(productId: widget.productId));
     super.didChangeDependencies();
+  }
+
+  Future<void> _showSnackbar() async {
+    final snackBar = SnackBar(
+      content: const Text('Disable Product Succes!'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   Future<void> _showLoading() async {
@@ -66,7 +81,8 @@ class _DetailStockPage extends State<DetailStockPage>
           automaticallyImplyLeading: false,
           leading: IconButton(
               onPressed: () {
-                Navigator.of(context).pushReplacementNamed('/viewListStckPage');
+                // Navigator.of(context).pushReplacementNamed('/viewListStckPage');
+                Navigator.of(context).pop();
               },
               icon: Icon(
                 Icons.arrow_back,
@@ -74,118 +90,204 @@ class _DetailStockPage extends State<DetailStockPage>
               )),
         ),
         body: SingleChildScrollView(
-          child: BlocProvider(
-            create: (context) => showproductbyidBloc,
-            child: Builder(
-              builder: (context) =>
-                  BlocListener<ShowproductbyidBloc, ShowproductbyidState>(
-                      listener: (context, state) {
-                        if (state is ShowproductbyidLoading) {
-                          print('Loading...');
-                          _showLoading();
-                        } else if (state is ShowproductbyidDone) {
-                          Navigator.of(context).pop();
-                        } else if (state is ShowproductbyidFailedById) {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (builder) {
-                                return AlertDialog(
-                                  title: Text('ALERT!'),
-                                  content: Text(
-                                      'Something went wrong with product id, please try another product.'),
-                                  actions: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        OutlinedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('OK'),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                );
-                              });
-                        } else if (state is ShowproductbyidErrorParam) {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (builder) {
-                                return AlertDialog(
-                                  title: Text('ALERT!'),
-                                  content: Text(
-                                      'Something went wrong, please try again later.'),
-                                  actions: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        OutlinedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('OK'),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                );
-                              });
-                        } else if (state is ShowproductbyidErrorContentType) {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (builder) {
-                                return AlertDialog(
-                                  title: Text('ALERT!'),
-                                  content: Text(
-                                      'Something went wrong with this content, please try again later.'),
-                                  actions: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        OutlinedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('OK'),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                );
-                              });
-                        } else if (state
-                            is ShowproductbyidErrorInternalServer) {
-                          Navigator.of(context).pop();
-                          showDialog(
-                              context: context,
-                              builder: (builder) {
-                                return AlertDialog(
-                                  title: Text('ALERT!'),
-                                  content: Text(
-                                      'Something went wrong on our server, please try again later.'),
-                                  actions: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        OutlinedButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text('OK'),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                );
-                              });
-                        }
-                      },
-                      child: _detailProduct()),
-            ),
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<ShowproductbyidBloc>(create: (context) => showproductbyidBloc,),
+              BlocProvider<DeleteproductBloc>(create: (context) => _deleteproductBloc),
+            ],
+            child: MultiBlocListener(
+              listeners: [
+                BlocListener<ShowproductbyidBloc, ShowproductbyidState>(
+                        listener: (context, state) {
+                          if (state is ShowproductbyidLoading) {
+                            print('Loading...');
+                            _showLoading();
+                          } else if (state is ShowproductbyidDone) {
+                            Navigator.of(context).pop();
+                          } else if (state is ShowproductbyidFailedById) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong with product id, please try another product.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else if (state is ShowproductbyidErrorParam) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong, please try again later.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else if (state is ShowproductbyidErrorContentType) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong with this content, please try again later.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          } else if (state
+                              is ShowproductbyidErrorInternalServer) {
+                            Navigator.of(context).pop();
+                            showDialog(
+                                context: context,
+                                builder: (builder) {
+                                  return AlertDialog(
+                                    title: Text('ALERT!'),
+                                    content: Text(
+                                        'Something went wrong on our server, please try again later.'),
+                                    actions: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: [
+                                          OutlinedButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: Text('OK'),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  );
+                                });
+                          }
+                        },
+                       ),
+              BlocListener<DeleteproductBloc, DeleteproductState>(
+                    listener: (context, state) {
+                  if (state is DeleteProductDone) {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushReplacementNamed('/viewListStckPage');
+                    _showSnackbar();
+                  // } else if (state is DeleteProductLoading) {
+                  //   print('Disable Loading...');
+                  //   _showLoading();
+                  // } else if (state is DeleteProductFailedInvalidProductId) {
+                  //     Navigator.of(context).pop();
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (builder) {
+                  //           return AlertDialog(
+                  //             title: Text('ALERT!'),
+                  //             content: Text(
+                  //                 'Something went wrong with product id, please try another product.'),
+                  //             actions: [
+                  //               Row(
+                  //                 mainAxisAlignment: MainAxisAlignment.end,
+                  //                 children: [
+                  //                   OutlinedButton(
+                  //                     onPressed: () {
+                  //                       Navigator.of(context).pop();
+                  //                     },
+                  //                     child: Text('OK'),
+                  //                   ),
+                  //                 ],
+                  //               )
+                  //             ],
+                  //           );
+                  //         });
+                  // } else if (state is DeleteProductErrorInternalServer) {
+                  //     Navigator.of(context).pop();
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (builder) {
+                  //           return AlertDialog(
+                  //             title: Text('ALERT!'),
+                  //             content: Text(
+                  //                 'Something went wrong on our server, please try again later.'),
+                  //             actions: [
+                  //               Row(
+                  //                 mainAxisAlignment: MainAxisAlignment.end,
+                  //                 children: [
+                  //                   OutlinedButton(
+                  //                     onPressed: () {
+                  //                       Navigator.of(context).pop();
+                  //                     },
+                  //                     child: Text('OK'),
+                  //                   ),
+                  //                 ],
+                  //               )
+                  //             ],
+                  //           );
+                  //         });
+                  // } else if (state is DeleteProductFailedInvalidUid) {
+                  //     Navigator.of(context).pop();
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (builder) {
+                  //           return AlertDialog(
+                  //             title: Text('ALERT!'),
+                  //             content: Text(
+                  //                 'This account has not authority for this page.'),
+                  //             actions: [
+                  //               Row(
+                  //                 mainAxisAlignment: MainAxisAlignment.end,
+                  //                 children: [
+                  //                   OutlinedButton(
+                  //                     onPressed: () {
+                  //                       Navigator.of(context).pop();
+                  //                     },
+                  //                     child: Text('OK'),
+                  //                   ),
+                  //                 ],
+                  //               )
+                  //             ],
+                  //           );
+                  //         });
+                  }
+                })
+            ],  child: _detailProduct())   
           ),
         ));
   }
@@ -318,7 +420,42 @@ class _DetailStockPage extends State<DetailStockPage>
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (builder) {
+                    return AlertDialog(
+                      title: Text('ALERT!'),
+                      content: Text(
+                          'Are you sure want to disable this product?'),
+                      actions: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            OutlinedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text('No'),
+                            ),
+                            OutlinedButton(
+                              onPressed: () {
+                                _deleteproductBloc.add(DisableProduct(
+                                  firebaseUid: BlocProvider.of<AuthenticationBloc>(context)
+                                                  .user
+                                                  .uid,
+                                  productId: widget.productId,
+                                  ));
+                              
+                              },
+                              child: Text('Yes'),
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  });
+              },
               child: Text(
                 "Disable Product",
                 style: TextStyle(color: Colors.white),
@@ -332,3 +469,8 @@ class _DetailStockPage extends State<DetailStockPage>
     });
   }
 }
+
+
+
+
+

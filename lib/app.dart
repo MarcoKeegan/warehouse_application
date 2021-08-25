@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:warehouse_application/blocs/authentication_bloc/authentication_bloc.dart';
 import 'package:warehouse_application/blocs/login_bloc/login_bloc.dart';
 import 'package:warehouse_application/repo/repositories/createProduct_repository.dart';
+import 'package:warehouse_application/repo/repositories/deleteProduct_repository.dart';
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 import 'package:warehouse_application/views/dashboardFolder/stockFolder/addProduct_Page.dart';
@@ -26,15 +27,19 @@ class App extends StatefulWidget {
       {Key? key,
       required FirebaseRepository firebaseAuth,
       required RegisApiRepository regisApiRepository,
-      required CreateProductRepository createProductRepository})
+      required CreateProductRepository createProductRepository,
+      required DeleteProductRepository deleteProductRepository})
       : _firebaseAuthRepo = firebaseAuth,
         _regisApiRepository = regisApiRepository,
         _createProductRepository = createProductRepository,
+        _deleteProductRepository = deleteProductRepository,
+
         super(key: key);
 
   final FirebaseRepository _firebaseAuthRepo;
   final RegisApiRepository _regisApiRepository;
   final CreateProductRepository _createProductRepository;
+  final DeleteProductRepository _deleteProductRepository;
 
   @override
   _AppState createState() => _AppState();
@@ -116,8 +121,11 @@ class _AppState extends State<App> with TickerProviderStateMixin {
                     ));
           case '/viewListStckPage':
             return MaterialPageRoute(builder: (context) => ListStockPage());
-          // case '/detailStockPage':
-          //   return MaterialPageRoute(builder: (context) => DetailStockPage());
+          case '/detailStockPage':
+            Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(builder: (context) => DetailStockPage(
+              deleteProductRepository: widget._deleteProductRepository, 
+            productId: args['productId'],));
           // case '/addStockPage':
           //   return MaterialPageRoute(builder: (context) => AddStockPage());
         }
