@@ -123,9 +123,9 @@ class _UpdateProductPage extends State<UpdateProductPage>
                                   .uid,
                           productId: widget.productId,
                         ));
-                        Navigator.of(context)
-                            .pushReplacementNamed('/viewListStckPage');
-                        _showSnackbar();
+                        // Navigator.of(context)
+                        //     .pushReplacementNamed('/viewListStckPage');
+                        // _showSnackbar();
                       } else {
                         Navigator.of(context).pop(context);
                       }
@@ -186,6 +186,9 @@ class _UpdateProductPage extends State<UpdateProductPage>
                         _showLoading();
                       } else if (state is UpdateproductDone) {
                         Navigator.of(context).pop();
+                        Navigator.of(context)
+                            .pushReplacementNamed('/viewListStckPage');
+                        _showSnackbar();
                       } else if (state is UpdateproductInvalidProductId) {
                         Navigator.of(context).pop();
                         showDialog(
