@@ -104,16 +104,19 @@ class _UpdateProductPage extends State<UpdateProductPage>
                           productName: _formKey.currentState!.value['namaB'],
                           productTypeId: _formKey.currentState!.value['type'],
                           price: _formKey.currentState!.value['harga'],
-                          image64: _formKey.currentState!.value['image'] != null ? 
-                          (_formKey.currentState!.value['image'] 
-                                  as List<PlatformFile>)
-                              .first
-                              .bytes! : null,
-                          imageType: _formKey.currentState!.value['image'] != null ? 
-                          (_formKey.currentState!.value['image']
-                                  as List<PlatformFile>)
-                              .first
-                              .extension! : null,
+                          image64: _formKey.currentState!.value['image'] != null
+                              ? (_formKey.currentState!.value['image']
+                                      as List<PlatformFile>)
+                                  .first
+                                  .bytes!
+                              : null,
+                          imageType:
+                              _formKey.currentState!.value['image'] != null
+                                  ? (_formKey.currentState!.value['image']
+                                          as List<PlatformFile>)
+                                      .first
+                                      .extension!
+                                  : null,
                           firebaseUid:
                               BlocProvider.of<AuthenticationBloc>(context)
                                   .user
@@ -470,8 +473,16 @@ class _UpdateProductPage extends State<UpdateProductPage>
     return BlocBuilder<ShowproductbyidBloc, ShowproductbyidState>(
         builder: (context, state) {
       if (state is ShowproductbyidDone) {
-        return Column(
-          children: [Padding(
+        return Column(children: [
+          _formKey.currentState?.value['image'] == null
+              ? Image.network(
+                  state.productID.data!.imageUrl!,
+                  height: 200,
+                  width: 200,
+                  fit: BoxFit.cover,
+                )
+              : Container(),
+          Padding(
             padding: const EdgeInsets.all(8.0),
             child: FormBuilderFilePicker(
               name: 'image',
@@ -493,15 +504,7 @@ class _UpdateProductPage extends State<UpdateProductPage>
               // ]),
             ),
           ),
-          _formKey.currentState?.value['image'] == null ?
-          Image.network(
-            state.productID.data!.imageUrl!, 
-            height: 100,
-            width: 100, 
-            fit: BoxFit.cover,
-          ): Container()
-          ]
-        );
+        ]);
       }
       return Container();
     });

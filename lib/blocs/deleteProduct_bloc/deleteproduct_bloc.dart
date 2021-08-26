@@ -27,7 +27,7 @@ class DeleteproductBloc extends Bloc<DeleteproductEvent, DeleteproductState> {
         );
         yield DeleteProductDone();
       } on DeleteProductInvalidProductId {
-        yield DeleteProductFailedInvalidProductId(); 
+        yield DeleteProductFailedInvalidProductId();
       } on DeleteProductErrorrInternalServer {
         yield DeleteProductErrorInternalServer();
       } on DeleteProductInvalidUid {

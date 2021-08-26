@@ -8,15 +8,16 @@ import 'package:warehouse_application/repo/repositories/deleteProduct_repository
 import 'package:warehouse_application/repo/repositories/firebaseAPI_repository.dart';
 import 'package:warehouse_application/repo/repositories/regisAPI_repository.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = CustomBlocObserver();
   await Firebase.initializeApp();
   final FirebaseRepository _firebaseAuthRepo = FirebaseRepository();
   final RegisApiRepository _regisApiRepository = RegisApiRepository();
-  final CreateProductRepository _createProductRepository = CreateProductRepository();
-  final DeleteProductRepository _deleteProductRepository = DeleteProductRepository();
+  final CreateProductRepository _createProductRepository =
+      CreateProductRepository();
+  final DeleteProductRepository _deleteProductRepository =
+      DeleteProductRepository();
   runApp(App(
     firebaseAuth: _firebaseAuthRepo,
     regisApiRepository: _regisApiRepository,

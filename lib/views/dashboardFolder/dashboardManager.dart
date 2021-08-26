@@ -46,92 +46,94 @@ class _DashManagerPage extends State<DashManagerPage> {
                 ),
               ),
             ]),
-        body: Container(
-          child: BlocBuilder<DashboardBloc, DashboardState>(
-            builder: (context, state) {
-              if (state is DashboardDone)
-                return Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.fromLTRB(8.0, 15.0, 200.0, 15.0),
-                      child: Text("Dashboard",
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black)),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          elevation: 2,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/warePage');
-                            },
-                            child: SizedBox(
-                              width: 500,
-                              height: 150,
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('Warehouse'),
-                                  ]),
+        body: SingleChildScrollView(
+          child: Container(
+            child: BlocBuilder<DashboardBloc, DashboardState>(
+              builder: (context, state) {
+                if (state is DashboardDone)
+                  return Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(8.0, 15.0, 200.0, 15.0),
+                        child: Text("Dashboard",
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontStyle: FontStyle.italic,
+                                color: Colors.black)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(children: [
+                          Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            elevation: 2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/warePage');
+                              },
+                              child: SizedBox(
+                                width: 500,
+                                height: 150,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('Warehouse'),
+                                    ]),
+                              ),
                             ),
                           ),
-                        ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          elevation: 2,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/viewListStckPage');
-                            },
-                            child: SizedBox(
-                              width: 500,
-                              height: 150,
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('Stock'),
-                                  ]),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            elevation: 2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/viewListStckPage');
+                              },
+                              child: SizedBox(
+                                width: 500,
+                                height: 150,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('Stock'),
+                                    ]),
+                              ),
                             ),
                           ),
-                        ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          elevation: 2,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context)
-                                  .pushReplacementNamed('/purchPage');
-                            },
-                            child: SizedBox(
-                              width: 500,
-                              height: 150,
-                              child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text('Purchasing'),
-                                  ]),
+                          Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
+                            elevation: 2,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/purchPage');
+                              },
+                              child: SizedBox(
+                                width: 500,
+                                height: 150,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text('Purchasing'),
+                                    ]),
+                              ),
                             ),
                           ),
-                        ),
-                      ]),
-                    ),
-                  ],
-                );
-              else {
-                return Container();
-              }
-            },
+                        ]),
+                      ),
+                    ],
+                  );
+                else {
+                  return Container();
+                }
+              },
+            ),
           ),
         ),
         drawer: Drawer(

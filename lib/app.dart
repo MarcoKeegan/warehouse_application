@@ -33,7 +33,6 @@ class App extends StatefulWidget {
         _regisApiRepository = regisApiRepository,
         _createProductRepository = createProductRepository,
         _deleteProductRepository = deleteProductRepository,
-
         super(key: key);
 
   final FirebaseRepository _firebaseAuthRepo;
@@ -122,10 +121,13 @@ class _AppState extends State<App> with TickerProviderStateMixin {
           case '/viewListStckPage':
             return MaterialPageRoute(builder: (context) => ListStockPage());
           case '/detailStockPage':
-            Map<String, dynamic> args = settings.arguments as Map<String, dynamic>;
-            return MaterialPageRoute(builder: (context) => DetailStockPage(
-              deleteProductRepository: widget._deleteProductRepository, 
-            productId: args['productId'],));
+            Map<String, dynamic> args =
+                settings.arguments as Map<String, dynamic>;
+            return MaterialPageRoute(
+                builder: (context) => DetailStockPage(
+                      deleteProductRepository: widget._deleteProductRepository,
+                      productId: args['productId'],
+                    ));
           // case '/addStockPage':
           //   return MaterialPageRoute(builder: (context) => AddStockPage());
         }
