@@ -28,10 +28,12 @@ class UpdateproductBloc extends Bloc<UpdateproductEvent, UpdateproductState> {
         ImageProduct? image;
         // = ImageProduct(imageType: imageType, image64: image64);
 
-        if (event.imageType == null && event.imageType != null) {
+        if (event.image64 == null && event.imageType == null) {
           image = null;
         } else if (event.image64 != null && event.imageType != null) {
-          image = ImageProduct(image64: base64Encode(event.image64!), imageType: event.imageType);
+          image = ImageProduct(
+              image64: base64Encode(event.image64!),
+              imageType: event.imageType);
         } else {
           yield UpdateproductFailed();
           throw Exception();
